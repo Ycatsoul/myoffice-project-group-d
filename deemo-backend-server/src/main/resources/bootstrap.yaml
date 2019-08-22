@@ -4,10 +4,3 @@
 spring:
   application:
     name: deemo
-
-# ----------------------------------------
-# PROFILES PROPERTIES
-# ----------------------------------------
----
-spring:
-  profiles: dev
