@@ -15,6 +15,14 @@ spring:
       force: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:/mapping/*.xml
+  type-aliases-package: com.capgemini.cn.deemo.data.domain
+  config-location: classpath:/mybatis-config.xml
+
 logging:
   level.root: info
   level.com.capgemini.cn: debug
@@ -60,23 +68,27 @@ cgc:
 
 ---
 spring:
-  # PROFILES
   profiles: dev
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/deemo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
 
 cgc:
   api-docs:
     enabled: true
     pathMapping: ${server.servlet.context-path}
-    title: CapGemini Spring Boot Demo API Docs - Dev
+    title: CapGemini Deemo Project API Docs - Dev
     description: Dev
-    contactName: Andriy Huang
+    contactName: Tiantang Yu
     contactUrl: https://www.capgemini.com/cn-zh/
-    contactEmail: yaxiang.huang@capgemini.com
+    contactEmail: 1758267482@qq.com
     version: 1.0.0-SNAPSHOT
 
 ---
 spring:
-  # PROFILES
   profiles: test
 
 cgc:
