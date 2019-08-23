@@ -56,7 +56,7 @@
         <i class="el-icon-date " align="right">今天是: {{today}}</i>
         </div>
         <div class="home-main">
-           <el-main>
+           <el-main>   
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item :to="{ path: '/home' }">当前位置</el-breadcrumb-item>
               <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
