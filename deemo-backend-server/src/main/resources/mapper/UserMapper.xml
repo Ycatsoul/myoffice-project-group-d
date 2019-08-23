@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.cn.deemo.mapper.UserMapper">
+    <select id="queryObject" resultType="com.capgemini.cn.deemo.data.domain.User">
+        select * from user where `isBlocked` = 0 and id = #{id}
+    </select>
+
+    <select id="queryList" resultType="com.capgemini.cn.deemo.data.domain.User">
+        select * from user where `isBlocked` = 0
+    </select>
+
+    <insert id="save" parameterType="com.capgemini.cn.deemo.data.domain.User">
+        insert into user
+        (
+            `userId`,
+            `userName`,
+            `gender`,
+            `departmentId`,
+            `roleId`,
+            `password`
+        )
+        values
+        (
+            #{userId},
+            #{userName} ,
+            #{gender},
+            #{departmentId},
+            #{roleId},
+            #{password}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.capgemini.cn.deemo.data.domain.User">
+        update user
+        <set>
+            <if test="userId != null">`userId` = #{userId}, </if>
+            <if test="userName != null">`userName` = #{userName} , </if>
+            <if test="gender != null">`gender` = #{gender}, </if>
+            <if test="departmentId != null">`departmentId` = #{departmentId}, </if>
+            <if test="roleId != null">`roleId` = #{roleId}, </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="com.capgemini.cn.deemo.data.domain.User">
+        delete from user where `isBlocked` = 0 and id = #{id}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="com.capgemini.cn.deemo.data.domain.User">
+        delete from user WHERE id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=Integer}
+        </foreach>
+    </delete>
+
+
+</mapper>

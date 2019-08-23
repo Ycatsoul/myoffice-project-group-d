@@ -18,7 +18,6 @@
 --
 -- Table structure for table `Accessory`
 --
-USE deemo;
 
 DROP TABLE IF EXISTS `Accessory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -29,7 +28,7 @@ CREATE TABLE `Accessory` (
   `fileId` bigint(20) unsigned NOT NULL,
   `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `accessoryTypeId` bigint(20) unsigned NOT NULL,
+  `accessoryType` bigint(20) unsigned NOT NULL,
   `accessorySize` int(10) unsigned NOT NULL,
   `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -113,8 +112,8 @@ CREATE TABLE `File` (
   `fileId` bigint(20) unsigned NOT NULL,
   `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `fileTypeId` bigint(20) unsigned NOT NULL,
-  `fileOwnerId` bigint(20) unsigned NOT NULL,
+  `fileType` bigint(20) unsigned NOT NULL,
+  `fileOwner` bigint(20) unsigned NOT NULL,
   `parentId` bigint(20) unsigned NOT NULL,
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
@@ -306,7 +305,7 @@ CREATE TABLE `Message` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `messageId` bigint(20) unsigned NOT NULL,
   `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `messageTypeId` bigint(20) unsigned NOT NULL,
+  `messageType` bigint(20) unsigned NOT NULL,
   `messageContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -331,7 +330,7 @@ UNLOCK TABLES;
 -- Table structure for table `messageTrans`
 --
 
-DROP TABLE IF EXISTS MessageTrans;
+DROP TABLE IF EXISTS `messageTrans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `messageTrans` (
@@ -349,9 +348,9 @@ CREATE TABLE `messageTrans` (
 -- Dumping data for table `messageTrans`
 --
 
-LOCK TABLES MessageTrans WRITE;
-/*!40000 ALTER TABLE MessageTrans DISABLE KEYS */;
-/*!40000 ALTER TABLE MessageTrans ENABLE KEYS */;
+LOCK TABLES `messageTrans` WRITE;
+/*!40000 ALTER TABLE `messageTrans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `messageTrans` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -504,7 +503,7 @@ CREATE TABLE `Schedule` (
   `scheduleContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `meetingTypeId` bigint(20) unsigned NOT NULL,
+  `meetingType` bigint(20) unsigned NOT NULL,
   `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `createUserId` bigint(20) unsigned NOT NULL,
   `isPrivate` tinyint(4) NOT NULL DEFAULT '0',

@@ -1,18 +1,20 @@
 package com.capgemini.cn.deemo;
 
-import com.capgemini.cn.core.commons.BaseBootApplication;
-import lombok.extern.slf4j.Slf4j;
+import com.capgemini.cn.core.commons.BaseController;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * @author hasaker
- * @since 2019-08-19 16:22
- *
+ * @create_date 2019-08-19 16:22
+ * @description
  */
-@Slf4j
+@SpringBootApplication
 @MapperScan("com.capgemini.cn.deemo.mapper")
-public class DeemoApplication extends BaseBootApplication {
+public class DeemoApplication extends BaseController {
     public static void main(String[] args) {
         SpringApplication.run(DeemoApplication.class, args);
     }
