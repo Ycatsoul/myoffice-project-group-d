@@ -45,9 +45,9 @@
           {{ item.name }}
         </el-menu-item>
          </el-submenu>
-       </el-menu>
-      </div>
-        <div class="home-header">
+       </el-menu>   
+      </div>     
+        <div class="home-header">   
         <i class="el-icon-document size">主页</i>
         <i class="el-icon-user-solid size">重新登录</i>
         <i class="el-icon-edit size">修改密码</i>
