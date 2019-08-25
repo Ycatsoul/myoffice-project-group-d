@@ -1,16 +1,23 @@
-package com.capgemini.cn.deemo.vo.request;
+package com.capgemini.cn.deemo.data.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.sql.Date;
+
 /**
  * @author hasaker
- * @since 2019-08-22 11:02
+ * @since 2019-08-21 15:06
  */
 @Data
-@ApiModel(value = "添加一条File记录")
-public class FileAddVo {
+@ApiModel
+public class FileInfo {
+    private Integer id;
+
+    @ApiModelProperty(value = "文件ID")
+    private Long fileId;
+
     @ApiModelProperty(value = "文件名")
     private String fileName;
 
@@ -20,12 +27,18 @@ public class FileAddVo {
     @ApiModelProperty(value = "文件类型ID")
     private Long fileTypeId;
 
-    @ApiModelProperty(value = "文件拥有者ID")
+    @ApiModelProperty(value = "文件所有者ID")
     private Long fileOwnerId;
 
-    @ApiModelProperty(value = "父目录ID")
+    @ApiModelProperty(value = "文件父目录ID")
     private Long parentId;
+
+    @ApiModelProperty(value = "文件上传时间")
+    private Date uploadTime;
 
     @ApiModelProperty(value = "备注")
     private String remark;
+
+    @ApiModelProperty(value = "文件是否被删除")
+    private Boolean isDeleted;
 }

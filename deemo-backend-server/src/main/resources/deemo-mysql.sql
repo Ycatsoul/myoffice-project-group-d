@@ -102,7 +102,7 @@ LOCK TABLES `Department` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `File`
+-- Table structure for table `FileInfo`
 --
 
 DROP TABLE IF EXISTS `File`;
@@ -124,7 +124,7 @@ CREATE TABLE `File` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `File`
+-- Dumping data for table `FileInfo`
 --
 
 LOCK TABLES `File` WRITE;

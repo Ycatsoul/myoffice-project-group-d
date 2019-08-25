@@ -2,6 +2,8 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
+  application:
+    name: Deemo
   banner:
     charset: UTF-8
   aop:

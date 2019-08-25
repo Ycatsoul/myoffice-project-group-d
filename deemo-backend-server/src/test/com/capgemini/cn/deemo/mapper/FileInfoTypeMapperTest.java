@@ -18,9 +18,9 @@ import java.util.List;
  */
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FileTypeMapperTest.class)
+@SpringBootTest(classes = FileInfoTypeMapperTest.class)
 @MapperScan("com.capgemini.cn.deemo.mapper")
-public class FileTypeMapperTest {
+public class FileInfoTypeMapperTest {
 
     @Autowired
     private FileTypeMapper fileTypeMapper;
