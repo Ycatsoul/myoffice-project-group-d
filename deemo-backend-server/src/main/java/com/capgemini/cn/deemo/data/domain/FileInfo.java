@@ -41,4 +41,7 @@ public class FileInfo {
 
     @ApiModelProperty(value = "文件是否被删除")
     private Boolean isDeleted;
+
+    @ApiModelProperty(value = "删除时间")
+    private Date deleteTime;
 }

@@ -21,15 +21,21 @@ public class FileInfoRespVo {
 
     private Long fileTypeId;
 
-    private String fileType;
+    private String fileTypeName;
+
+    private String fileTypeImage;
 
     private Long fileOwnerId;
 
-    private String fileOwner;
+    private String fileOwnerName;
 
     private Long parentId;
 
     private Date uploadTime;
 
     private String remark;
+
+    private Boolean isDeleted;
+
+    private Date deleteTime;
 }

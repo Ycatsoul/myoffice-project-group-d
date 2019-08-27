@@ -12,6 +12,7 @@ import java.sql.Date;
 /**
  * @author hasaker
  * @since 2019-08-22 11:02
+ *
  */
 @Setter
 @Getter
@@ -19,16 +20,25 @@ import java.sql.Date;
 public class FileInfoSearchVo {
 
     @ApiModelProperty(value = "文件名搜索字段")
-    private String fileName;
+    private String fileName = null;
 
     @ApiModelProperty(value = "文件创建人搜索字段")
-    private String createUserName;
+    private String createUserName = null;
 
-    @ApiModelProperty(value = "文件创建起始时间")
-    @JsonFormat(pattern = DateUtils.YYYY_MM_DD, timezone = DateUtils.DEFAULT_ZONE)
-    private Date startTime;
+    @ApiModelProperty(value = "父文件夹ID")
+    private Long parentId = 0L;
 
-    @ApiModelProperty(value = "文件创建截止时间")
+    @ApiModelProperty(value = "起始时间")
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD, timezone = DateUtils.DEFAULT_ZONE)
-    private Date endTime;
+    private Date startTime = null;
+
+    @ApiModelProperty(value = "截止时间")
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD, timezone = DateUtils.DEFAULT_ZONE)
+    private Date endTime = null;
+
+    @ApiModelProperty(value = "偏移量")
+    private Integer start = 0;
+
+    @ApiModelProperty(value = "分页大小")
+    private Integer size = 10;
 }

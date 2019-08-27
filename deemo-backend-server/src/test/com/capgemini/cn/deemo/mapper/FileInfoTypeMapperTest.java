@@ -27,13 +27,41 @@ public class FileInfoTypeMapperTest {
 
     @Test
     public void insertFileTypeTest() {
-        FileType fileType = new FileType();
-        fileType.setFileTypeId(IdWorker.get().nextId());
-        fileType.setFileTypeName("图片");
-        fileType.setFileTypeImage("图片");
-        fileType.setFileTypeSuffix(".jpg");
+        String[] fileTypeNames = new String[]{
+                "Excel文档", "Excel文档", "其它", "图片", "PDF文档", "图片",
+                "PPT文档", "纯文本文档", "Word文档", "Word文档",
+                "压缩包", "压缩包", "压缩包", "压缩包"
+        };
+        String[] fileTypeImages = new String[]{
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/excel.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/excel.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/file.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/jpg.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/pdf.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/png.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/ppt.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/txt.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/word.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/word.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png",
+                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png"
+        };
+        String[] fileTypeSuffixes = new String[]{
+                "xls", "xlsx", "*", "jpg", "pdf", "png", "ppt", "txt",
+                "doc", "docx", "zip", "rar", "7z", "tar.gz"
+        };
 
-        assert fileTypeMapper.insertFileType(fileType) == 1;
+        for (int i = 0; i < fileTypeNames.length; i++) {
+            FileType fileType = new FileType();
+            fileType.setFileTypeId(IdWorker.get().nextId());
+            fileType.setFileTypeName(fileTypeNames[i]);
+            fileType.setFileTypeImage(fileTypeImages[i]);
+            fileType.setFileTypeSuffix(fileTypeSuffixes[i]);
+
+            assert fileTypeMapper.insertFileType(fileType) == 1;
+        }
     }
 
     @Test

@@ -10,6 +10,10 @@ import java.util.List;
  * @since 2019-08-21 15:05
  */
 public interface FileTypeMapper {
+    Long getFileTypeIdByFileTypeSuffix(@Param("fileTypeSuffix") String fileTypeSuffix);
+
+    FileType getFileTypeByFileTypeId(@Param("fileTypeId") Long fileTypeId);
+
     List<FileType> getAllFileType();
 
     Integer insertFileType(@Param("fileType") FileType fileType);

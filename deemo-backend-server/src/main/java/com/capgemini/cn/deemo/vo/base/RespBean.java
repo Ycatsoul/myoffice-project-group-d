@@ -23,36 +23,36 @@ public class RespBean {
     private String message;
 
     @ApiModelProperty(value = "数据")
-    private Object object;
+    private Object data;
 
-    private RespBean(Integer status, Object object) {
+    private RespBean(Integer status, Object data) {
         this.status = status;
-        this.object = object;
+        this.data = data;
     }
 
-    private RespBean(Integer status, String message, Object object) {
+    private RespBean(Integer status, String message, Object data) {
         this.status = status;
         this.message = message;
-        this.object = object;
+        this.data = data;
     }
 
-    public static RespBean success(Object object) {
-        return new RespBean(200, object);
+    public static RespBean ok(Object data) {
+        return new RespBean(200, data);
     }
 
-    public static RespBean success(String message) {
+    public static RespBean ok(String message) {
         return new RespBean(200, message, null);
     }
 
-    public static RespBean success(String message, Object object) {
-        return new RespBean(200, message, object);
+    public static RespBean ok(String message, Object data) {
+        return new RespBean(200, message, data);
     }
 
     public static RespBean error(String message) {
         return new RespBean(500, message, null);
     }
 
-    public static RespBean error(String message, Object object) {
-        return new RespBean(500, message , object);
+    public static RespBean error(String message, Object data) {
+        return new RespBean(500, message , data);
     }
 }

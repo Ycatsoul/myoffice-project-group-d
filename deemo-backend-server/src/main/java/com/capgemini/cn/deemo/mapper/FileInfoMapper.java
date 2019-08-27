@@ -14,11 +14,15 @@ import java.util.List;
 public interface FileInfoMapper {
     FileInfo getFile(@Param("fileId") Long fileId);
 
-    List<FileInfo> searchFiles(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
+    List<FileInfo> listFiles(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
 
-    List<FileInfo> listFiles();
+    Integer countFiles(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
 
-    List<FileInfo> listDeletedFiles();
+    List<Long> listFileIdsInCurrentDir(@Param("parentId") Long parentId);
+
+    List<FileInfo> listFilesInTrash(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
+
+    Integer countFilesInTrash(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
 
     Integer insertFile(@Param("fileInfo") FileInfo fileInfo);
 
