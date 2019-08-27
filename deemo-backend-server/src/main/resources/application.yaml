@@ -2,6 +2,8 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
+  application:
+    name: Deemo
   banner:
     charset: UTF-8
   aop:
@@ -13,6 +15,10 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  servlet:
+    multipart:
+      maxFileSize: "1000MB"
+      maxRequestSize: "10000MB"
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   profiles:
