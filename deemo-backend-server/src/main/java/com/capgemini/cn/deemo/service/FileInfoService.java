@@ -20,13 +20,15 @@ public interface FileInfoService {
 
     public RespVos<FileInfoRespVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo);
 
-    public Integer uploadFile(MultipartFile multipartFile, FileInfoAddVo fileInfoAddVo);
+    public boolean uploadFile(MultipartFile multipartFile);
 
-    public Integer updateFile(FileInfoEditVo fileInfoEditVo);
+    public int insertFile(FileInfoAddVo fileInfoAddVo);
 
-    public Integer putFilesToTrash(List<Long> fileIds);
+    public int updateFile(FileInfoEditVo fileInfoEditVo);
 
-    public Integer restoreFilesFromTrash(List<Long> fileIds);
+    public int putFilesToTrash(List<Long> fileIds);
 
-    public Integer deleteFilesFromTrash(List<Long> fileIds);
+    public int restoreFilesFromTrash(List<Long> fileIds);
+
+    public int deleteFilesFromTrash(List<Long> fileIds);
 }

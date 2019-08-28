@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @author hasaker
  * @since 2019-08-22 15:43
@@ -29,30 +31,26 @@ public class FileInfoController {
         this.fileInfoService = fileInfoService;
     }
 
-    @ApiOperation(value = "获取文件列表")
-    @PostMapping("/list")
-    public RespBean listFiles(@RequestBody FileInfoSearchVo fileInfoSearchVo) {
-        RespVos<FileInfoRespVo> respVos = fileInfoService.listFiles(fileInfoSearchVo);
+    @ApiOperation(value = "上传文件")
+    @PostMapping("/upload")
+    public RespBean uploadFile(@RequestParam("file") MultipartFile multipartFile) {
+        boolean res = fileInfoService.uploadFile(multipartFile);
 
-        if (respVos != null && respVos.getVos().size() > 0) {
-            return RespBean.ok("ok", respVos);
-        }
-
-        return RespBean.error("未找到文件");
+        return res ? RespBean.ok("上传成功") : RespBean.error("上传失败!");
     }
 
-    @ApiOperation(value = "上传文件")
-    @PostMapping("/")
-    public RespBean uploadFile(@RequestParam("file") MultipartFile multipartFile, @RequestBody FileInfoAddVo fileInfoAddVo) {
-        Integer res = fileInfoService.uploadFile(multipartFile, fileInfoAddVo);
+    @ApiOperation(value = "插入文件上传记录")
+    @PostMapping("/insert")
+    public RespBean insertFile(@RequestBody FileInfoAddVo fileInfoAddVo) {
+        int res = fileInfoService.insertFile(fileInfoAddVo);
 
-        return res > 0 ? RespBean.ok("上传成功") : RespBean.error("上传失败!");
+        return res == 1 ? RespBean.ok("插入成功！") : RespBean.error("插入失败！");
     }
 
     @ApiOperation(value = "更新一个文件的信息")
     @PutMapping("/")
     public RespBean updateFile(@RequestBody FileInfoEditVo fileInfoEditVo) {
-        Integer res = fileInfoService.updateFile(fileInfoEditVo);
+        int res = fileInfoService.updateFile(fileInfoEditVo);
 
         return res > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }
@@ -69,8 +67,20 @@ public class FileInfoController {
         return RespBean.error("未找到文件");
     }
 
+    @ApiOperation(value = "获取文件列表")
+    @PostMapping("/list")
+    public RespBean listFiles(@RequestBody FileInfoSearchVo fileInfoSearchVo) {
+        RespVos<FileInfoRespVo> respVos = fileInfoService.listFiles(fileInfoSearchVo);
+
+        if (respVos != null && respVos.getVos().size() > 0) {
+            return RespBean.ok("ok", respVos);
+        }
+
+        return RespBean.error("未找到文件");
+    }
+
     @ApiOperation(value = "获取回收站文件列表")
-    @GetMapping("/trash")
+    @PostMapping("/trash")
     public RespBean listFilesInTrash(@RequestBody FileInfoSearchVo fileInfoSearchVo) {
         RespVos<FileInfoRespVo> respVos = fileInfoService.listFilesInTrash(fileInfoSearchVo);
 
@@ -79,5 +89,29 @@ public class FileInfoController {
         }
 
         return RespBean.error("未找到文件");
+    }
+
+    @ApiOperation(value = "将文件放入回收站")
+    @PutMapping("/delete")
+    public RespBean putFileToTrash(@RequestBody List<Long> fileIds) {
+        int res = fileInfoService.putFilesToTrash(fileIds);
+
+        return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
+    }
+
+    @ApiOperation(value = "从回收站取回文件")
+    @PutMapping("/restore")
+    public RespBean restoreFileFromTrash(@RequestBody List<Long> fileIds) {
+        int res = fileInfoService.restoreFilesFromTrash(fileIds);
+
+        return res > 0 ? RespBean.ok("还原成功!") : RespBean.error("还原失败!");
+    }
+
+    @ApiOperation(value = "将文件从回收站中彻底删除")
+    @PutMapping("/destroy")
+    public RespBean deleteFilesInTrash(@RequestBody List<Long> fileIds) {
+        int res = fileInfoService.deleteFilesFromTrash(fileIds);
+
+        return res > 0 ? RespBean.ok("彻底删除成功!") : RespBean.error("彻底删除失败!");
     }
 }

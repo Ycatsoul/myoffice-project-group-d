@@ -37,5 +37,7 @@ public class FileInfoRespVo {
 
     private Boolean isDeleted;
 
+    private Long parentIdInTrash;
+
     private Date deleteTime;
 }

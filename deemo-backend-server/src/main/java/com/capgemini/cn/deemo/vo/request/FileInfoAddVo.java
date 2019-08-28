@@ -12,6 +12,9 @@ import lombok.Data;
 @ApiModel
 public class FileInfoAddVo {
 
+    @ApiModelProperty(value = "文件名")
+    private String fileName;
+
     @ApiModelProperty(value = "父目录ID")
     private Long parentId;
 
