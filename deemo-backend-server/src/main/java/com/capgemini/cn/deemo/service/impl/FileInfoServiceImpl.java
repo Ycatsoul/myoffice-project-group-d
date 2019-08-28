@@ -11,25 +11,27 @@ import com.capgemini.cn.deemo.vo.request.FileInfoAddVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
 import com.capgemini.cn.deemo.vo.response.FileInfoRespVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author hasaker
  * @since 2019-08-22 15:53
  */
+@Slf4j
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
     private FileInfoMapper fileInfoMapper;
     private FileTypeMapper fileTypeMapper;
+
+    private static final Long FILE_MANAGER_ROOT_ID = 273734225100800L;
+    private static final Long TRASH_ROOT_ID = 273734225100889L;
 
     public FileInfoServiceImpl(FileInfoMapper fileInfoMapper, FileTypeMapper fileTypeMapper) {
         this.fileInfoMapper = fileInfoMapper;
@@ -96,20 +98,46 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     /**
-     * TODO 添加文件拥有者ID
-     * 插入一条文件记录
+     * 上传文件
      */
     @Override
-    public Integer uploadFile(MultipartFile multipartFile, FileInfoAddVo fileInfoAddVo) {
+    public boolean uploadFile(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
-        String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/";
-        String fileSuffix = Objects.requireNonNull(fileName).split(".")[fileName.split(".").length - 1];
-        Long fileTypeId = fileTypeMapper.getFileTypeIdByFileTypeSuffix(fileSuffix.toLowerCase());
+        String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/Files/";
 
         try {
             multipartFile.transferTo(new File(filePath + fileName));
+            log.info("上传成功！");
+
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    /**
+     * TODO 添加文件拥有者ID
+     * 添加文件记录
+     */
+    @Override
+    public int insertFile(FileInfoAddVo fileInfoAddVo) {
+        String fileName = fileInfoAddVo.getFileName();
+        String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/Files/";
+        String fileSuffix = "";
+        if (fileName.contains(".")) {
+            fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        }
+
+        List<String> fileTypeSuffixes = fileTypeMapper.getAllFileTypeSuffixes();
+        Long fileTypeId;
+
+        if (fileTypeSuffixes.contains(fileSuffix)) {
+            fileTypeId = fileTypeMapper.getFileTypeIdByFileTypeSuffix(fileSuffix.toLowerCase());
+        } else {
+            fileTypeId = fileTypeMapper.getFileTypeIdByFileTypeSuffix("*");
         }
 
         FileInfo fileInfo = new FileInfo();
@@ -120,6 +148,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfo.setFileOwnerId(0L);
         fileInfo.setParentId(fileInfoAddVo.getParentId());
         fileInfo.setRemark(fileInfoAddVo.getRemark());
+        fileInfo.setParentIdInTrash(fileInfoAddVo.getParentId());
 
         return fileInfoMapper.insertFile(fileInfo);
     }
@@ -128,17 +157,26 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 更新一条文件记录
      */
     @Override
-    public Integer updateFile(FileInfoEditVo fileInfoEditVo) {
+    public int updateFile(FileInfoEditVo fileInfoEditVo) {
         return fileInfoMapper.updateFile(fileInfoEditVo);
     }
 
     /**
      * 将文件放入回收站
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹放入回收站
+     * @return 受影响的行数
      */
     @Override
-    public Integer putFilesToTrash(List<Long> fileIds) {
-        return fileInfoMapper.putFilesToTrash(includeChildren(fileIds));
+    public int putFilesToTrash(List<Long> fileIds) {
+        int a = fileInfoMapper.putFilesToTrash(fileIds);
+        int b = 0;
+        List<Long> childIds = getChildIds(fileIds);
+
+        if (childIds.size() > 0) {
+            b = fileInfoMapper.putChildrenToTrash(childIds);
+        }
+
+        return a + b;
     }
 
     /**
@@ -146,8 +184,20 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹从回收站中取回
      */
     @Override
-    public Integer restoreFilesFromTrash(List<Long> fileIds) {
-        return fileInfoMapper.restoreFilesFromTrash(includeChildren(fileIds));
+    public int restoreFilesFromTrash(List<Long> fileIds) {
+        List<Long> childIds = getChildIds(fileIds);
+        int a = 0;
+        int b = 0;
+
+        for (Long fileId : fileIds) {
+            a += fileInfoMapper.restoreFileFromTrash(fileId);
+        }
+
+        if (childIds.size() > 0) {
+            b = fileInfoMapper.restoreChildrenFromTrash(childIds);
+        }
+
+        return a + b;
     }
 
     /**
@@ -155,24 +205,31 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹彻底删除
      */
     @Override
-    public Integer deleteFilesFromTrash(List<Long> fileIds) {
-        return fileInfoMapper.deleteFilesFromTrash(includeChildren(fileIds));
+    public int deleteFilesFromTrash(List<Long> fileIds) {
+        fileIds.addAll(getChildIds(fileIds));
+
+        return fileInfoMapper.deleteFilesFromTrash(fileIds);
     }
 
     /**
      * 获取文件夹ID及其儿子们的ID
      */
-    private List<Long> includeChildren(List<Long> fileIds) {
-        List<Long> allFileIds = new ArrayList<>();
+    private List<Long> getChildIds(List<Long> fileIds) {
+        List<Long> childIds = new ArrayList<>();
         LinkedList<Long> queue = new LinkedList<>(fileIds);
+        int fileIdsSize = fileIds.size();
+        int totalSize = 0;
 
         while (queue.size() > 0) {
+            totalSize++;
             Long fileId = queue.pop();
-            allFileIds.add(fileId);
-            queue.addAll(fileInfoMapper.listFileIdsInCurrentDir(fileId));
+            if (totalSize > fileIdsSize) {
+                childIds.add(fileId);
+            }
+            queue.addAll(fileInfoMapper.getChildIds(fileId));
         }
 
-        return allFileIds;
+        return childIds;
     }
 
     /**

@@ -42,6 +42,9 @@ public class FileInfo {
     @ApiModelProperty(value = "文件是否被删除")
     private Boolean isDeleted;
 
+    @ApiModelProperty(value = "在回收站中的父文件夹ID")
+    private Long parentIdInTrash;
+
     @ApiModelProperty(value = "删除时间")
     private Date deleteTime;
 }

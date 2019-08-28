@@ -18,7 +18,7 @@ public interface FileInfoMapper {
 
     Integer countFiles(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
 
-    List<Long> listFileIdsInCurrentDir(@Param("parentId") Long parentId);
+    List<Long> getChildIds(@Param("parentId") Long parentId);
 
     List<FileInfo> listFilesInTrash(@Param("fileInfoSearchVo") FileInfoSearchVo fileInfoSearchVo);
 
@@ -30,7 +30,11 @@ public interface FileInfoMapper {
 
     Integer putFilesToTrash(@Param("fileIds") List<Long> fileIds);
 
-    Integer restoreFilesFromTrash(@Param("fileIds") List<Long> fileIds);
+    Integer putChildrenToTrash(@Param("childIds") List<Long> childIds);
+
+    Integer restoreFileFromTrash(@Param("fileId") Long fileId);
+
+    Integer restoreChildrenFromTrash(@Param("childIds") List<Long> childIds);
 
     Integer deleteFilesFromTrash(@Param("fileIds") List<Long> fileIds);
 }

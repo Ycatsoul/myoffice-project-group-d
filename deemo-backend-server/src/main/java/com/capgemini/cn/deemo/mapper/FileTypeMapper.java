@@ -14,6 +14,8 @@ public interface FileTypeMapper {
 
     FileType getFileTypeByFileTypeId(@Param("fileTypeId") Long fileTypeId);
 
+    List<String> getAllFileTypeSuffixes();
+
     List<FileType> getAllFileType();
 
     Integer insertFileType(@Param("fileType") FileType fileType);

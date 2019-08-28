@@ -30,27 +30,27 @@ public class FileInfoTypeMapperTest {
         String[] fileTypeNames = new String[]{
                 "Excel文档", "Excel文档", "其它", "图片", "PDF文档", "图片",
                 "PPT文档", "纯文本文档", "Word文档", "Word文档",
-                "压缩包", "压缩包", "压缩包", "压缩包"
+                "压缩包", "压缩包", "压缩包", "文件夹"
         };
         String[] fileTypeImages = new String[]{
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/excel.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/excel.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/file.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/jpg.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/pdf.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/png.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/ppt.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/txt.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/word.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/word.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png",
-                "/Users/hasaker/Desktop/Deemo/fileTypeIcon/zip.png"
+                "classpath:/file_type_icons/excel.png",
+                "classpath:/file_type_icons/excel.png",
+                "classpath:/file_type_icons/file.png",
+                "classpath:/file_type_icons/jpg.png",
+                "classpath:/file_type_icons/pdf.png",
+                "classpath:/file_type_icons/png.png",
+                "classpath:/file_type_icons/ppt.png",
+                "classpath:/file_type_icons/txt.png",
+                "classpath:/file_type_icons/word.png",
+                "classpath:/file_type_icons/word.png",
+                "classpath:/file_type_icons/zip.png",
+                "classpath:/file_type_icons/zip.png",
+                "classpath:/file_type_icons/zip.png",
+                "classpath:/file_type_icons/folder.png"
         };
         String[] fileTypeSuffixes = new String[]{
                 "xls", "xlsx", "*", "jpg", "pdf", "png", "ppt", "txt",
-                "doc", "docx", "zip", "rar", "7z", "tar.gz"
+                "doc", "docx", "zip", "rar", "7z", ""
         };
 
         for (int i = 0; i < fileTypeNames.length; i++) {

@@ -140,11 +140,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @throws
      */
     public static String  currentMonthFirstDay() {
-        Calendar   cal_1=Calendar.getInstance();//获取当前日期
-        cal_1.add(Calendar.MONTH, 0);
-        cal_1.set(Calendar.DAY_OF_MONTH,1);
+        //获取当前日期
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH,1);
 
-        return parseDateToStr(YYYY_MM_DD, cal_1.getTime());
+        return parseDateToStr(YYYY_MM_DD, calendar.getTime());
 
     }
 

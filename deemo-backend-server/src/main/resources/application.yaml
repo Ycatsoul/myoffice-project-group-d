@@ -37,6 +37,7 @@ logging:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
+  address: 0.0.0.0
   port: 8080
   servlet:
     context-path: /
@@ -78,7 +79,7 @@ spring:
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/deemo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/deemo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
     username: root
     password: root
 

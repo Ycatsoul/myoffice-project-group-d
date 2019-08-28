@@ -10,10 +10,14 @@
   </select>
   
   <!-- 根据FileTypeId获取FileType详尽信息 -->
-  <select id="getFileTypeByFileTypeId"
-          parameterType="Long"
+  <select id="getFileTypeByFileTypeId" parameterType="Long"
           resultType="com.capgemini.cn.deemo.data.domain.FileType">
     SELECT * FROM FileType WHERE fileTypeId = #{fileTypeId}
+  </select>
+  
+  <!-- 获取所有文件类型后缀 -->
+  <select id="getAllFileTypeSuffixes" resultType="String">
+    SELECT fileTypeSuffix FROM FileType;
   </select>
 
   <!-- 获取FileType -->
