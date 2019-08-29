@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.cn.deemo.mapper.MessageMapper">
+    <!-- 发送消息 -->
+    <insert id="sendMsg" useGeneratedKeys="true" parameterType="com.capgemini.cn.deemo.data.domain.Message" keyProperty="id">
+        INSERT INTO Message(messageId, messageTitle, messageTypeId, messageContent, beginTime, endTime, sendUserId, isPublished, publishTime)
+        VALUES(#{messageId}, #{messageTitle}, #{messageTypeId}, #{messageContent}, #{beginTime}, #{endTime}, #{sendUserId}, #{isPublished}, #{publishTime})
+    </insert>
+
+    <insert id="addMsgToAllUser">
+        INSERT INTO MessageTrans(messageId,recipientId) VALUES
+        <foreach collection="users" item="user" separator=",">
+            (#{messageid},#{user.id})
+        </foreach>
+    </insert>
+    <!-- 查询消息 -->
+    <select id="getMsg" resultMap="BaseResultMap">
+        select mt.*,msg.`id`,msg.`messageId`,msg.`messageTitle`,msg.`messageTypeId`,msg.`messageContent`,msg.`messageContent`,msg.`beginTime`,msg.`endTime`,msg.`sendUserId`,msg.`isPublished`,msg.`publishTime` as mcid from MessageTrans mt,Message msg where mt.`messageId`=msg.`messageId` and mt.`recipientId`=#{recipientId} order by msg.`beginTime` desc limit #{start},#{size}
+    </select>
+    <resultMap id="BaseResultMap" type="com.capgemini.cn.deemo.data.domain.MessageTrans">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="messageTransId" property="messageTransId" jdbcType="INTEGER" />
+        <result column="messageId" property="messageId" jdbcType="INTEGER" />
+        <result column="recipientId" property="recipientId" jdbcType="INTEGER" />
+        <result column="isRead" property="isRead" jdbcType="INTEGER" />
+        <association property="msgContent" javaType="com.capgemini.cn.deemo.data.domain.Message">
+            <id column="mcid" property="id" jdbcType="BIGINT" />
+            <result column="title" property="title" jdbcType="VARCHAR" />
+            <result column="message" property="message" jdbcType="VARCHAR" />
+            <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
+    <!-- 更新消息 -->
+    <update id="updateMsg" parameterType="com.capgemini.cn.deemo.data.domain.Message">
+        UPDATE Message set messageTitle=#{message.messageTitle}, messageTypeId=#{message.messageTypeId}, messageContent=#{message.messageContent}, beginTime=#{message.beginTime}, endTime=#{message.endTime}
+        WHERE messageId=#{messageId}
+    </update>
+</mapper>
