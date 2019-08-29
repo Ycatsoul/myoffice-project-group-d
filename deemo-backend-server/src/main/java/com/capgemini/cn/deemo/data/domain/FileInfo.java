@@ -13,7 +13,6 @@ import java.sql.Date;
 @Data
 @ApiModel
 public class FileInfo {
-    private Integer id;
 
     @ApiModelProperty(value = "文件ID")
     private Long fileId;

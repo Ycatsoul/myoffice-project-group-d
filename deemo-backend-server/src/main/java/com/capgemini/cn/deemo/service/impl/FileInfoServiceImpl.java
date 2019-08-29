@@ -30,9 +30,6 @@ public class FileInfoServiceImpl implements FileInfoService {
     private FileInfoMapper fileInfoMapper;
     private FileTypeMapper fileTypeMapper;
 
-    private static final Long FILE_MANAGER_ROOT_ID = 273734225100800L;
-    private static final Long TRASH_ROOT_ID = 273734225100889L;
-
     public FileInfoServiceImpl(FileInfoMapper fileInfoMapper, FileTypeMapper fileTypeMapper) {
         this.fileInfoMapper = fileInfoMapper;
         this.fileTypeMapper = fileTypeMapper;
