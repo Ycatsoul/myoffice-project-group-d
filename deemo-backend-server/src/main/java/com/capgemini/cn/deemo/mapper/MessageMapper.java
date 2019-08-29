@@ -14,17 +14,17 @@ import java.util.List;
 
 public interface MessageMapper {
 
-    int sendMsg(Message message);
+    Integer sendMsg(Message message);
 
-    int addMsgToAllUser(@Param("users") List<User> users, @Param("messageId") Long messageId);
+    Integer addMsgToAllUser(@Param("users") List<User> users, @Param("messageId") Long messageId);
 
-    List<MessageTrans> getMsg(@Param("recipientId") Long recipientId);
+    List<MessageTrans> getMsg(@Param("start") int start, @Param("size") Integer size,@Param("recipientId") Long recipientId);
 
-    int markPublished(@Param("messageId") Long messageId);
+    Integer markPublished(@Param("messageId") Long isPublished);
 
-    int markRead(@Param("isRead") Long isRead, @Param("recipientId") Long recipientId);
+    Integer markRead(@Param("isRead") Long isRead, @Param("recipientId") Long recipientId);
 
-    int updateMsg(@Param("messageId") Long messageId);
+    Integer updateMsg(@Param("messageId") Long messageId);
 
-    int deleteMsg(@Param("messageId") Long messageId);
+    Integer deleteMsg(@Param("messageId") Long messageId);
 }
