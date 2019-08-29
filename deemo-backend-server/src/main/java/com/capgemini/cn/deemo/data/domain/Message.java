@@ -12,13 +12,20 @@ import java.util.Date;
 
 @Data
 public class Message {
-    private Long id;
-    private Long messageId;  //消息ID
-    private String messageTitle;  //消息标题
-    private String messageContent;  //消息内容
-    private Date beginTime;  //开始时间
-    private Date endTime;  //结束时间
-    private String sendUserId;  //发送人
-    private Long isPublished;  //发布状态
-    private Date pulishTime;  //发布时间
+    //消息ID
+    private Long messageId;
+    //消息标题
+    private String messageTitle;
+    //消息内容
+    private String messageContent;
+    //开始时间
+    private Date beginTime;
+    //结束时间
+    private Date endTime;
+    //发送人
+    private String sendUserId;
+    //发布状态
+    private Long isPublished;
+    //发布时间
+    private Date publishTime;
 }

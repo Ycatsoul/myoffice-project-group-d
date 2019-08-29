@@ -10,9 +10,9 @@ import lombok.Data;
 
 @Data
 public class MessageTrans {
-    private Long id;
     private Long messageTransId;
-    private Long recipientId; //接收人
-    private Long isRead;  //阅读状态
-    private Message message;
+    // 接收人
+    private Long recipientId;
+    // 阅读状态
+    private Long isRead;
 }
