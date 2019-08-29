@@ -2,6 +2,8 @@
 # CORE PROPERTIES
 # ----------------------------------------
 spring:
+  application:
+    name: Deemo
   banner:
     charset: UTF-8
   aop:
@@ -13,6 +15,10 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  servlet:
+    multipart:
+      maxFileSize: "1000MB"
+      maxRequestSize: "10000MB"
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   profiles:
@@ -31,6 +37,7 @@ logging:
 # WEB PROPERTIES
 # ----------------------------------------
 server:
+  address: 0.0.0.0
   port: 8080
   servlet:
     context-path: /
@@ -72,7 +79,7 @@ spring:
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/deemo?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/deemo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
     username: root
     password: root
 

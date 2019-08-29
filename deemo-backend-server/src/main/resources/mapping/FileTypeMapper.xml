@@ -3,6 +3,22 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.capgemini.cn.deemo.mapper.FileTypeMapper">
+  
+  <!-- 根据FileTypeSuffix获取FileTypeId -->
+  <select id="getFileTypeIdByFileTypeSuffix" parameterType="String" resultType="Long">
+    SELECT fileTypeId FROM FileType WHERE fileTypeSuffix = #{fileTypeSuffix}
+  </select>
+  
+  <!-- 根据FileTypeId获取FileType详尽信息 -->
+  <select id="getFileTypeByFileTypeId" parameterType="Long"
+          resultType="com.capgemini.cn.deemo.data.domain.FileType">
+    SELECT * FROM FileType WHERE fileTypeId = #{fileTypeId}
+  </select>
+  
+  <!-- 获取所有文件类型后缀 -->
+  <select id="getAllFileTypeSuffixes" resultType="String">
+    SELECT fileTypeSuffix FROM FileType;
+  </select>
 
   <!-- 获取FileType -->
   <select id="getAllFileType" resultType="com.capgemini.cn.deemo.data.domain.FileType">

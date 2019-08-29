@@ -18,39 +18,39 @@ public class RespBean {
     private Integer status;
 
     @ApiModelProperty(value = "消息")
-    private String msg;
+    private String message;
 
     @ApiModelProperty(value = "数据")
-    private Object obj;
+    private Object data;
 
-    private RespBean(Integer status, Object obj) {
+    private RespBean(Integer status, Object data) {
         this.status = status;
-        this.obj = obj;
+        this.data = data;
     }
 
-    private RespBean(Integer status, String msg, Object obj) {
+    private RespBean(Integer status, String message, Object data) {
         this.status = status;
-        this.msg = msg;
-        this.obj = obj;
+        this.message = message;
+        this.data = data;
     }
 
-    public static RespBean ok(Object obj) {
-        return new RespBean(200, obj);
+    public static RespBean ok(Object data) {
+        return new RespBean(200, data);
     }
 
-    public static RespBean ok(String msg) {
-        return new RespBean(200, msg, null);
+    public static RespBean ok(String message) {
+        return new RespBean(200, message, null);
     }
 
-    public static RespBean ok(String msg, Object obj) {
-        return new RespBean(200, msg, obj);
+    public static RespBean ok(String message, Object data) {
+        return new RespBean(200, message, data);
     }
 
-    public static RespBean error(String msg) {
-        return new RespBean(500, msg, null);
+    public static RespBean error(String message) {
+        return new RespBean(500, message, null);
     }
 
-    public static RespBean error(String msg, Object obj) {
-        return new RespBean(500, msg, obj);
+    public static RespBean error(String message, Object data) {
+        return new RespBean(500, message , data);
     }
 }

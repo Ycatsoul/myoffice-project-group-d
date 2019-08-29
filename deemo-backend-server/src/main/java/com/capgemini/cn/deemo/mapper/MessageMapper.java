@@ -18,7 +18,9 @@ public interface MessageMapper {
 
     int addMsgToAllUser(@Param("users") List<User> users, @Param("messageId") Long messageId);
 
-    List<MessageTrans> getMsg(@Param("start") int start, @Param("size") Integer size, @Param("recipientId") Long recipientId);
+    List<MessageTrans> getMsg(@Param("recipientId") Long recipientId);
+
+    int markPublished(@Param("messageId") Long messageId);
 
     int markRead(@Param("isRead") Long isRead, @Param("recipientId") Long recipientId);
 
