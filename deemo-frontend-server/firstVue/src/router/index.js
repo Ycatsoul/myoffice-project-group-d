@@ -23,7 +23,7 @@ import checkInquiry from '@/components/check/checkInquiry'
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',//history模式 前面没有#号  没有这个叫哈希模式
+  // mode:'history',//history模式 前面没有#号  反之叫哈希模式
   routes: [
     {
       path: '/login',
