@@ -1,20 +1,18 @@
-package com.capgemini.cn.deemo.data.domain;
-
+package com.capgemini.cn.deemo.vo.request;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
- * @Description:员工信息实体类
- * @Classname :User
+ * @Description:
+ * @Classname :
  * @author: GuoBingjun
- * @date:2019-8-21 15:27
+ * @date:
  */
 @Data
-public class User implements Serializable {
-//    //员工编号
-//    private Integer id;
+public class UserSearchVo {
+
+    //员工编号
+    private Integer id;
     //用户id
     private Long userId;
     //用户姓名
@@ -25,10 +23,14 @@ public class User implements Serializable {
     private String gender;
     //部门编号
     private Long departmentId;
-    //用户角色
+    //姓名
     private String name;
     //用户头像
     private String avatar;
     //是否被屏蔽
     private String isBlocked;
+
+    private int page;
+    //一页几条数据
+    private int limit;
 }

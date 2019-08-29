@@ -9,8 +9,9 @@ import lombok.Data;
 
 @Data
 public class MessageType {
-    private Long id;
     private Long messageTypeId;
-    private String messagetTypeName;  //消息类型名称
-    private String messageTypeDesc;  //消息类型描述
+    //消息类型名称
+    private String messageTypeName;
+    //消息类型描述
+    private String messageTypeDesc;
 }
