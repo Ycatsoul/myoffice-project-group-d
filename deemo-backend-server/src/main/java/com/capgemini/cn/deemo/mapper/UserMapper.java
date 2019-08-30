@@ -1,6 +1,8 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.data.dto.UserDto;
+import com.capgemini.cn.deemo.vo.request.UserSearchVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,6 +19,9 @@ import java.util.List;
 
 public interface UserMapper extends BaseMapper<User>{
 
+    List<User> listUser(@Param("userSearch") UserSearchVo userSearchVo);
+    Long countUser(@Param("userSearch") UserSearchVo userSearchVo);
+    List<UserDto> queryAll();
 
 //    //根据id查询员工
 //    User queryById(@Param("id") int id);

@@ -7,28 +7,42 @@
         select * from user where `isBlocked` = 0 and id = #{id}
     </select>
 
+    <select id="listUser" resultType="com.capgemini.cn.deemo.data.domain.User">
+        select * from user
+    </select>
+
     <select id="queryList" resultType="com.capgemini.cn.deemo.data.domain.User">
         select * from user where `isBlocked` = 0
+    </select>
+
+    <select id="queryAll" resultType="com.capgemini.cn.deemo.data.dto.UserDto">
+        select username,departmentId from user
+    </select>
+
+    <select id="countUser" resultType="Long">
+        select count(*) from user
     </select>
 
     <insert id="save" parameterType="com.capgemini.cn.deemo.data.domain.User">
         insert into user
         (
             `userId`,
-            `userName`,
+            `username`,
             `gender`,
             `departmentId`,
-            `roleId`,
-            `password`
+            `password`,
+            `name`,
+            `avatar`
         )
         values
         (
             #{userId},
-            #{userName} ,
+            #{username},
             #{gender},
             #{departmentId},
-            #{roleId},
-            #{password}
+            #{password},
+            #{name},
+            #{avatar}
         )
     </insert>
 
@@ -36,10 +50,12 @@
         update user
         <set>
             <if test="userId != null">`userId` = #{userId}, </if>
-            <if test="userName != null">`userName` = #{userName} , </if>
+            <if test="username != null">`username` = #{username} , </if>
             <if test="gender != null">`gender` = #{gender}, </if>
+            <if test="password != null">`password` = #{password} </if>
             <if test="departmentId != null">`departmentId` = #{departmentId}, </if>
-            <if test="roleId != null">`roleId` = #{roleId}, </if>
+            <if test="name != null">`name` = #{name}, </if>
+            <if test="avatar != null">`avatar` = #{avatar} </if>
         </set>
         where id = #{id}
     </update>

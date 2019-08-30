@@ -2,20 +2,31 @@ package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
 import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.data.dto.BranchDto;
+import com.capgemini.cn.deemo.data.dto.DepartmentDto;
+import com.capgemini.cn.deemo.data.dto.UserDto;
+import com.capgemini.cn.deemo.mapper.BaseMapper;
+import com.capgemini.cn.deemo.service.BranchService;
+import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.utils.CovertBeanToMapUtils;
+import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.utils.PageUtils;
 import com.capgemini.cn.deemo.utils.Query;
 import com.capgemini.cn.deemo.vo.base.RespBean;
+import com.capgemini.cn.deemo.vo.request.UserSearchVo;
 import com.capgemini.cn.deemo.vo.request.UserVo;
+import com.capgemini.cn.deemo.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +35,7 @@ import java.util.Map;
  * @create_date 2019-08-19 22:32
  * @description
  */
+@Slf4j
 @Api
 @RestController
 @RequestMapping("/user/employee")
@@ -32,23 +44,83 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation("普通搜索以及高级搜索")
-    @PostMapping("/list")
-    public RespBean list(@RequestBody UserVo userVo){
+    @Autowired
+    private DepartmentService departmentService;
 
-        //将bean转化成map,然后用map去查询
-        Map<String,Object> params = CovertBeanToMapUtils.convertBeanToMap(userVo);
+    @Autowired
+    private BranchService branchService;
 
-        //查询列表数据
-        Query query = new Query(params);
+    @ApiOperation("显示页面字段信息")
+    @ResponseBody
+    @PostMapping("list")
+    public RespBean list(@RequestBody UserSearchVo userSearchVo){
 
-        List<User> userList = userService.queryList(query);
-        int total = userService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(userList, total, query.getLimit(), query.getPage());
-
-        return RespBean.ok(pageUtil);
+        UserResponseVo userResponseVo = userService.listUser(userSearchVo);
+        if (userResponseVo != null) {
+            return RespBean.ok("查询成功",userResponseVo);
+        }
+        return RespBean.error("查询失败！");
     }
+
+    //查询人员菜单栏
+    @ApiOperation("查询人员菜单")
+    @ResponseBody
+    @PostMapping("/peopleTree")
+    public RespBean peopleTree(){
+
+        //1.查询所有的员工user
+        List<UserDto> userDtos = userService.queryAll();
+
+        //2.查询所有部门
+        List<DepartmentDto> departmentDtos = departmentService.queryAll();
+
+        //3.查询所有机构
+        List<BranchDto> branchDtos = branchService.queryAllBranch();
+
+        //4.讲员工放到部门中
+        for (DepartmentDto departmentDto: departmentDtos){
+            List<UserDto> list = new ArrayList<>();
+            for (UserDto userDto:userDtos)
+            {
+                if (userDto.getDepartmentId() == departmentDto.getUserId())
+                {
+                    list.add(userDto);
+                }
+            }
+            departmentDto.setUserDtoList(list);
+        }
+        //5.讲部门放到机构中
+        for (BranchDto branchDto : branchDtos){
+            List<DepartmentDto> list1 = new ArrayList<>();
+            for (DepartmentDto departmentDto : departmentDtos)
+            {
+                if (departmentDto.getBranchId() == departmentDto.getBranchId())
+                {
+                    list1.add(departmentDto);
+                }
+            }
+            branchDto.setDepartmentDtoList(list1);
+        }
+        return RespBean.ok("success",branchDtos);
+    }
+
+//    @ApiOperation("普通搜索以及高级搜索")
+//    @PostMapping("/list")
+//    public RespBean list(@RequestBody UserVo userVo){
+//
+//        //将bean转化成map,然后用map去查询
+//        Map<String,Object> params = CovertBeanToMapUtils.convertBeanToMap(userVo);
+//
+//        //查询列表数据
+//        Query query = new Query(params);
+//
+//        List<User> userList = userService.queryList(query);
+//        int total = userService.queryTotal(query);
+//
+//        PageUtils pageUtil = new PageUtils(userList, total, query.getLimit(), query.getPage());
+//
+//        return RespBean.ok(pageUtil);
+//    }
 
     /**
      * 信息
@@ -63,7 +135,7 @@ public class UserController extends BaseController {
 
         User user = userService.queryObject(id);
 
-        return RespBean.ok(user);
+        return RespBean.ok("查询成功",user);
     }
 
     /**
@@ -73,16 +145,16 @@ public class UserController extends BaseController {
     @PostMapping("/save")
     public RespBean save(@RequestBody User user, HttpServletRequest request){
 
-        //设置员工姓名
-        this.userService.queryObject(Integer.parseInt(user.getId().toString()));
-        user.setUserName(user.getUserName());
+//        //设置员工姓名
+//        this.userService.queryObject(Integer.parseInt(user.getId().toString()));
+//        user.setUsername(user.getUsername());
 
-
+        user.setUserId(IdWorker.get().nextId());
         boolean result = userService.save(user);
 
         //判断是否成功
         if(result){
-            return RespBean.ok("添加成功");
+            return RespBean.ok("添加成功",user);
         }
         else {
             return RespBean.error("添加失败");
@@ -100,7 +172,7 @@ public class UserController extends BaseController {
 
         //判断是否成功
         if(result){
-            return RespBean.ok("修改成功");
+            return RespBean.ok("修改成功",user);
         }
         else {
             return RespBean.error("修改失败");
@@ -158,13 +230,16 @@ public class UserController extends BaseController {
             return RespBean.error("删除失败");
         }
 
-        User user = new User();
-
-        //要删除的empId
-        user.setId(id);
         //假删除
-        userService.delete(id);
+        boolean result = userService.delete(id);
 
-        return RespBean.ok("删除成功");
+        //判断是否成功
+        if(result){
+            return RespBean.ok("删除成功");
+        }
+        else {
+            return RespBean.error("删除失败");
+        }
+
     }
 }

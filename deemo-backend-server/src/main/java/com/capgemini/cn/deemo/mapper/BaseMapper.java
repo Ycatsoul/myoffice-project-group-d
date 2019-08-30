@@ -1,6 +1,6 @@
 package com.capgemini.cn.deemo.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.capgemini.cn.deemo.data.domain.Branch;
 
 import java.util.List;
 import java.util.Map;

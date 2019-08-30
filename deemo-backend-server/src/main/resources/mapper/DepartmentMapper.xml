@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.cn.deemo.mapper.DepartmentMapper">
+    <select id="queryObject" resultType="com.capgemini.cn.deemo.data.domain.Department">
+        select * from department where id = #{id}
+    </select>
+
+    <select id="listDepart" resultType="com.capgemini.cn.deemo.data.domain.Department">
+        select * from department
+    </select>
+
+    <select id="queryAll" resultType="com.capgemini.cn.deemo.data.dto.DepartmentDto">
+        select departmentName,branchId,departmentId from department
+    </select>
+
+    <!--<select id="queryList" resultType="com.capgemini.cn.deemo.data.domain.Department">-->
+        <!--select * from department-->
+    <!--</select>-->
+
+    <select id="countDepart" resultType="Long">
+        select count(*) from department
+    </select>
+
+    <insert id="save" parameterType="com.capgemini.cn.deemo.data.domain.Department">
+        insert into department
+        (
+            `departmentId`,
+            `departmentName`,
+            `connectPhone`,
+            `connectTelephone`,
+            `principalUserId`,
+            `branchId`
+        )
+        values
+        (
+            #{departmentId},
+            #{departmentName},
+            #{connectPhone},
+            #{connectTelephone},
+            #{principalUserId},
+            #{branchId}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.capgemini.cn.deemo.data.domain.Department">
+        update department
+        <set>
+            <if test="departmentId != null">`departmentId` = #{departmentId}  , </if>
+            <if test="departmentName != null">`departmentName` = #{departmentName}  , </if>
+            <if test="connectPhone != null">`connectPhone` = #{connectPhone} , </if>
+            <if test="connectTelephone != null">`connectTelephone` = #{connectTelephone}  </if>
+            <if test="principalUserId != null">`principalUserId` = #{principalUserId} , </if>
+            <if test="branchId != null">`branchId` = #{branchId} , </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="com.capgemini.cn.deemo.data.domain.Department">
+        delete from department where id = #{id}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="com.capgemini.cn.deemo.data.domain.Department">
+        delete from department WHERE id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=Integer}
+        </foreach>
+    </delete>
+
+</mapper>
