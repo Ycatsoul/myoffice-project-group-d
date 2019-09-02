@@ -1,11 +1,11 @@
 package com.capgemini.cn.deemo;
 
+
 import com.capgemini.cn.core.commons.BaseController;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -13,7 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @create_date 2019-08-19 16:22
  * @description
  */
+
 @SpringBootApplication
+
 @MapperScan("com.capgemini.cn.deemo.mapper")
 public class DeemoApplication extends BaseController {
     public static void main(String[] args) {

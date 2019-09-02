@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 public class UserSearchVo {
 
-    //员工编号
-    private Integer id;
+//    //员工编号
+//    private Integer id;
     //用户id
     private Long userId;
     //用户姓名

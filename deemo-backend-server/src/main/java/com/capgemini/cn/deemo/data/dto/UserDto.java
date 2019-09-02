@@ -11,14 +11,18 @@ import lombok.Data;
 @Data
 public class UserDto {
 
+
     /*
     * 用户id
     */
-    private Long userId;
+    //private Long userId;
+
+
     /*
     * 用户名
     * */
     private String username;
+
     /*
     * 部门id
     * */

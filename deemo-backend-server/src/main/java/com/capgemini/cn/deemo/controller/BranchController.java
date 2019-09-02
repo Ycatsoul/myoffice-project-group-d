@@ -3,13 +3,9 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.core.commons.BaseController;
 import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.service.BranchService;
-import com.capgemini.cn.deemo.utils.CovertBeanToMapUtils;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.PageUtils;
-import com.capgemini.cn.deemo.utils.Query;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.request.BranchVo;
 import com.capgemini.cn.deemo.vo.response.BranchResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Description:
@@ -47,7 +41,7 @@ public class BranchController extends BaseController {
     }
 
     @ApiOperation("根据id查询机构信息")
-    @PostMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public RespBean info(@PathVariable("id") Integer id){
 
         if(StringUtils.isBlank(id.toString())){
@@ -60,7 +54,7 @@ public class BranchController extends BaseController {
     }
 
     @ApiOperation("添加机构信息")
-    @PostMapping("/save")
+    @PutMapping("/save")
     public RespBean save(@RequestBody Branch branch, HttpServletRequest request){
 
 //        //设置部门名称
@@ -105,7 +99,7 @@ public class BranchController extends BaseController {
      * 删除
      */
     @ApiOperation("删除机构信息")
-    @PostMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public RespBean delete (@PathVariable Integer id, HttpServletRequest request){
 
         if (StringUtils.isBlank(id.toString())) {

@@ -1,7 +1,114 @@
 spring:
+
+  application:
+    name: Deemo
+  banner:
+    charset: UTF-8
+  aop:
+    auto: true
+    proxy-target-class: false
+  mandatory-file-encoding: utf-8
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  servlet:
+    multipart:
+      maxFileSize: "1000MB"
+      maxRequestSize: "10000MB"
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
   profiles:
     active: dev
 
 mybatis:
+
   typeAliasesPackage: com.capgemin.cn.deemo.data.domain
   mapperLocations: classpath:mapper/*.xml
+
+  mapper-locations: classpath:/mapping/*.xml
+  type-aliases-package: com.capgemini.cn.deemo.data.domain
+  config-location: classpath:/mybatis-config.xml
+
+logging:
+  level.root: info
+  level.com.capgemini.cn: debug
+
+# ----------------------------------------
+# WEB PROPERTIES
+# ----------------------------------------
+server:
+  address: 0.0.0.0
+  port: 8080
+  servlet:
+    context-path: /
+    application-display-name: ${spring.application.name}
+  error:
+    include-stacktrace: always
+    whitelabel:
+      enabled: true
+  undertow:
+    accesslog:
+      enabled: false
+
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# ----------------------------------------
+# CAPGEMINI CHINA PROPERTIES
+# ----------------------------------------
+cgc:
+  api-docs:
+    enabled: true
+    pathMapping: ${server.servlet.context-path}
+    title: CapGemini Spring Boot Demo API Docs
+    description:
+    contactName: Andriy Huang
+    contactUrl: https://www.capgemini.com/cn-zh/
+    contactEmail: yaxiang.huang@capgemini.com
+    version: 1.0.0-SNAPSHOT
+
+---
+spring:
+  profiles: dev
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/deemo-mysql?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: 123456
+
+cgc:
+  api-docs:
+    enabled: true
+    pathMapping: ${server.servlet.context-path}
+    title: CapGemini Deemo Project API Docs - Dev
+    description: Dev
+    contactName: Tiantang Yu
+    contactUrl: https://www.capgemini.com/cn-zh/
+    contactEmail: 1758267482@qq.com
+    version: 1.0.0-SNAPSHOT
+
+---
+spring:
+  profiles: test
+
+cgc:
+  api-docs:
+    enabled: true
+    pathMapping: ${server.servlet.context-path}
+    title: CapGemini Spring Boot Demo API Docs - Test
+    description: Test
+    contactName: Andriy Huang
+    contactUrl: https://www.capgemini.com/cn-zh/
+    contactEmail: yaxiang.huang@capgemini.com
+    version: 1.0.0-SNAPSHOT
+

@@ -23,16 +23,21 @@ DROP TABLE IF EXISTS `Accessory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Accessory` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accessoryId` bigint(20) unsigned NOT NULL,
   `fileId` bigint(20) unsigned NOT NULL,
+<<<<<<< HEAD
   `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `accessoryType` bigint(20) unsigned NOT NULL,
   `accessorySize` int(10) unsigned NOT NULL,
+=======
+  `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `accessoryTypeId` bigint(20) unsigned NOT NULL,
+  `accessorySize` int(10) unsigned NOT NULL DEFAULT '0',
+>>>>>>> develop
   `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `accessoryId` (`accessoryId`)
+  PRIMARY KEY (`accessoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,12 +58,10 @@ DROP TABLE IF EXISTS `Branch`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Branch` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `branchId` bigint(20) unsigned NOT NULL,
-  `branchName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `BranchShortName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `branchId` (`branchId`)
+  `branchName` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `BranchShortName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`branchId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,15 +82,13 @@ DROP TABLE IF EXISTS `Department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Department` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `departmentId` bigint(20) unsigned NOT NULL,
-  `departmentName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `connectPhone` char(11) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
-  `connectTelephone` char(11) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `departmentName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `connectPhone` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `connectTelephone` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `principalUserId` bigint(20) unsigned NOT NULL,
   `branchId` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `departmentId` (`departmentId`)
+  PRIMARY KEY (`departmentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,34 +102,43 @@ LOCK TABLES `Department` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `File`
+-- Table structure for table `file`
 --
 
-DROP TABLE IF EXISTS `File`;
+DROP TABLE IF EXISTS `file`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `File` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `file` (
   `fileId` bigint(20) unsigned NOT NULL,
+<<<<<<< HEAD
   `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fileType` bigint(20) unsigned NOT NULL,
   `fileOwner` bigint(20) unsigned NOT NULL,
+=======
+  `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `fileTypeId` bigint(20) unsigned NOT NULL,
+  `fileOwnerId` bigint(20) unsigned NOT NULL,
+>>>>>>> develop
   `parentId` bigint(20) unsigned NOT NULL,
+  `uploadTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `fileId` (`fileId`)
+  `parentIdInTrash` bigint(20) unsigned NOT NULL,
+  `deleteTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fileId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `File`
+-- Dumping data for table `file`
 --
 
-LOCK TABLES `File` WRITE;
-/*!40000 ALTER TABLE `File` DISABLE KEYS */;
-/*!40000 ALTER TABLE `File` ENABLE KEYS */;
+LOCK TABLES `file` WRITE;
+/*!40000 ALTER TABLE `file` DISABLE KEYS */;
+INSERT INTO `file` VALUES (273734225100800,'文件管理','',2458562643099648,0,0,'2019-08-23 15:05:31','文件管理根目录',0,0,'2019-08-29 14:23:19'),(273734225100889,'回收站','',2458562643099648,0,0,'2019-08-27 10:04:36','回收站根目录',0,0,'2019-08-29 14:23:19'),(2543243162025984,'文件夹','/Users/hasaker/Desktop/Deemo/Files/文件夹',2458562643099648,0,273734225100800,'2019-08-28 17:15:42','这是一个文件夹',0,2543243162025984,'2019-08-29 14:23:19'),(2543472582066176,'文件夹2','/Users/hasaker/Desktop/Deemo/Files/文件夹2',2458562643099648,0,273734225100800,'2019-08-28 17:16:37','这是一个文件夹2',0,273734225100800,'2019-08-29 14:23:19'),(2543951856795648,'文件2.jpg','/Users/hasaker/Desktop/Deemo/Files/文件2.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:31','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543967245697024,'文件1.jpg','/Users/hasaker/Desktop/Deemo/Files/文件1.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:35','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543998661033984,'文件3.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件3.xlsx',2458562408218624,0,273734225100800,'2019-08-28 17:18:42','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2544093049651200,'文件4.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件4.xlsx',2458562408218624,0,2543243162025984,'2019-08-28 17:19:05','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544125391929344,'文件5.ppt','/Users/hasaker/Desktop/Deemo/Files/文件5.ppt',2458562521464832,0,2543243162025984,'2019-08-28 17:19:13','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544166298976256,'文件6.pdf','/Users/hasaker/Desktop/Deemo/Files/文件6.pdf',2458562479521792,0,2543243162025984,'2019-08-28 17:19:22','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544764712910848,'文件7.pdf','/Users/hasaker/Desktop/Deemo/Files/文件7.pdf',2458562479521792,0,2543472582066176,'2019-08-28 17:21:45','这是一个文件2',0,2543472582066176,'2019-08-29 14:23:19');
+/*!40000 ALTER TABLE `file` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -139,13 +149,11 @@ DROP TABLE IF EXISTS `FileType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `FileType` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fileTypeId` bigint(20) unsigned NOT NULL,
-  `fileTypeName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `fileTypeImage` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `fileTypeSuffix` varchar(8) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `fileTypeId` (`fileTypeId`)
+  `fileTypeName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `fileTypeImage` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `fileTypeSuffix` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`fileTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,6 +163,7 @@ CREATE TABLE `FileType` (
 
 LOCK TABLES `FileType` WRITE;
 /*!40000 ALTER TABLE `FileType` DISABLE KEYS */;
+INSERT INTO `FileType` VALUES (2458559249907712,'Excel文档','classpath:/file_type_icons/excel.png','xls'),(2458562408218624,'Excel文档','classpath:/file_type_icons/excel.png','xlsx'),(2458562450161664,'其它','classpath:/file_type_icons/file.png','*'),(2458562466938880,'图片','classpath:/file_type_icons/jpg.png','jpg'),(2458562479521792,'PDF文档','classpath:/file_type_icons/pdf.png','pdf'),(2458562496299008,'图片','classpath:/file_type_icons/png.png','png'),(2458562521464832,'PPT文档','classpath:/file_type_icons/ppt.png','ppt'),(2458562538242048,'纯文本文档','classpath:/file_type_icons/txt.png','txt'),(2458562555019264,'Word文档','classpath:/file_type_icons/word.png','doc'),(2458562575990784,'Word文档','classpath:/file_type_icons/word.png','docx'),(2458562584379392,'压缩包','classpath:/file_type_icons/zip.png','zip'),(2458562613739520,'压缩包','classpath:/file_type_icons/zip.png','rar'),(2458562630516736,'压缩包','classpath:/file_type_icons/zip.png','7z'),(2458562643099648,'文件夹','classpath:/file_type_icons/folder.png','');
 /*!40000 ALTER TABLE `FileType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,15 +175,13 @@ DROP TABLE IF EXISTS `LoginLog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `LoginLog` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `loginId` bigint(20) unsigned NOT NULL,
   `isSuccess` tinyint(4) NOT NULL DEFAULT '0',
   `userId` bigint(20) unsigned NOT NULL,
   `loginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `loginIp` varchar(16) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `loginIp` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `loginDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `loginId` (`loginId`)
+  PRIMARY KEY (`loginId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -195,14 +202,12 @@ DROP TABLE IF EXISTS `ManualSigin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ManualSigin` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `manualSiginId` bigint(20) unsigned NOT NULL,
   `userId` bigint(20) unsigned NOT NULL,
   `singinTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `singinDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `singinTag` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `manualSiginId` (`manualSiginId`)
+  PRIMARY KEY (`manualSiginId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -223,11 +228,9 @@ DROP TABLE IF EXISTS `MeetingType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `MeetingType` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `meetingTypeId` bigint(20) unsigned NOT NULL,
   `meetingTypeName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `meetingTypeId` (`meetingTypeId`)
+  PRIMARY KEY (`meetingTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -248,14 +251,17 @@ DROP TABLE IF EXISTS `Menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Menu` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `menuId` bigint(20) unsigned NOT NULL,
-  `menuName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `menuUrl` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `menuOrder` int(11) NOT NULL,
+  `menuUrl` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `menuPath` varchar(128) COLLATE utf8mb4_general_ci DEFAULT '',
+  `menuComponent` varchar(64) COLLATE utf8mb4_general_ci DEFAULT '',
+  `menuName` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `menuIcon` varchar(64) COLLATE utf8mb4_general_ci DEFAULT '',
+  `menuOrder` int(11) NOT NULL DEFAULT '0',
   `parentMenuId` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `menuId` (`menuId`)
+  `requireAuth` tinyint(4) DEFAULT '1',
+  `disabled` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`menuId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -276,12 +282,10 @@ DROP TABLE IF EXISTS `MenuRole`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `MenuRole` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `menuRoleId` bigint(20) unsigned NOT NULL,
   `menuId` bigint(20) unsigned NOT NULL,
   `roleId` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `menuRoleId` (`menuRoleId`)
+  PRIMARY KEY (`menuRoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -302,18 +306,21 @@ DROP TABLE IF EXISTS `Message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Message` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `messageId` bigint(20) unsigned NOT NULL,
+<<<<<<< HEAD
   `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `messageType` bigint(20) unsigned NOT NULL,
+=======
+  `messageTypeId` bigint(20) unsigned NOT NULL,
+  `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+>>>>>>> develop
   `messageContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sendUserId` bigint(20) unsigned NOT NULL,
   `isPublished` tinyint(4) NOT NULL DEFAULT '0',
   `publishTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `messageId` (`messageId`)
+  PRIMARY KEY (`messageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -334,13 +341,11 @@ DROP TABLE IF EXISTS `messageTrans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `messageTrans` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `messageTransId` bigint(20) unsigned NOT NULL,
   `messageId` bigint(20) unsigned NOT NULL,
   `recipientId` bigint(20) unsigned NOT NULL,
-  `isRead` tinyint(4) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `messageTransId` (`messageTransId`)
+  `isRead` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`messageTransId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -361,12 +366,10 @@ DROP TABLE IF EXISTS `MessageType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `MessageType` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `messageTypeId` bigint(20) unsigned NOT NULL,
   `messageTypeName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `messageTypeDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `messageTypeId` (`messageTypeId`)
+  PRIMARY KEY (`messageTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -387,14 +390,12 @@ DROP TABLE IF EXISTS `Note`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Note` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `noteId` bigint(20) unsigned NOT NULL,
-  `noteTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `noteContent` text COLLATE utf8mb4_general_ci NOT NULL,
+  `noteTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `noteContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `createUserId` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `noteId` (`noteId`)
+  PRIMARY KEY (`noteId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -415,15 +416,13 @@ DROP TABLE IF EXISTS `OperationLog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `OperationLog` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `operationId` bigint(20) unsigned NOT NULL,
   `opeartionUserId` bigint(20) unsigned NOT NULL,
   `objectId` bigint(20) unsigned NOT NULL,
   `operationName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `operationTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `opeartionDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `operationId` (`operationId`)
+  `operationTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`operationId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -444,12 +443,10 @@ DROP TABLE IF EXISTS `Precontract`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Precontract` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `precontractId` bigint(20) unsigned NOT NULL,
   `scheduleId` bigint(20) unsigned NOT NULL,
   `userId` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `precontractId` (`precontractId`)
+  PRIMARY KEY (`precontractId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -470,12 +467,10 @@ DROP TABLE IF EXISTS `Role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Role` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `roleId` bigint(20) unsigned NOT NULL,
-  `roleName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `roleDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `roleId` (`roleId`)
+  `roleName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `roleDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -485,6 +480,7 @@ CREATE TABLE `Role` (
 
 LOCK TABLES `Role` WRITE;
 /*!40000 ALTER TABLE `Role` DISABLE KEYS */;
+INSERT INTO `Role` VALUES (2867588375773184,'ROLE_ADMIN','超级管理员'),(2867590917521408,'ROLE_HR','管理员(运维/HR)'),(2867590938492928,'ROLE_USER','用户/员工');
 /*!40000 ALTER TABLE `Role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -496,19 +492,22 @@ DROP TABLE IF EXISTS `Schedule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Schedule` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `scheduleId` bigint(20) unsigned NOT NULL,
-  `scheduleTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `scheduleAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `scheduleContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `scheduleTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `scheduleAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `scheduleContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+<<<<<<< HEAD
   `meetingType` bigint(20) unsigned NOT NULL,
   `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+=======
+  `meetingTypeId` bigint(20) unsigned NOT NULL,
+>>>>>>> develop
   `createUserId` bigint(20) unsigned NOT NULL,
+  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isPrivate` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `scheduleId` (`scheduleId`)
+  PRIMARY KEY (`scheduleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -529,16 +528,15 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `User` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `userId` bigint(20) unsigned NOT NULL,
-  `userName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `passWord` varchar(16) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(16) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(16) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `gender` tinyint(4) NOT NULL DEFAULT '-1',
+  `avatar` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'http://pic.51yuansu.com/pic3/cover/02/96/71/5ad09ba522904_610.jpg',
   `departmentId` bigint(20) unsigned NOT NULL,
-  `roleId` bigint(20) unsigned NOT NULL,
   `isBlocked` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `userId` (`userId`)
+  PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -559,12 +557,10 @@ DROP TABLE IF EXISTS `UserRole`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `UserRole` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `userRoleId` bigint(20) unsigned NOT NULL,
   `userId` bigint(20) unsigned NOT NULL,
   `roleId` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `userRoleId` (`userRoleId`)
+  PRIMARY KEY (`userRoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -585,12 +581,11 @@ DROP TABLE IF EXISTS `WorkTime`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `WorkTime` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `workTimeId` bigint(20) unsigned NOT NULL,
+  `userId` bigint(20) unsigned NOT NULL,
   `onDutyTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `offDutyTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `workTimeId` (`workTimeId`)
+  PRIMARY KEY (`workTimeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -612,4 +607,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-21 11:08:57
+-- Dump completed on 2019-08-29 14:59:21

@@ -2,11 +2,8 @@ package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.data.dto.UserDto;
-import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
 import com.capgemini.cn.deemo.vo.response.UserResponseVo;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

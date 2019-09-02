@@ -3,7 +3,6 @@ package com.capgemini.cn.deemo.mapper;
 import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.data.dto.UserDto;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 

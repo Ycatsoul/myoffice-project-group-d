@@ -13,16 +13,29 @@ import java.util.List;
 @Data
 public class DepartmentDto {
 
+    /*
+    * 用户id
+    * */
     private Long userId;
-    //部门id
+
+    /*
+    * 部门id
+    * */
     private Long departmentId;
-    //部门姓名
+
+    /*
+    * 部门名称
+    * */
     private String departmentName;
 
-    //机构编号
+    /*
+    * 机构编号
+    * */
     private Integer branchId;
 
-    //用户列表
+    /*
+    * 用户列表
+    * */
     private List<UserDto> userDtoList;
 
 }

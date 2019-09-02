@@ -41,7 +41,6 @@
     <update id="update" parameterType="com.capgemini.cn.deemo.data.domain.Branch">
         update branch
         <set>
-            <if test="id != null">`id` = #{id}, </if>
             <if test="branchId != null">`branchId` = #{branchId}  , </if>
             <if test="branchName != null">`branchName` = #{branchName} , </if>
             <if test="branchShortName != null">`branchShortName` = #{branchShortName} </if>

@@ -11,15 +11,29 @@ import lombok.Data;
 @Data
 public class Branch {
 
+
     /*
     * id
     * */
     //private Integer id;
-    //机构id
+
+    //id
+    private Integer id;
+
+    /*
+    * 机构Id
+    * */
     private Long branchId;
 
+    /*
+    * 机构名称
+    * */
     private String branchName;
-    //机构简称
+
+
+    /*
+    * 机构简称
+    * */
     private String branchShortName;
 
 }

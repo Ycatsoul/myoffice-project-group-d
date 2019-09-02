@@ -3,12 +3,6 @@ package com.capgemini.cn.deemo.vo.base;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @Description:工具类用于提示json数据格式的信息，200代表成功，404资源不存在，500服务器错误
- * @Classname :RespBean
- * @author: GuoBingjun
- * @date:2019-8-22 15:41
- */
 @Getter
 @Setter
 public class RespBean {
@@ -55,4 +49,5 @@ public class RespBean {
         this.msg = msg;
         this.obj = obj;
     }
+
 }
