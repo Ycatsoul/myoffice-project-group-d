@@ -25,10 +25,17 @@ DROP TABLE IF EXISTS `Accessory`;
 CREATE TABLE `Accessory` (
   `accessoryId` bigint(20) unsigned NOT NULL,
   `fileId` bigint(20) unsigned NOT NULL,
+<<<<<<< HEAD
+  `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `accessoryType` bigint(20) unsigned NOT NULL,
+  `accessorySize` int(10) unsigned NOT NULL,
+=======
   `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `accessoryTypeId` bigint(20) unsigned NOT NULL,
   `accessorySize` int(10) unsigned NOT NULL DEFAULT '0',
+>>>>>>> develop
   `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`accessoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -103,10 +110,17 @@ DROP TABLE IF EXISTS `file`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `file` (
   `fileId` bigint(20) unsigned NOT NULL,
+<<<<<<< HEAD
+  `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `fileType` bigint(20) unsigned NOT NULL,
+  `fileOwner` bigint(20) unsigned NOT NULL,
+=======
   `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `fileTypeId` bigint(20) unsigned NOT NULL,
   `fileOwnerId` bigint(20) unsigned NOT NULL,
+>>>>>>> develop
   `parentId` bigint(20) unsigned NOT NULL,
   `uploadTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
@@ -293,8 +307,13 @@ DROP TABLE IF EXISTS `Message`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Message` (
   `messageId` bigint(20) unsigned NOT NULL,
+<<<<<<< HEAD
+  `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `messageType` bigint(20) unsigned NOT NULL,
+=======
   `messageTypeId` bigint(20) unsigned NOT NULL,
   `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+>>>>>>> develop
   `messageContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -479,7 +498,12 @@ CREATE TABLE `Schedule` (
   `scheduleContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+<<<<<<< HEAD
+  `meetingType` bigint(20) unsigned NOT NULL,
+  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+=======
   `meetingTypeId` bigint(20) unsigned NOT NULL,
+>>>>>>> develop
   `createUserId` bigint(20) unsigned NOT NULL,
   `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isPrivate` tinyint(4) NOT NULL DEFAULT '0',

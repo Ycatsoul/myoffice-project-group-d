@@ -1,7 +1,5 @@
-# ----------------------------------------
-# CORE PROPERTIES
-# ----------------------------------------
 spring:
+
   application:
     name: Deemo
   banner:
@@ -21,10 +19,15 @@ spring:
       maxRequestSize: "10000MB"
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+
   profiles:
     active: dev
 
 mybatis:
+
+  typeAliasesPackage: com.capgemin.cn.deemo.data.domain
+  mapperLocations: classpath:mapper/*.xml
+
   mapper-locations: classpath:/mapping/*.xml
   type-aliases-package: com.capgemini.cn.deemo.data.domain
   config-location: classpath:/mybatis-config.xml
@@ -79,9 +82,9 @@ spring:
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/deemo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://127.0.0.1:3306/deemo-mysql?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
     username: root
-    password: root
+    password: 123456
 
 cgc:
   api-docs:
@@ -108,3 +111,4 @@ cgc:
     contactUrl: https://www.capgemini.com/cn-zh/
     contactEmail: yaxiang.huang@capgemini.com
     version: 1.0.0-SNAPSHOT
+

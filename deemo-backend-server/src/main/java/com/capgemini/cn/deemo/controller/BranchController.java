@@ -41,7 +41,7 @@ public class BranchController extends BaseController {
     }
 
     @ApiOperation("根据id查询机构信息")
-    @PostMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public RespBean info(@PathVariable("id") Integer id){
 
         if(StringUtils.isBlank(id.toString())){
@@ -54,7 +54,7 @@ public class BranchController extends BaseController {
     }
 
     @ApiOperation("添加机构信息")
-    @PostMapping("/save")
+    @PutMapping("/save")
     public RespBean save(@RequestBody Branch branch, HttpServletRequest request){
 
 //        //设置部门名称
@@ -99,7 +99,7 @@ public class BranchController extends BaseController {
      * 删除
      */
     @ApiOperation("删除机构信息")
-    @PostMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public RespBean delete (@PathVariable Integer id, HttpServletRequest request){
 
         if (StringUtils.isBlank(id.toString())) {

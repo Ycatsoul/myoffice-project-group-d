@@ -1,56 +1,53 @@
 package com.capgemini.cn.deemo.vo.base;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author hasaker
- * @since 2019-08-22 15:07
- */
 @Getter
 @Setter
-@ApiModel(description = "Response类")
 public class RespBean {
 
-    @ApiModelProperty(value = "状态码")
     private Integer status;
+    private String msg;
+    private Object obj;
 
-    @ApiModelProperty(value = "消息")
-    private String message;
+    private RespBean() {
+    }
 
-    @ApiModelProperty(value = "数据")
-    private Object data;
+    public static RespBean build() {
+        return new RespBean();
+    }
 
-    private RespBean(Integer status, Object data) {
+    public static RespBean ok(Object obj) {
+        return new RespBean(200, obj);
+    }
+
+    public static RespBean ok(String msg, Object obj) {
+        return new RespBean(200, msg, obj);
+    }
+
+    public static RespBean okMessage(String msg) {
+        return new RespBean(200, msg, null);
+    }
+
+    public static RespBean error(String msg, Object obj) {
+        return new RespBean(500, msg, obj);
+    }
+
+    public static RespBean error(String msg) {
+        return new RespBean(500, msg, null);
+    }
+
+
+    private RespBean(Integer status, Object obj) {
         this.status = status;
-        this.data = data;
+        this.obj = obj;
     }
 
-    private RespBean(Integer status, String message, Object data) {
+    private RespBean(Integer status, String msg, Object obj) {
         this.status = status;
-        this.message = message;
-        this.data = data;
+        this.msg = msg;
+        this.obj = obj;
     }
 
-    public static RespBean ok(Object data) {
-        return new RespBean(200, data);
-    }
-
-    public static RespBean ok(String message) {
-        return new RespBean(200, message, null);
-    }
-
-    public static RespBean ok(String message, Object data) {
-        return new RespBean(200, message, data);
-    }
-
-    public static RespBean error(String message) {
-        return new RespBean(500, message, null);
-    }
-
-    public static RespBean error(String message, Object data) {
-        return new RespBean(500, message , data);
-    }
 }

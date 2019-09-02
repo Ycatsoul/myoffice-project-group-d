@@ -56,7 +56,7 @@ public class DepartmentController extends BaseController {
 
 
     @ApiOperation("根据id查询部门信息")
-    @PostMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public RespBean info(@PathVariable("id") Integer id){
 
         if(StringUtils.isBlank(id.toString())){
@@ -69,7 +69,7 @@ public class DepartmentController extends BaseController {
     }
 
     @ApiOperation("添加部门信息")
-    @PostMapping("/save")
+    @PutMapping("/save")
     public RespBean save(@RequestBody Department department, HttpServletRequest request){
 
         //设置部门名称
@@ -112,7 +112,7 @@ public class DepartmentController extends BaseController {
      * 删除
      */
     @ApiOperation("删除员工信息")
-    @PostMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public RespBean delete (@PathVariable Integer id, HttpServletRequest request){
 
         if (StringUtils.isBlank(id.toString())) {
