@@ -1,17 +1,5 @@
 package com.capgemini.cn.deemo.service.impl;
 
-import com.capgemini.cn.deemo.data.domain.ManualSigin;
-import com.capgemini.cn.deemo.mapper.ManualSiginMapper;
-import com.capgemini.cn.deemo.service.ManualSiginService;
-import com.capgemini.cn.deemo.vo.request.ManualSiginSearchVo;
-import com.capgemini.cn.deemo.vo.request.ManualSiginVo;
-import com.capgemini.cn.deemo.vo.response.ManualSiginResponseVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @Description:
  * @Classname :

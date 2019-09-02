@@ -6,7 +6,7 @@ import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.utils.ConvertUtils;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
-import com.capgemini.cn.deemo.vo.request.UserVo;
+import com.capgemini.cn.deemo.vo.response.UserVo;
 import com.capgemini.cn.deemo.vo.response.UserResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

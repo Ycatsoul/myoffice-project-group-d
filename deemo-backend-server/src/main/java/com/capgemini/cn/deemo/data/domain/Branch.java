@@ -17,7 +17,10 @@ public class Branch {
     private Long branchId;
 
     private String branchName;
-    //机构简称
+
+    /**
+     * 机构简称
+     */
     private String branchShortName;
 
 }

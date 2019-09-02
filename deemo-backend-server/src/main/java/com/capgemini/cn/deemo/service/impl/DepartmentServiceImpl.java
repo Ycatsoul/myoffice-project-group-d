@@ -6,7 +6,7 @@ import com.capgemini.cn.deemo.mapper.DepartmentMapper;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.utils.ConvertUtils;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
-import com.capgemini.cn.deemo.vo.request.DepartmentVo;
+import com.capgemini.cn.deemo.vo.response.DepartmentVo;
 import com.capgemini.cn.deemo.vo.response.DepartmentResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

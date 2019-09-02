@@ -5,7 +5,6 @@ import com.capgemini.cn.deemo.data.domain.Department;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespBean;
-import com.capgemini.cn.deemo.vo.request.DepartmentVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
 import com.capgemini.cn.deemo.vo.response.DepartmentResponseVo;
 import io.swagger.annotations.Api;

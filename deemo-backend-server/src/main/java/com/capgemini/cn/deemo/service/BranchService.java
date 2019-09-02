@@ -3,7 +3,6 @@ package com.capgemini.cn.deemo.service;
 import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.data.dto.BranchDto;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.request.BranchVo;
 import com.capgemini.cn.deemo.vo.response.BranchResponseVo;
 import org.springframework.stereotype.Service;
 

@@ -30,5 +30,5 @@ public class User implements Serializable {
     //用户头像
     private String avatar;
     //是否被屏蔽
-    private String isBlocked;
+    private Boolean isBlocked;
 }

@@ -1,6 +1,5 @@
 package com.capgemini.cn.deemo.vo.response;
 
-import com.capgemini.cn.deemo.vo.request.UserVo;
 import lombok.Data;
 
 import java.util.List;

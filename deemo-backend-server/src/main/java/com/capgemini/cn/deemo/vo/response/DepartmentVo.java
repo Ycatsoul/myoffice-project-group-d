@@ -1,6 +1,5 @@
-package com.capgemini.cn.deemo.vo.request;
+package com.capgemini.cn.deemo.vo.response;
 
-import com.capgemini.cn.deemo.data.domain.Department;
 import lombok.Data;
 
 /**
@@ -11,18 +10,34 @@ import lombok.Data;
  */
 @Data
 public class DepartmentVo {
-    //主键Id
-    private Integer id;
-    //部门Id
+
+    /**
+     * 部门Id
+     */
     private Long departmentId;
-    //部门名称
+
+    /**
+     * 部门名称
+     */
     private String departmentName;
-    //联系电话
+
+    /**
+     * 联系电话
+     */
     private String connectPhone;
-    //联系电话（座机）
+
+    /**
+     * 联系电话（座机）
+     */
     private String connectTelephone;
-    //法人id
+
+    /**
+     * 法人id
+     */
     private Long principalUserId;
-    //分部门id
+
+    /**
+     * 分部门id
+     */
     private Long branchId;
 }

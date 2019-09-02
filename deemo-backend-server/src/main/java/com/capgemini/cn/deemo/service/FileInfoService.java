@@ -4,7 +4,7 @@ import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.FileInfoAddVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
-import com.capgemini.cn.deemo.vo.response.FileInfoRespVo;
+import com.capgemini.cn.deemo.vo.response.FileInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
  * @since 2019-08-22 15:52
  */
 public interface FileInfoService {
-    public RespVos<FileInfoRespVo> getFile(Long fileId);
+    public RespVos<FileInfoVo> getFile(Long fileId);
 
-    public RespVos<FileInfoRespVo> listFiles(FileInfoSearchVo fileInfoSearchVo);
+    public RespVos<FileInfoVo> listFiles(FileInfoSearchVo fileInfoSearchVo);
 
-    public RespVos<FileInfoRespVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo);
+    public RespVos<FileInfoVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo);
 
     public boolean uploadFile(MultipartFile multipartFile);
 

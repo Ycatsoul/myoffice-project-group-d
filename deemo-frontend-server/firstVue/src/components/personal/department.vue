@@ -364,7 +364,7 @@ export default {
         }).catch(() => {
         });
       },
-      doDeleteDepartment(ids){
+      doDeleteDepartment(ids) {
         this.tableLoading = true;
         var _this = this;
         var datas = {
@@ -409,14 +409,14 @@ export default {
   left:50px;
   font-size: 30px;
 }
-.first{
+.first {
   font-family:  Georgia, Times, 'Times New Roman', serif;
   position: relative;
   width:1000px;
   top:160px;
   left:50px;
 }
-.main{
+.main {
   position:relative;
   top:200px;
   left:100px;

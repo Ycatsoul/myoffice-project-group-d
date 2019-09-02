@@ -19,5 +19,4 @@ public class BaseSearchVo {
     
     @ApiModelProperty(value = "分页大小")
     private Integer size;
-
 }

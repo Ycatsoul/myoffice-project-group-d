@@ -15,6 +15,7 @@ public class Department {
     //部门Id
     private Long departmentId;
     //部门名称
+
     private String departmentName;
     //联系电话
     private String connectPhone;

@@ -5,17 +5,12 @@ import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.data.dto.BranchDto;
 import com.capgemini.cn.deemo.data.dto.DepartmentDto;
 import com.capgemini.cn.deemo.data.dto.UserDto;
-import com.capgemini.cn.deemo.mapper.BaseMapper;
 import com.capgemini.cn.deemo.service.BranchService;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.service.UserService;
-import com.capgemini.cn.deemo.utils.CovertBeanToMapUtils;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.PageUtils;
-import com.capgemini.cn.deemo.utils.Query;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
-import com.capgemini.cn.deemo.vo.request.UserVo;
 import com.capgemini.cn.deemo.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hasaker
@@ -219,6 +213,7 @@ public class UserController extends BaseController {
 //            return Result.error();
 //        }
 //    }
+
     /**
      * 删除
      */
@@ -240,6 +235,5 @@ public class UserController extends BaseController {
         else {
             return RespBean.error("删除失败");
         }
-
     }
 }

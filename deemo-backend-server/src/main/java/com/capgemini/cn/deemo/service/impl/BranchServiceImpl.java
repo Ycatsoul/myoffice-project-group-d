@@ -6,7 +6,7 @@ import com.capgemini.cn.deemo.mapper.BranchMapper;
 import com.capgemini.cn.deemo.service.BranchService;
 import com.capgemini.cn.deemo.utils.ConvertUtils;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.request.BranchVo;
+import com.capgemini.cn.deemo.vo.response.BranchVo;
 import com.capgemini.cn.deemo.vo.response.BranchResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

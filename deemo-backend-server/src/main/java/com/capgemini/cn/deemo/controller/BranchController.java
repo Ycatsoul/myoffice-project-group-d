@@ -3,13 +3,9 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.core.commons.BaseController;
 import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.service.BranchService;
-import com.capgemini.cn.deemo.utils.CovertBeanToMapUtils;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.PageUtils;
-import com.capgemini.cn.deemo.utils.Query;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.request.BranchVo;
 import com.capgemini.cn.deemo.vo.response.BranchResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Description:

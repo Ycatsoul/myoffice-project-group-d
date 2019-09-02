@@ -11,7 +11,7 @@ import java.sql.Date;
  */
 @ApiModel
 @Data
-public class FileInfoRespVo {
+public class FileInfoVo {
 
     private Long fileId;
 

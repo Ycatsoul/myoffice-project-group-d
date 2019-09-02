@@ -1,10 +1,12 @@
 package com.capgemini.cn.deemo.vo.request;
 
 import com.capgemini.cn.deemo.utils.DateUtils;
+import com.capgemini.cn.deemo.vo.base.BaseSearchVo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
@@ -13,30 +15,25 @@ import java.sql.Date;
  * @since 2019-08-22 11:02
  *
  */
-@Data
+@Getter
+@Setter
 @ApiModel
-public class FileInfoSearchVo {
+public class FileInfoSearchVo extends BaseSearchVo {
 
     @ApiModelProperty(value = "文件名搜索字段")
-    private String fileName = null;
+    private String fileName;
 
     @ApiModelProperty(value = "文件创建人搜索字段")
-    private String createUserName = null;
+    private String createUserName;
 
     @ApiModelProperty(value = "起始时间")
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD, timezone = DateUtils.DEFAULT_ZONE)
-    private Date startTime = null;
+    private Date startTime;
 
     @ApiModelProperty(value = "截止时间")
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD, timezone = DateUtils.DEFAULT_ZONE)
-    private Date endTime = null;
+    private Date endTime;
 
     @ApiModelProperty(value = "父文件夹ID")
     private Long parentId;
-
-    @ApiModelProperty(value = "偏移量")
-    private Integer start = 0;
-
-    @ApiModelProperty(value = "分页大小")
-    private Integer size = 10;
 }

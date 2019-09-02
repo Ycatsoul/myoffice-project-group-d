@@ -6,7 +6,7 @@ import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.FileInfoAddVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
-import com.capgemini.cn.deemo.vo.response.FileInfoRespVo;
+import com.capgemini.cn.deemo.vo.response.FileInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -58,10 +58,10 @@ public class FileInfoController {
     @ApiOperation(value = "获取一个文件的详尽信息")
     @GetMapping("/{fileId}")
     public RespBean getFile(@PathVariable Long fileId) {
-        RespVos<FileInfoRespVo> respVos = fileInfoService.getFile(fileId);
+        RespVos<FileInfoVo> respVos = fileInfoService.getFile(fileId);
 
         if (respVos != null && respVos.getVos().size() > 0) {
-            return RespBean.ok(respVos);
+            return RespBean.ok("成功", respVos);
         }
 
         return RespBean.error("未找到文件");
@@ -70,10 +70,10 @@ public class FileInfoController {
     @ApiOperation(value = "获取文件列表")
     @PostMapping("/list")
     public RespBean listFiles(@RequestBody FileInfoSearchVo fileInfoSearchVo) {
-        RespVos<FileInfoRespVo> respVos = fileInfoService.listFiles(fileInfoSearchVo);
+        RespVos<FileInfoVo> respVos = fileInfoService.listFiles(fileInfoSearchVo);
 
         if (respVos != null && respVos.getVos().size() > 0) {
-            return RespBean.ok("ok", respVos);
+            return RespBean.ok("成功", respVos);
         }
 
         return RespBean.error("未找到文件");
@@ -82,10 +82,10 @@ public class FileInfoController {
     @ApiOperation(value = "获取回收站文件列表")
     @PostMapping("/trash")
     public RespBean listFilesInTrash(@RequestBody FileInfoSearchVo fileInfoSearchVo) {
-        RespVos<FileInfoRespVo> respVos = fileInfoService.listFilesInTrash(fileInfoSearchVo);
+        RespVos<FileInfoVo> respVos = fileInfoService.listFilesInTrash(fileInfoSearchVo);
 
         if (respVos != null && respVos.getVos().size() > 0) {
-            return RespBean.ok(respVos);
+            return RespBean.ok("成功", respVos);
         }
 
         return RespBean.error("未找到文件");

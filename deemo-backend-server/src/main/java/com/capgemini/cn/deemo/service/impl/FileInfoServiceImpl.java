@@ -10,7 +10,7 @@ import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.FileInfoAddVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
-import com.capgemini.cn.deemo.vo.response.FileInfoRespVo;
+import com.capgemini.cn.deemo.vo.response.FileInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,14 +39,14 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 获取一个文件的详尽信息
      */
     @Override
-    public RespVos<FileInfoRespVo> getFile(Long fileId) {
-        RespVos<FileInfoRespVo> respVos = new RespVos<>();
+    public RespVos<FileInfoVo> getFile(Long fileId) {
+        RespVos<FileInfoVo> respVos = new RespVos<>();
         FileInfo fileInfo = fileInfoMapper.getFile(fileId);
 
         if (fileInfo != null) {
             respVos.setSize(1);
-            respVos.setVos(new ArrayList<FileInfoRespVo>(1){{
-                add(convertFileInfoToFileInfoRespVo(fileInfo));
+            respVos.setVos(new ArrayList<FileInfoVo>(1){{
+                add(convertFileInfoToFileInfoVo(fileInfo));
             }});
 
             return respVos;
@@ -62,13 +62,13 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return respVos<FileInfoRespVo>
      */
     @Override
-    public RespVos<FileInfoRespVo> listFiles(FileInfoSearchVo fileInfoSearchVo) {
-        RespVos<FileInfoRespVo> respVos = new RespVos<>();
+    public RespVos<FileInfoVo> listFiles(FileInfoSearchVo fileInfoSearchVo) {
+        RespVos<FileInfoVo> respVos = new RespVos<>();
         List<FileInfo> fileInfos = fileInfoMapper.listFiles(fileInfoSearchVo);
 
         if (fileInfos != null && fileInfos.size() > 0) {
             respVos.setSize(fileInfoMapper.countFiles(fileInfoSearchVo));
-            respVos.setVos(fileInfos.stream().map(this::convertFileInfoToFileInfoRespVo).collect(Collectors.toList()));
+            respVos.setVos(fileInfos.stream().map(this::convertFileInfoToFileInfoVo).collect(Collectors.toList()));
 
             return respVos;
         }
@@ -80,13 +80,13 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 获取
      */
     @Override
-    public RespVos<FileInfoRespVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo) {
-        RespVos<FileInfoRespVo> respVos = new RespVos<>();
+    public RespVos<FileInfoVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo) {
+        RespVos<FileInfoVo> respVos = new RespVos<>();
         List<FileInfo> fileInfos = fileInfoMapper.listFilesInTrash(fileInfoSearchVo);
 
         if (fileInfos != null && fileInfos.size() > 0) {
             respVos.setSize(fileInfoMapper.countFilesInTrash(fileInfoSearchVo));
-            respVos.setVos(fileInfos.stream().map(this::convertFileInfoToFileInfoRespVo).collect(Collectors.toList()));
+            respVos.setVos(fileInfos.stream().map(this::convertFileInfoToFileInfoVo).collect(Collectors.toList()));
 
             return respVos;
         }
@@ -233,23 +233,23 @@ public class FileInfoServiceImpl implements FileInfoService {
      * TODO 获取文件拥有者的姓名
      * 将FileInfo转换为FileInfoRespVo
      */
-    private FileInfoRespVo convertFileInfoToFileInfoRespVo(FileInfo fileInfo) {
+    private FileInfoVo convertFileInfoToFileInfoVo(FileInfo fileInfo) {
         FileType fileType = fileTypeMapper.getFileTypeByFileTypeId(fileInfo.getFileTypeId());
-        FileInfoRespVo fileInfoRespVo = new FileInfoRespVo();
+        FileInfoVo fileInfoVo = new FileInfoVo();
 
-        fileInfoRespVo.setFileId(fileInfo.getFileId());
-        fileInfoRespVo.setFileName(fileInfo.getFileName());
-        fileInfoRespVo.setFilePath(fileInfo.getFilePath());
-        fileInfoRespVo.setFileTypeId(fileInfo.getFileTypeId());
-        fileInfoRespVo.setFileTypeName(fileType.getFileTypeName());
-        fileInfoRespVo.setFileTypeImage(fileType.getFileTypeImage());
-        fileInfoRespVo.setFileOwnerId(fileInfo.getFileOwnerId());
+        fileInfoVo.setFileId(fileInfo.getFileId());
+        fileInfoVo.setFileName(fileInfo.getFileName());
+        fileInfoVo.setFilePath(fileInfo.getFilePath());
+        fileInfoVo.setFileTypeId(fileInfo.getFileTypeId());
+        fileInfoVo.setFileTypeName(fileType.getFileTypeName());
+        fileInfoVo.setFileTypeImage(fileType.getFileTypeImage());
+        fileInfoVo.setFileOwnerId(fileInfo.getFileOwnerId());
         //  fileInfoRespVo.setFileOwnerName();
-        fileInfoRespVo.setParentId(fileInfo.getParentId());
-        fileInfoRespVo.setRemark(fileInfo.getRemark());
-        fileInfoRespVo.setIsDeleted(fileInfo.getIsDeleted());
-        fileInfoRespVo.setDeleteTime(fileInfo.getDeleteTime());
+        fileInfoVo.setParentId(fileInfo.getParentId());
+        fileInfoVo.setRemark(fileInfo.getRemark());
+        fileInfoVo.setIsDeleted(fileInfo.getIsDeleted());
+        fileInfoVo.setDeleteTime(fileInfo.getDeleteTime());
 
-        return fileInfoRespVo;
+        return fileInfoVo;
     }
 }
