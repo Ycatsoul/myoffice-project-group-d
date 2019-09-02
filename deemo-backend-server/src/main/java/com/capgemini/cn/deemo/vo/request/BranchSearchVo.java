@@ -12,8 +12,8 @@ import lombok.Data;
 public class BranchSearchVo {
 //    //主键Id
 //    private Integer id;
-    //部门Id
-    private Long branchId;
+//    //部门Id
+//    private Long branchId;
     //部门名称
     private String branchName;
     //联系电话

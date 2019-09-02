@@ -14,8 +14,8 @@ import java.util.List;
 @Data
 public class DepartmentSearchVo {
 
-    //主键Id
-    private Integer id;
+//    //主键Id
+//    private Integer id;
     //部门Id
     private Long departmentId;
     //部门名称

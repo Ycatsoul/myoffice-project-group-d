@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.cn.deemo.mapper.ManualSiginMapper">
+    <select id="queryObject" resultType="com.capgemini.cn.deemo.data.domain.ManualSigin">
+        select * from manualsigin where id = #{id}
+    </select>
+
+    <select id="listManualSigin" resultType="com.capgemini.cn.deemo.data.domain.ManualSigin">
+        select * from manualsigin
+    </select>
+
+    <select id="countManualSigin" resultType="Long">
+        select count(*) from manualsigin
+    </select>
+</mapper>

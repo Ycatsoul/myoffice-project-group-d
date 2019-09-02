@@ -5,17 +5,13 @@ import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.data.dto.BranchDto;
 import com.capgemini.cn.deemo.data.dto.DepartmentDto;
 import com.capgemini.cn.deemo.data.dto.UserDto;
-import com.capgemini.cn.deemo.mapper.BaseMapper;
 import com.capgemini.cn.deemo.service.BranchService;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.service.UserService;
-import com.capgemini.cn.deemo.utils.CovertBeanToMapUtils;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.PageUtils;
-import com.capgemini.cn.deemo.utils.Query;
 import com.capgemini.cn.deemo.vo.base.RespBean;
+import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
-import com.capgemini.cn.deemo.vo.request.UserVo;
 import com.capgemini.cn.deemo.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hasaker
@@ -65,7 +60,7 @@ public class UserController extends BaseController {
     //查询人员菜单栏
     @ApiOperation("查询人员菜单")
     @ResponseBody
-    @PostMapping("/peopleTree")
+    @GetMapping("/peopleTree")
     public RespBean peopleTree(){
 
         //1.查询所有的员工user
@@ -126,7 +121,7 @@ public class UserController extends BaseController {
      * 信息
      */
     @ApiOperation("根据id查询员工信息")
-    @PostMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     public RespBean info(@PathVariable("id") Integer id){
 
         if(StringUtils.isBlank(id.toString())){
@@ -142,7 +137,7 @@ public class UserController extends BaseController {
      * 保存
      */
     @ApiOperation("添加员工信息")
-    @PostMapping("/save")
+    @PutMapping("/save")
     public RespBean save(@RequestBody User user, HttpServletRequest request){
 
 //        //设置员工姓名
@@ -223,7 +218,7 @@ public class UserController extends BaseController {
      * 删除
      */
     @ApiOperation("删除员工信息")
-    @PostMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public RespBean delete (@PathVariable Integer id, HttpServletRequest request){
 
         if (StringUtils.isBlank(id.toString())) {
