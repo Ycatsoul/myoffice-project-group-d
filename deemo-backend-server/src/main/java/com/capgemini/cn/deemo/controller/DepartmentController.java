@@ -1,19 +1,17 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
-import com.capgemini.cn.deemo.data.domain.Department;
 import com.capgemini.cn.deemo.service.DepartmentService;
-import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespBean;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
-import com.capgemini.cn.deemo.vo.response.DepartmentResponseVo;
+import com.capgemini.cn.deemo.vo.response.DepartmentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Description:部门管理controller
@@ -23,111 +21,60 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Api
 @RestController
-@RequestMapping("/user/department")
+@RequestMapping("/department")
 public class DepartmentController extends BaseController {
 
-    @Autowired
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
-    @ApiOperation("显示页面字段信息")
-    @ResponseBody
-    @PostMapping("list")
-    public RespBean list(@RequestBody DepartmentSearchVo departmentSearchVo){
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
 
-        DepartmentResponseVo departmentResponseVo = departmentService.listDepart(departmentSearchVo);
-        if (departmentResponseVo != null) {
-            return RespBean.ok("查询成功",departmentResponseVo);
+    @ApiOperation("获取部门详尽信息")
+    @GetMapping("/{departmentId}")
+    public RespBean getDepartment(@PathVariable Long departmentId){
+        RespVos<DepartmentVo> respVos = departmentService.getDepartment(departmentId);
+
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok("查询成功",respVos);
         }
+
         return RespBean.error("查询失败！");
     }
-//        //将bean转化成map,然后用map去查询
-//        Map<String,Object> params = CovertBeanToMapUtils.convertBeanToMap(departmentVo);
-//
-//        //查询列表数据
-//        Query query = new Query(params);
-//
-//        List<Department> departments  = departmentService.queryList(query);
-//        int total = departmentService.queryTotal(query);
-//
-//        PageUtils pageUtil = new PageUtils(departments, total, query.getLimit(), query.getPage());
 
-//        return RespBean.ok(pageUtil);
+    @ApiOperation("获取部门列表")
+    @PostMapping("/list")
+    public RespBean listDepartments(@RequestBody DepartmentSearchVo departmentSearchVo){
+        RespVos<DepartmentVo> respVos = departmentService.listDepartments(departmentSearchVo);
 
-
-
-    @ApiOperation("根据id查询部门信息")
-    @GetMapping("/info/{id}")
-    public RespBean info(@PathVariable("id") Integer id){
-
-        if(StringUtils.isBlank(id.toString())){
-            return RespBean.error("id不能为空");
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok("查询成功",respVos);
         }
 
-        Department department = departmentService.queryObject(id);
-
-        return RespBean.ok("查询成功",department);
+        return RespBean.error("查询失败！");
     }
 
-    @ApiOperation("添加部门信息")
-    @PutMapping("/save")
-    public RespBean save(@RequestBody Department department, HttpServletRequest request){
+    @ApiOperation("添加一个部门")
+    @PostMapping("/add")
+    public RespBean addDepartment(@RequestBody DepartmentEditVo departmentEditVo) {
+        Integer res = departmentService.addDepartment(departmentEditVo);
 
-        //设置部门名称
-//        departmentService.queryObject(Integer.parseInt(department.getId().toString()));
-//        department.setDepartmentName(department.getDepartmentName());
-        department.setDepartmentId(IdWorker.get().nextId());
-
-        boolean result = departmentService.save(department);
-
-        //判断是否成功
-        if(result){
-            return RespBean.ok("添加成功",department);
-        }
-        else {
-            return RespBean.error("添加失败");
-        }
+        return res > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
-
-    /**
-     * 修改
-     */
     @ApiOperation("修改部门信息")
-    @PostMapping("/update")
-    public RespBean update(@RequestBody Department department,HttpServletRequest request){
+    @PutMapping("/update")
+    public RespBean updateDepartment(@RequestBody DepartmentEditVo departmentEditVo) {
+        Integer res = departmentService.updateDepartment(departmentEditVo);
 
-        boolean result = departmentService.update(department);
-
-        //判断是否成功
-        if(result){
-            return RespBean.ok("修改成功",department);
-        }
-        else {
-            return RespBean.error("修改失败");
-        }
+        return res > 0 ? RespBean.ok("修改成功!") : RespBean.error("修改失败!");
     }
 
+    @ApiOperation("删除部门")
+    @PostMapping("/delete")
+    public RespBean deleteDepartments(@RequestBody List<Long> departmentIds) {
+        Integer res = departmentService.deleteDepartments(departmentIds);
 
-    /**
-     * 删除
-     */
-    @ApiOperation("删除员工信息")
-    @DeleteMapping(value = "/delete/{id}")
-    public RespBean delete (@PathVariable Integer id, HttpServletRequest request){
-
-        if (StringUtils.isBlank(id.toString())) {
-            return RespBean.error("删除失败");
-        }
-
-        boolean result = departmentService.delete(id);
-
-        //判断是否成功
-        if(result){
-            return RespBean.ok("删除成功");
-        }
-        else {
-            return RespBean.error("删除失败");
-        }
-
+        return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
 }

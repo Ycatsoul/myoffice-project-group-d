@@ -1,6 +1,10 @@
 package com.capgemini.cn.deemo.vo.request;
 
+import com.capgemini.cn.deemo.vo.base.BaseSearchVo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Description:
@@ -8,18 +12,11 @@ import lombok.Data;
  * @author: GuoBingjun
  * @date:
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BranchSearchVo {
-//    //主键Id
-//    private Integer id;
-//    //部门Id
-//    private Long branchId;
-    //部门名称
-    private String branchName;
-    //联系电话
-    private String branchShortName;
+@ApiModel
+public class BranchSearchVo extends BaseSearchVo {
 
-    private int page;
-    //一页几条数据
-    private int limit;
+    @ApiModelProperty(value = "机构名称")
+    private String branchName;
 }

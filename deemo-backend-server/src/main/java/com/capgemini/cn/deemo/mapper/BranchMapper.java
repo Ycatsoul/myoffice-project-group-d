@@ -1,9 +1,10 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.Branch;
-import com.capgemini.cn.deemo.data.dto.BranchDto;
+import com.capgemini.cn.deemo.vo.request.BranchEditVo;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,8 +14,17 @@ import java.util.List;
  * @author: Cola Guo
  * @date:2019-8-26 15:51
  */
-public interface BranchMapper extends BaseMapper<Branch> {
-    List<Branch> listBranch(@Param("branchSearch") BranchSearchVo branchSearchVo);
-    Long countBranch(@Param("branchSearch") BranchSearchVo branchSearchVo);
-    List<BranchDto> queryAllBranch();
+@Service
+public interface BranchMapper {
+    Branch getBranch(@Param("branchId") Long branchId);
+
+    List<Branch> listBranches(@Param("branchSearchVo") BranchSearchVo branchSearchVo);
+
+    Integer countBranches(@Param("branchSearchVo") BranchSearchVo branchSearchVo);
+
+    Integer insertBranch(@Param("branchEditVo") BranchEditVo branchEditVo);
+
+    Integer updateBranch(@Param("branchEditVo") BranchEditVo branchEditVo);
+
+    Integer deleteBranches(@Param("branchIds") List<Long> branchIds);
 }

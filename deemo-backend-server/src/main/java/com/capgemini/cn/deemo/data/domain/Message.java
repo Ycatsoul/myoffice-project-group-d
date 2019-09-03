@@ -3,7 +3,8 @@ package com.capgemini.cn.deemo.data.domain;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 /**
  * @author Bowen Du
@@ -12,20 +13,48 @@ import java.util.Date;
 
 @Data
 public class Message {
-    //消息ID
+    /**
+     * 消息ID
+     */
     private Long messageId;
-    //消息标题
+
+    /**
+     * 消息类型ID
+     */
+    private Long messageTypeId;
+
+    /**
+     * 消息标题
+     */
     private String messageTitle;
-    //消息内容
+
+    /**
+     * 消息内容
+     */
     private String messageContent;
-    //开始时间
+
+    /**
+     * 开始时间
+     */
     private Date beginTime;
-    //结束时间
+
+    /**
+     * 结束时间
+     */
     private Date endTime;
-    //发送人
+
+    /**
+     * 发送用户ID
+     */
     private String sendUserId;
-    //发布状态
-    private Long isPublished;
-    //发布时间
+
+    /**
+     * 发布状态
+     */
+    private Boolean isPublished;
+
+    /**
+     * 发布时间
+     */
     private Date publishTime;
 }

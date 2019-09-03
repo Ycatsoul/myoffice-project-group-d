@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class FileType {
     /**
-     * id
+     * ID
      */
     private Long fileTypeId;
 

@@ -2,12 +2,13 @@ package com.capgemini.cn.deemo.service.impl;
 
 import com.capgemini.cn.deemo.data.domain.FileInfo;
 import com.capgemini.cn.deemo.data.domain.FileType;
+import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.mapper.FileInfoMapper;
 import com.capgemini.cn.deemo.mapper.FileTypeMapper;
+import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
-import com.capgemini.cn.deemo.vo.request.FileInfoAddVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
 import com.capgemini.cn.deemo.vo.response.FileInfoVo;
@@ -17,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,10 +32,12 @@ import java.util.stream.Collectors;
 public class FileInfoServiceImpl implements FileInfoService {
     private FileInfoMapper fileInfoMapper;
     private FileTypeMapper fileTypeMapper;
+    private UserMapper userMapper;
 
-    public FileInfoServiceImpl(FileInfoMapper fileInfoMapper, FileTypeMapper fileTypeMapper) {
+    public FileInfoServiceImpl(FileInfoMapper fileInfoMapper, FileTypeMapper fileTypeMapper, UserMapper userMapper) {
         this.fileInfoMapper = fileInfoMapper;
         this.fileTypeMapper = fileTypeMapper;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -46,7 +51,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         if (fileInfo != null) {
             respVos.setSize(1);
             respVos.setVos(new ArrayList<FileInfoVo>(1){{
-                add(convertFileInfoToFileInfoVo(fileInfo));
+                add(convertToVo(fileInfo));
             }});
 
             return respVos;
@@ -68,7 +73,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         if (fileInfos != null && fileInfos.size() > 0) {
             respVos.setSize(fileInfoMapper.countFiles(fileInfoSearchVo));
-            respVos.setVos(fileInfos.stream().map(this::convertFileInfoToFileInfoVo).collect(Collectors.toList()));
+            respVos.setVos(fileInfos.stream().map(this::convertToVo).collect(Collectors.toList()));
 
             return respVos;
         }
@@ -77,7 +82,7 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     /**
-     * 获取
+     * 获取回收站文件列表
      */
     @Override
     public RespVos<FileInfoVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo) {
@@ -86,7 +91,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         if (fileInfos != null && fileInfos.size() > 0) {
             respVos.setSize(fileInfoMapper.countFilesInTrash(fileInfoSearchVo));
-            respVos.setVos(fileInfos.stream().map(this::convertFileInfoToFileInfoVo).collect(Collectors.toList()));
+            respVos.setVos(fileInfos.stream().map(this::convertToVo).collect(Collectors.toList()));
 
             return respVos;
         }
@@ -116,12 +121,11 @@ public class FileInfoServiceImpl implements FileInfoService {
 
 
     /**
-     * TODO 添加文件拥有者ID
      * 添加文件记录
      */
     @Override
-    public int insertFile(FileInfoAddVo fileInfoAddVo) {
-        String fileName = fileInfoAddVo.getFileName();
+    public int insertFile(FileInfoEditVo fileInfoEditVo) {
+        String fileName = fileInfoEditVo.getFileName();
         String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/Files/";
         String fileSuffix = "";
         if (fileName.contains(".")) {
@@ -142,10 +146,10 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfo.setFileName(fileName);
         fileInfo.setFilePath(filePath + fileName);
         fileInfo.setFileTypeId(fileTypeId);
-        fileInfo.setFileOwnerId(0L);
-        fileInfo.setParentId(fileInfoAddVo.getParentId());
-        fileInfo.setRemark(fileInfoAddVo.getRemark());
-        fileInfo.setParentIdInTrash(fileInfoAddVo.getParentId());
+        fileInfo.setFileOwnerId(fileInfoEditVo.getFileOwnerId());
+        fileInfo.setParentId(fileInfoEditVo.getParentId());
+        fileInfo.setRemark(fileInfoEditVo.getRemark());
+        fileInfo.setParentIdInTrash(fileInfoEditVo.getParentId());
 
         return fileInfoMapper.insertFile(fileInfo);
     }
@@ -230,12 +234,12 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     /**
-     * TODO 获取文件拥有者的姓名
-     * 将FileInfo转换为FileInfoRespVo
+     * 将FileInfo转换为FileInfoVo
      */
-    private FileInfoVo convertFileInfoToFileInfoVo(FileInfo fileInfo) {
+    private FileInfoVo convertToVo(FileInfo fileInfo) {
         FileType fileType = fileTypeMapper.getFileTypeByFileTypeId(fileInfo.getFileTypeId());
         FileInfoVo fileInfoVo = new FileInfoVo();
+        User user = userMapper.getUser(fileInfo.getFileOwnerId());
 
         fileInfoVo.setFileId(fileInfo.getFileId());
         fileInfoVo.setFileName(fileInfo.getFileName());
@@ -244,12 +248,30 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfoVo.setFileTypeName(fileType.getFileTypeName());
         fileInfoVo.setFileTypeImage(fileType.getFileTypeImage());
         fileInfoVo.setFileOwnerId(fileInfo.getFileOwnerId());
-        //  fileInfoRespVo.setFileOwnerName();
+        fileInfoVo.setFileOwnerName(user.getName());
         fileInfoVo.setParentId(fileInfo.getParentId());
         fileInfoVo.setRemark(fileInfo.getRemark());
         fileInfoVo.setIsDeleted(fileInfo.getIsDeleted());
         fileInfoVo.setDeleteTime(fileInfo.getDeleteTime());
 
         return fileInfoVo;
+    }
+
+    /**
+     * 将FileInfoEditVo装换为FileInfo
+     */
+    private FileInfo convertFromVo(FileInfoEditVo fileInfoEditVo) {
+        FileInfo fileInfo = new FileInfo();
+
+        fileInfo.setFileId(fileInfoEditVo.getFileId() == null ?
+                IdWorker.get().nextId() : fileInfoEditVo.getFileId());
+        fileInfo.setFileName(fileInfoEditVo.getFileName());
+        fileInfo.setFilePath(fileInfoEditVo.getFilePath());
+        fileInfo.setFileTypeId(fileInfoEditVo.getFileTypeId());
+        fileInfo.setFileOwnerId(fileInfoEditVo.getFileOwnerId());
+        fileInfo.setParentId(fileInfo.getParentId());
+        fileInfo.setRemark(fileInfoEditVo.getRemark());
+
+        return fileInfo;
     }
 }

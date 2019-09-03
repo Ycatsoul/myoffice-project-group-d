@@ -20,10 +20,6 @@ public class UserVo {
      * 用户姓名
      */
     private String username;
-    /**
-     * 用户密码
-     */
-    private String password;
 
     /**
      * 姓名
@@ -36,14 +32,19 @@ public class UserVo {
     private String gender;
 
     /**
-     * 部门编号
+     * 用户头像
+     */
+    private String avatar;
+
+    /**
+     * 所属部门ID
      */
     private Long departmentId;
 
     /**
-     * 用户头像
+     * 所属部门名称
      */
-    private String avatar;
+    private String departmentName;
 
     /**
      * 是否被屏蔽

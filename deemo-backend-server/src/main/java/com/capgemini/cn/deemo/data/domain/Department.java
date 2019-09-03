@@ -10,36 +10,34 @@ import lombok.Data;
  */
 @Data
 public class Department {
-//    //主键Id
-//    private Integer id;
-    /*
-    * 部门id
-    * */
+    /**
+     * 部门ID
+     */
     private Long departmentId;
 
-    /**
+    /*
      * 部门名称
-     */
+     * */
     private String departmentName;
 
-    /*
-    * 联系电话
-    * */
+    /**
+     * 联系电话
+     */
     private String connectPhone;
 
-    /*
-    * 联系电话（座机）
-    * */
+    /**
+     * 联系电话（座机）
+     */
     private String connectTelephone;
 
-    /*
-    * 法人id
-    * */
+    /**
+     * 部门负责人ID
+     */
     private Long principalUserId;
 
-    /*
-    * 分部门id
-    * */
+    /**
+     * 所属机构ID
+     */
     private Long branchId;
 
 }

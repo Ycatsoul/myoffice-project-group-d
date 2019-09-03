@@ -1,11 +1,10 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.User;
-import com.capgemini.cn.deemo.data.dto.UserDto;
+import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
 import org.apache.ibatis.annotations.Param;
-
-
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,24 +14,20 @@ import java.util.List;
  * @author: GuoBingjun
  * @date:2019-8-21 16:13
  */
+@Service
+public interface UserMapper {
 
-public interface UserMapper extends BaseMapper<User>{
+    User getUser(@Param("userId") Long userId);
 
-    List<User> listUser(@Param("userSearch") UserSearchVo userSearchVo);
-    Long countUser(@Param("userSearch") UserSearchVo userSearchVo);
-    List<UserDto> queryAll();
+    List<User> listUsers(@Param("userSearchVo") UserSearchVo userSearchVo);
 
-//    //根据id查询员工
-//    User queryById(@Param("id") int id);
-//    //查询所有员工
-//    List<User> queryAll();
-//    //增加员工信息
-//    Integer insertUser(User user);
-//    //更改员工信息
-//    Integer updateUserById(int id);
-//    //删除员工信息
-//    Integer deleteUserById(int id);
-//    //批量删除员工信息
-//    //int deleteBatch(@Param("ids") List<Integer> ids);
+    Integer countUsers(@Param("userSearchVo") UserSearchVo userSearchVo);
 
+    Integer insertUser(@Param("userEditVo") UserEditVo userEditVo);
+
+    Integer updateUser(@Param("userEditVo") UserEditVo userEditVo);
+
+    Integer blockUsers(@Param("userIds") List<Long> userIds);
+
+    Integer deleteUsers(@Param("userIds") List<Long> userIds);
 }

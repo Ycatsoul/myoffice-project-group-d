@@ -16,6 +16,20 @@ import com.capgemini.cn.deemo.vo.response.UserVo;
  */
 public class ConvertUtils {
 
+    public static UserVo convertUserToVo(User user){
+        UserVo userVo = new UserVo();
+
+        userVo.setUserId(user.getUserId());
+        userVo.setUsername(user.getUsername());
+        userVo.setDepartmentId(user.getDepartmentId());
+        userVo.setGender(user.getGender());
+        userVo.setIsBlocked(user.getIsBlocked());
+        userVo.setName(user.getName());
+        userVo.setAvatar(user.getAvatar());
+
+        return userVo;
+    }
+
     public static DepartmentVo convertDepartmentToVo(Department department) {
         DepartmentVo departmentVo = new DepartmentVo();
 
@@ -37,20 +51,5 @@ public class ConvertUtils {
         branchVo.setBranchShortName(branch.getBranchShortName());
 
         return branchVo;
-    }
-
-    public static UserVo convertUserToVo(User user){
-        UserVo userVo = new UserVo();
-
-        userVo.setUserId(user.getUserId());
-        userVo.setUsername(user.getUsername());
-        userVo.setPassword(user.getPassword());
-        userVo.setDepartmentId(user.getDepartmentId());
-        userVo.setGender(user.getGender());
-        userVo.setIsBlocked(user.getIsBlocked());
-        userVo.setName(user.getName());
-        userVo.setAvatar(user.getAvatar());
-
-        return userVo;
     }
 }

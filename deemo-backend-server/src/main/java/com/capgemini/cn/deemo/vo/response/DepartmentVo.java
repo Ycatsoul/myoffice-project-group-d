@@ -31,12 +31,27 @@ public class DepartmentVo {
     private String connectTelephone;
 
     /**
-     * 法人id
+     * 法人ID
      */
     private Long principalUserId;
 
     /**
-     * 分部门id
+     * 主管姓名
+     */
+    private String principalUserName;
+
+    /**
+     * 所属机构ID
      */
     private Long branchId;
+
+    /**
+     * 所属机构名称
+     */
+    private String branchName;
+
+    /**
+     * 所属机构简称
+     */
+    private String branchShortName;
 }

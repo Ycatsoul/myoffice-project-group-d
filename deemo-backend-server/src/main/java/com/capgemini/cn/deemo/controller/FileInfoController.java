@@ -3,7 +3,6 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
-import com.capgemini.cn.deemo.vo.request.FileInfoAddVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
 import com.capgemini.cn.deemo.vo.response.FileInfoVo;
@@ -41,14 +40,14 @@ public class FileInfoController {
 
     @ApiOperation(value = "插入文件上传记录")
     @PostMapping("/insert")
-    public RespBean insertFile(@RequestBody FileInfoAddVo fileInfoAddVo) {
-        int res = fileInfoService.insertFile(fileInfoAddVo);
+    public RespBean insertFile(@RequestBody FileInfoEditVo fileInfoEditVo) {
+        int res = fileInfoService.insertFile(fileInfoEditVo);
 
-        return res == 1 ? RespBean.ok("插入成功！") : RespBean.error("插入失败！");
+        return res > 0 ? RespBean.ok("插入成功!") : RespBean.error("插入失败!");
     }
 
     @ApiOperation(value = "更新一个文件的信息")
-    @PutMapping("/")
+    @PutMapping("/update")
     public RespBean updateFile(@RequestBody FileInfoEditVo fileInfoEditVo) {
         int res = fileInfoService.updateFile(fileInfoEditVo);
 

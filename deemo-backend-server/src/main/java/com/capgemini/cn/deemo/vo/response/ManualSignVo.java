@@ -11,30 +11,35 @@ import java.util.Date;
  * @date:
  */
 @Data
-public class ManualSiginVo {
+public class ManualSignVo {
 
     /**
-     * 签卡id
+     * 签卡ID
      */
-    private Long manualSiginId ;
+    private Long manualSignId ;
 
     /**
-     * 用户id
+     * 用户ID
      */
     private Long userId;
 
     /**
+     * 用户名字
+     */
+    private String name;
+
+    /**
      * 签卡时间
      */
-    private Date singInTime;
+    private Date signTime;
 
     /**
      * 签卡备注
      */
-    private String singInDesc;
+    private String signDesc;
 
     /**
      * 签卡标记
      */
-    private Integer singInTag;
+    private Integer signTag;
 }

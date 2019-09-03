@@ -5,8 +5,8 @@ import com.capgemini.cn.deemo.vo.base.BaseSearchVo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.sql.Date;
 
@@ -15,8 +15,8 @@ import java.sql.Date;
  * @since 2019-08-22 11:02
  *
  */
-@Getter
-@Setter
+@EqualsAndHashCode(callSuper = true)
+@Data
 @ApiModel
 public class FileInfoSearchVo extends BaseSearchVo {
 

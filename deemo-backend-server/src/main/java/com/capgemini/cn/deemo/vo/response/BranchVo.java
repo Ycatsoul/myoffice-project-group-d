@@ -12,7 +12,7 @@ import lombok.Data;
 public class BranchVo {
 
     /**
-     * 机构id
+     * 机构ID
      */
     private Long branchId;
 

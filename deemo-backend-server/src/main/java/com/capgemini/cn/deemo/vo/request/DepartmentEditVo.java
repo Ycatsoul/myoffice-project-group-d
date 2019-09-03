@@ -1,5 +1,7 @@
 package com.capgemini.cn.deemo.vo.request;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -9,19 +11,24 @@ import lombok.Data;
  * @date:
  */
 @Data
+@ApiModel
 public class DepartmentEditVo {
-    //主键Id
-    private Integer id;
-    //部门Id
+
+    @ApiModelProperty(value = "部门ID")
     private Long departmentId;
-    //部门名称
+
+    @ApiModelProperty(value = "部门名称")
     private String departmentName;
-    //联系电话
+
+    @ApiModelProperty(value = "联系电话")
     private String connectPhone;
-    //联系电话（座机）
+
+    @ApiModelProperty(value = "联系电话（座机）")
     private String connectTelephone;
-    //法人id
+
+    @ApiModelProperty(value = "部门主管ID")
     private Long principalUserId;
-    //分部门id
+
+    @ApiModelProperty(value = "所属机构ID")
     private Long branchId;
 }
