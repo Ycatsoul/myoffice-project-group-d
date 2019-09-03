@@ -25,17 +25,10 @@ DROP TABLE IF EXISTS `Accessory`;
 CREATE TABLE `Accessory` (
   `accessoryId` bigint(20) unsigned NOT NULL,
   `fileId` bigint(20) unsigned NOT NULL,
-<<<<<<< HEAD
-  `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `accessoryType` bigint(20) unsigned NOT NULL,
-  `accessorySize` int(10) unsigned NOT NULL,
-=======
   `accessoryName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `accessoryPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `accessoryTypeId` bigint(20) unsigned NOT NULL,
   `accessorySize` int(10) unsigned NOT NULL DEFAULT '0',
->>>>>>> develop
   `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`accessoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -60,7 +53,7 @@ DROP TABLE IF EXISTS `Branch`;
 CREATE TABLE `Branch` (
   `branchId` bigint(20) unsigned NOT NULL,
   `branchName` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `BranchShortName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `branchShortName` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`branchId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -71,6 +64,7 @@ CREATE TABLE `Branch` (
 
 LOCK TABLES `Branch` WRITE;
 /*!40000 ALTER TABLE `Branch` DISABLE KEYS */;
+INSERT INTO `Branch` VALUES (4709478423330816,'诺克萨斯','诺克'),(4709597210214400,'疾风剑豪','亚索'),(4722022584156160,'德玛西亚之力-盖伦','德玛'),(4789652376518656,'Customer System Development','CSD');
 /*!40000 ALTER TABLE `Branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,29 +92,23 @@ CREATE TABLE `Department` (
 
 LOCK TABLES `Department` WRITE;
 /*!40000 ALTER TABLE `Department` DISABLE KEYS */;
+INSERT INTO `Department` VALUES (4717142704390144,'牛逼部门','18526325350','0086001',4715897054822400,4709597210214400),(4717361437343744,'收钱部门','18526325350','0086001',4715897054822400,4709597210214400),(4717381758746624,'挨打部门','18526325350','0086001',4715897054822400,4709597210214400),(4718641199185920,'加油部门','18526325350','0086001',4715897054822400,4709597210214400),(4718661759664128,'做饭部门','18526325350','0086001',4715897054822400,4709597210214400),(4718691837018112,'洗碗部门','18526325350','0086001',4715897054822400,4709597210214400),(4718712607211520,'扫地部门','18526325350','0086001',4715897054822400,4709597210214400);
 /*!40000 ALTER TABLE `Department` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `file`
+-- Table structure for table `FileInfo`
 --
 
-DROP TABLE IF EXISTS FileInfo;
+DROP TABLE IF EXISTS `FileInfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `file` (
+CREATE TABLE `FileInfo` (
   `fileId` bigint(20) unsigned NOT NULL,
-<<<<<<< HEAD
-  `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `fileType` bigint(20) unsigned NOT NULL,
-  `fileOwner` bigint(20) unsigned NOT NULL,
-=======
   `fileName` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `filePath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `fileTypeId` bigint(20) unsigned NOT NULL,
   `fileOwnerId` bigint(20) unsigned NOT NULL,
->>>>>>> develop
   `parentId` bigint(20) unsigned NOT NULL,
   `uploadTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
@@ -132,13 +120,13 @@ CREATE TABLE `file` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `file`
+-- Dumping data for table `FileInfo`
 --
 
-LOCK TABLES FileInfo WRITE;
-/*!40000 ALTER TABLE FileInfo DISABLE KEYS */;
-INSERT INTO FileInfo VALUES (273734225100800,'文件管理','',2458562643099648,0,0,'2019-08-23 15:05:31','文件管理根目录',0,0,'2019-08-29 14:23:19'),(273734225100889,'回收站','',2458562643099648,0,0,'2019-08-27 10:04:36','回收站根目录',0,0,'2019-08-29 14:23:19'),(2543243162025984,'文件夹','/Users/hasaker/Desktop/Deemo/Files/文件夹',2458562643099648,0,273734225100800,'2019-08-28 17:15:42','这是一个文件夹',0,2543243162025984,'2019-08-29 14:23:19'),(2543472582066176,'文件夹2','/Users/hasaker/Desktop/Deemo/Files/文件夹2',2458562643099648,0,273734225100800,'2019-08-28 17:16:37','这是一个文件夹2',0,273734225100800,'2019-08-29 14:23:19'),(2543951856795648,'文件2.jpg','/Users/hasaker/Desktop/Deemo/Files/文件2.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:31','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543967245697024,'文件1.jpg','/Users/hasaker/Desktop/Deemo/Files/文件1.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:35','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543998661033984,'文件3.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件3.xlsx',2458562408218624,0,273734225100800,'2019-08-28 17:18:42','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2544093049651200,'文件4.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件4.xlsx',2458562408218624,0,2543243162025984,'2019-08-28 17:19:05','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544125391929344,'文件5.ppt','/Users/hasaker/Desktop/Deemo/Files/文件5.ppt',2458562521464832,0,2543243162025984,'2019-08-28 17:19:13','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544166298976256,'文件6.pdf','/Users/hasaker/Desktop/Deemo/Files/文件6.pdf',2458562479521792,0,2543243162025984,'2019-08-28 17:19:22','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544764712910848,'文件7.pdf','/Users/hasaker/Desktop/Deemo/Files/文件7.pdf',2458562479521792,0,2543472582066176,'2019-08-28 17:21:45','这是一个文件2',0,2543472582066176,'2019-08-29 14:23:19');
-/*!40000 ALTER TABLE FileInfo ENABLE KEYS */;
+LOCK TABLES `FileInfo` WRITE;
+/*!40000 ALTER TABLE `FileInfo` DISABLE KEYS */;
+INSERT INTO `FileInfo` VALUES (273734225100800,'文件管理','',2458562643099648,4715897054822400,0,'2019-08-23 15:05:31','文件管理根目录',0,0,'2019-08-29 14:23:19'),(273734225100889,'回收站','',2458562643099648,4715897054822400,0,'2019-08-27 10:04:36','回收站根目录',0,0,'2019-08-29 14:23:19'),(2543243162025984,'文件夹','/Users/hasaker/Desktop/Deemo/Files/文件夹',2458562643099648,4715897054822400,273734225100800,'2019-08-28 17:15:42','这是一个文件夹',0,2543243162025984,'2019-08-29 14:23:19'),(2543472582066176,'文件夹2','/Users/hasaker/Desktop/Deemo/Files/文件夹2',2458562643099648,4715897054822400,273734225100800,'2019-08-28 17:16:37','这是一个文件夹2',0,273734225100800,'2019-08-29 14:23:19'),(2543951856795648,'文件2.jpg','/Users/hasaker/Desktop/Deemo/Files/文件2.jpg',2458562466938880,4715897054822400,273734225100800,'2019-08-28 17:18:31','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543967245697024,'文件1.jpg','/Users/hasaker/Desktop/Deemo/Files/文件1.jpg',2458562466938880,4715897054822400,273734225100800,'2019-08-28 17:18:35','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543998661033984,'文件3.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件3.xlsx',2458562408218624,4715897054822400,273734225100800,'2019-08-28 17:18:42','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2544093049651200,'文件4.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件4.xlsx',2458562408218624,4715897054822400,2543243162025984,'2019-08-28 17:19:05','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544125391929344,'文件5.ppt','/Users/hasaker/Desktop/Deemo/Files/文件5.ppt',2458562521464832,4715897054822400,2543243162025984,'2019-08-28 17:19:13','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544166298976256,'文件6.pdf','/Users/hasaker/Desktop/Deemo/Files/文件6.pdf',2458562479521792,4715897054822400,2543243162025984,'2019-08-28 17:19:22','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544764712910848,'文件7.pdf','/Users/hasaker/Desktop/Deemo/Files/文件7.pdf',2458562479521792,4715897054822400,2543472582066176,'2019-08-28 17:21:45','这是一个文件2',0,2543472582066176,'2019-08-29 14:23:19');
+/*!40000 ALTER TABLE `FileInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -195,29 +183,30 @@ LOCK TABLES `LoginLog` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ManualSigin`
+-- Table structure for table `ManualSign`
 --
 
-DROP TABLE IF EXISTS ManualSign;
+DROP TABLE IF EXISTS `ManualSign`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ManualSigin` (
-  `manualSiginId` bigint(20) unsigned NOT NULL,
+CREATE TABLE `ManualSign` (
+  `manualSignId` bigint(20) unsigned NOT NULL,
   `userId` bigint(20) unsigned NOT NULL,
-  `singinTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `singinDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `singinTag` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`manualSiginId`)
+  `signTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `signDesc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `signTag` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`manualSignId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ManualSigin`
+-- Dumping data for table `ManualSign`
 --
 
-LOCK TABLES ManualSign WRITE;
-/*!40000 ALTER TABLE ManualSign DISABLE KEYS */;
-/*!40000 ALTER TABLE ManualSign ENABLE KEYS */;
+LOCK TABLES `ManualSign` WRITE;
+/*!40000 ALTER TABLE `ManualSign` DISABLE KEYS */;
+INSERT INTO `ManualSign` VALUES (4725314722725888,4715897054822400,'2019-09-03 17:46:29','签到啦啦啦',0),(4776686566506496,4715897054822400,'2019-09-03 21:10:37','啦啦啦',0),(4776722171953152,4715897054822400,'2019-09-03 21:10:45','啦啦啦',0),(4776731881766912,4715897054822400,'2019-09-03 21:10:48','啦啦啦',0),(4776731974041600,4715897054822400,'2019-09-03 21:10:48','啦啦啦',0),(4776732557049856,4715897054822400,'2019-09-03 21:10:48','啦啦啦',0),(4776733299441664,4715897054822400,'2019-09-03 21:10:48','啦啦啦',0),(4776733962141696,4715897054822400,'2019-09-03 21:10:48','啦啦啦',0),(4776734650007552,4715897054822400,'2019-09-03 21:10:48','啦啦啦',0),(4776735300124672,4715897054822400,'2019-09-03 21:10:48','修改测试',0),(4776735946047488,4715897054822400,'2019-09-03 21:10:49','啦啦啦',0),(4776736587776000,4715897054822400,'2019-09-03 21:10:49','啦啦啦',0),(4776737162395648,4715897054822400,'2019-09-03 21:10:49','啦啦啦',0),(4776737875427328,4715897054822400,'2019-09-03 21:10:49','啦啦啦',0),(4776740526227456,4715897054822400,'2019-09-03 21:10:50','啦啦啦',0),(4776741058904064,4715897054822400,'2019-09-03 21:10:50','啦啦啦',0);
+/*!40000 ALTER TABLE `ManualSign` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -307,13 +296,8 @@ DROP TABLE IF EXISTS `Message`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Message` (
   `messageId` bigint(20) unsigned NOT NULL,
-<<<<<<< HEAD
-  `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `messageType` bigint(20) unsigned NOT NULL,
-=======
   `messageTypeId` bigint(20) unsigned NOT NULL,
   `messageTitle` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
->>>>>>> develop
   `messageContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -334,13 +318,13 @@ LOCK TABLES `Message` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `messageTrans`
+-- Table structure for table `MessageTrans`
 --
 
-DROP TABLE IF EXISTS MessageTrans;
+DROP TABLE IF EXISTS `MessageTrans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `messageTrans` (
+CREATE TABLE `MessageTrans` (
   `messageTransId` bigint(20) unsigned NOT NULL,
   `messageId` bigint(20) unsigned NOT NULL,
   `recipientId` bigint(20) unsigned NOT NULL,
@@ -350,12 +334,12 @@ CREATE TABLE `messageTrans` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `messageTrans`
+-- Dumping data for table `MessageTrans`
 --
 
-LOCK TABLES MessageTrans WRITE;
-/*!40000 ALTER TABLE MessageTrans DISABLE KEYS */;
-/*!40000 ALTER TABLE MessageTrans ENABLE KEYS */;
+LOCK TABLES `MessageTrans` WRITE;
+/*!40000 ALTER TABLE `MessageTrans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MessageTrans` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -498,12 +482,7 @@ CREATE TABLE `Schedule` (
   `scheduleContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `beginTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `endTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-<<<<<<< HEAD
-  `meetingType` bigint(20) unsigned NOT NULL,
-  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-=======
   `meetingTypeId` bigint(20) unsigned NOT NULL,
->>>>>>> develop
   `createUserId` bigint(20) unsigned NOT NULL,
   `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isPrivate` tinyint(4) NOT NULL DEFAULT '0',
@@ -546,6 +525,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (4715897054822400,'Hasaker','123','余天堂',0,'avatar',0,0),(4782823961526272,'fuduwen','123','付杜文',1,'132123',4718691837018112,0),(4782929997725696,'string','string','string',0,'string',0,0);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -582,7 +562,6 @@ DROP TABLE IF EXISTS `WorkTime`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `WorkTime` (
   `workTimeId` bigint(20) unsigned NOT NULL,
-  `userId` bigint(20) unsigned NOT NULL,
   `onDutyTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `offDutyTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`workTimeId`)
@@ -607,4 +586,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-29 14:59:21
+-- Dump completed on 2019-09-03 22:49:18
