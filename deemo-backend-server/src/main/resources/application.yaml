@@ -23,7 +23,7 @@ spring:
 
 mybatis:
   typeAliasesPackage: com.capgemin.cn.deemo.data.domain
-  mapperLocations: classpath:mapping/*.xml
+  mapperLocations: classpath:mapper/*.xml
   config-location: classpath:/mybatis-config.xml
 
 logging:
