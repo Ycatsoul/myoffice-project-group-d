@@ -1,14 +1,11 @@
 package com.capgemini.cn.deemo.service;
 
-import com.capgemini.cn.deemo.data.domain.Branch;
-import com.capgemini.cn.deemo.data.dto.BranchDto;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.BranchEditVo;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.request.BranchVo;
-import com.capgemini.cn.deemo.vo.response.BranchResponseVo;
-import org.springframework.stereotype.Service;
+import com.capgemini.cn.deemo.vo.response.BranchVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description:
@@ -16,23 +13,39 @@ import java.util.Map;
  * @author: GuoBingjun
  * @date:
  */
-@Service
 public interface BranchService {
-    Branch queryObject(Integer id);
+    /**
+     * 根据branchId获取Branch实体
+     * @param branchId Long
+     * @return Branch
+     */
+    RespVos<BranchVo> getBranch(Long branchId);
 
-    List<Branch> queryList(Map<String, Object> map);
+    /**
+     * 根据branchSearchVo获取Branch列表
+     * @param branchSearchVo BranchSearchVo
+     * @return RespVos<BranchVo>
+     */
+    RespVos<BranchVo> listBranches(BranchSearchVo branchSearchVo);
 
-    int queryTotal(Map<String, Object> map);
+    /**
+     * 添加Branch
+     * @param branchEditVo BranchEditVo
+     * @return 1
+     */
+    Integer addBranch(BranchEditVo branchEditVo);
 
-    boolean save(Branch branch);
+    /**
+     * 编辑Branch
+     * @param branchEditVo BranchEditVo
+     * @return 1
+     */
+    Integer updateBranch(BranchEditVo branchEditVo);
 
-    boolean update(Branch branch);
-
-    boolean delete(Integer id);
-
-    boolean deleteBatch(Integer[] ids);
-
-    BranchResponseVo listBranch(BranchSearchVo branchSearchVo);
-
-    List<BranchDto> queryAllBranch();
+    /**
+     * 删除Branch
+     * @param branchIds branchId链表
+     * @return 被删除的branch行数
+     */
+    Integer deleteBranches(List<Long> branchIds);
 }

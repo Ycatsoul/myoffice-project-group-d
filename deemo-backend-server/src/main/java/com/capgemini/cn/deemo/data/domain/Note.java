@@ -11,9 +11,28 @@ import java.sql.Date;
  */
 @Data
 public class Note {
+    /**
+     * ID
+     */
     private Long noteId;
+
+    /**
+     * 标题
+     */
     private String noteTitle;
+
+    /**
+     * 内容
+     */
     private String noteContent;
+
+    /**
+     * 创建时间
+     */
     private Date createTime;
-    private String createUser;
+
+    /**
+     * 创建用户ID
+     */
+    private String createUserId;
 }

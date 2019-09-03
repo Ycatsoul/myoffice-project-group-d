@@ -35,6 +35,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // setAllowedOrigins("*")表示可以跨域
         // withSockJS()表示支持socktJS访问，在浏览器中使用
         stompEndpointRegistry.addEndpoint("/ws/endpointChat").withSockJS();
-
     }
 }

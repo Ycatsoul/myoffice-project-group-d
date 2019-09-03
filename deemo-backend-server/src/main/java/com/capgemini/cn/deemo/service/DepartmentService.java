@@ -1,13 +1,11 @@
 package com.capgemini.cn.deemo.service;
 
-import com.capgemini.cn.deemo.data.domain.Department;
-import com.capgemini.cn.deemo.data.dto.DepartmentDto;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
-import com.capgemini.cn.deemo.vo.response.DepartmentResponseVo;
-import org.springframework.stereotype.Service;
+import com.capgemini.cn.deemo.vo.response.DepartmentVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description:
@@ -15,24 +13,15 @@ import java.util.Map;
  * @author: GuoBingjun
  * @date:
  */
-@Service
 public interface DepartmentService {
-    Department queryObject(Integer id);
+    RespVos<DepartmentVo> getDepartment(Long departmentId);
 
-    List<Department> queryList(Map<String, Object> map);
+    RespVos<DepartmentVo> listDepartments(DepartmentSearchVo departmentSearchVo);
 
-    int queryTotal(Map<String, Object> map);
+    Integer addDepartment(DepartmentEditVo departmentEditVo);
 
-    boolean save(Department department);
+    Integer updateDepartment(DepartmentEditVo departmentEditVo);
 
-    boolean update(Department department);
-
-    boolean delete(Integer id);
-
-    boolean deleteBatch(Integer[] ids);
-
-    DepartmentResponseVo listDepart(DepartmentSearchVo departmentSearchVo);
-
-    List<DepartmentDto> queryAll();
+    Integer deleteDepartments(List<Long> departmentIds);
 
 }

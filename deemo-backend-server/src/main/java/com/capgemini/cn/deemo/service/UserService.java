@@ -1,13 +1,11 @@
 package com.capgemini.cn.deemo.service;
 
-import com.capgemini.cn.deemo.data.domain.User;
-import com.capgemini.cn.deemo.data.dto.UserDto;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
-import com.capgemini.cn.deemo.vo.response.UserResponseVo;
-import org.springframework.stereotype.Service;
+import com.capgemini.cn.deemo.vo.response.UserVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description:
@@ -15,26 +13,17 @@ import java.util.Map;
  * @author: GuoBingjun
  * @date:
  */
-@Service
 public interface UserService {
 
-    User queryObject(Integer id);
+    RespVos<UserVo> getUser(Long userId);
 
-    List<User> queryList(Map<String, Object> map);
+    RespVos<UserVo> listUsers(UserSearchVo userSearchVo);
 
-    int queryTotal(Map<String, Object> map);
+    Integer addUser(UserEditVo userEditVo);
 
-    boolean save(User user);
+    Integer updateUser(UserEditVo userEditVo);
 
-    boolean update(User user);
+    Integer blockUsers(List<Long> userIds);
 
-    boolean delete(Integer id);
-
-    boolean deleteBatch(Integer[] ids);
-
-    UserResponseVo listUser(UserSearchVo userSearchVo);
-
-    List<UserDto> queryAll();
-    //批量删除员工信息接口
-    //public int deleteBatch(@Param("id") List<Integer> ids);
+    Integer deleteUsers(List<Long> userIds);
 }

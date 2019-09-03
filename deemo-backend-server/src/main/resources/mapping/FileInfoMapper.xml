@@ -34,7 +34,7 @@
 
   <!-- 根据fileId获取文件详尽信息 -->
   <select id="getFile" resultType="com.capgemini.cn.deemo.data.domain.FileInfo">
-    SELECT * FROM File WHERE fileId = #{fileId}
+    SELECT * FROM FileInfo WHERE fileId = #{fileId}
   </select>
 
   <!-- 获取文件列表 -->
@@ -42,7 +42,7 @@
           parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo"
           resultType="com.capgemini.cn.deemo.data.domain.FileInfo">
     SELECT *
-    FROM File
+    FROM FileInfo
     WHERE isDeleted = 0 <include refid="searchFields" />
     ORDER BY uploadTime
     LIMIT #{fileInfoSearchVo.start}, #{fileInfoSearchVo.size}
@@ -53,13 +53,13 @@
           resultType="Integer"
           parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo">
     SELECT count(1)
-    FROM File
+    FROM FileInfo
     WHERE isDeleted = 0 <include refid="searchFields" />
   </select>
   
   <!-- 获取当前目录下的所有文件ID -->
   <select id="getChildIds" parameterType="Long" resultType="Long">
-    SELECT fileId FROM File WHERE parentId = #{parentId}
+    SELECT fileId FROM FileInfo WHERE parentId = #{parentId}
   </select>
 
   <!-- 获取回收站文件列表 -->
@@ -67,7 +67,7 @@
           parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo"
           resultType="com.capgemini.cn.deemo.data.domain.FileInfo">
     SELECT *
-    FROM File
+    FROM FileInfo
     WHERE isDeleted = 1 <include refid="searchFieldsInTrash" />
     ORDER BY deleteTime
     LIMIT #{fileInfoSearchVo.start}, #{fileInfoSearchVo.size}
@@ -77,12 +77,12 @@
   <select id="countFilesInTrash"
           resultType="Integer"
           parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo">
-    SELECT count(1) FROM File WHERE isDeleted = 1 <include refid="searchFieldsInTrash" />
+    SELECT count(1) FROM FileInfo WHERE isDeleted = 1 <include refid="searchFieldsInTrash" />
   </select>
 
   <!-- 插入一条文件记录 -->
   <insert id="insertFile" parameterType="com.capgemini.cn.deemo.data.domain.FileInfo">
-    INSERT INTO File (
+    INSERT INTO FileInfo (
       fileId,
       fileName,
       filePath,
@@ -105,14 +105,16 @@
 
   <!-- 更新文件信息 可更新字段: 文件名 备注信息 -->
   <update id="updateFile" parameterType="com.capgemini.cn.deemo.vo.request.FileInfoEditVo">
-    UPDATE File
-    SET fileName = #{fileInfoEditVo.fileName}, remark = #{fileInfoEditVo.remark}
+    UPDATE FileInfo
+    SET fileName = #{fileInfoEditVo.fileName},
+        fileTypeId = #{fileInfoEditVo.
+        remark = #{fileInfoEditVo.remark}
     WHERE fileId = #{fileInfoEditVo.fileId}
   </update>
 
   <!-- 根据fileId将文件放入回收站并设置父文件夹ID为回收站(273734225100889) -->
   <update id="putFilesToTrash" parameterType="java.util.List">
-    UPDATE File
+    UPDATE FileInfo
     SET isDeleted = 1, deleteTime = now(), parentIdInTrash = 273734225100889
     WHERE fileId IN
       <foreach collection="fileIds" item="fileId" separator="," open="(" close=")">
@@ -122,7 +124,7 @@
   
   <!-- 根据fileId将文件放入回收站 -->
   <update id="putChildrenToTrash" parameterType="java.util.List">
-    UPDATE File
+    UPDATE FileInfo
     SET isDeleted = 1, deleteTime = now()
     WHERE fileId IN
       <foreach collection="childIds" item="childId" separator="," open="(" close=")">
@@ -132,14 +134,14 @@
 
   <!-- 根据fileId从回收站中恢复文件 -->
   <update id="restoreFileFromTrash" parameterType="Long">
-    UPDATE File
+    UPDATE FileInfo
     SET isDeleted = 0, deleteTime = NULL, parentIdInTrash = #{fileId}
     WHERE fileId = #{fileId}
   </update>
   
   <!-- 根据fileId从回收站中恢复文件夹中的子文件 -->
   <update id="restoreChildrenFromTrash" parameterType="java.util.List">
-    UPDATE File SET isDeleted = 0, deleteTime = NULL WHERE fileId IN
+    UPDATE FileInfo SET isDeleted = 0, deleteTime = NULL WHERE fileId IN
       <foreach collection="childIds" item="childId" separator="," open="(" close=")">
         #{childId}
       </foreach>
@@ -147,7 +149,7 @@
 
   <!-- 根据fileId从回收站中永久删除文件 -->
   <delete id="deleteFilesFromTrash" parameterType="java.util.List">
-    DELETE FROM File WHERE fileId IN
+    DELETE FROM FileInfo WHERE fileId IN
       <foreach collection="fileIds" item="fileId" separator="," open="(" close=")">
         #{fileId}
       </foreach>

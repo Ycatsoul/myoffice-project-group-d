@@ -1,19 +1,18 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
-import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.service.BranchService;
-import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespBean;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.BranchEditVo;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.response.BranchResponseVo;
+import com.capgemini.cn.deemo.vo.response.BranchVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Description:
@@ -23,98 +22,62 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Api
 @RestController
-@RequestMapping("/user/branch")
+@RequestMapping("/branch")
 public class BranchController extends BaseController {
 
-    @Autowired
-    private BranchService branchService;
+    private final BranchService branchService;
 
-    @ApiOperation("显示页面字段信息")
-    @PostMapping("list")
-    public RespBean list(@RequestBody BranchSearchVo branchSearchVo){
-        BranchResponseVo branchResponseVo = branchService.listBranch(branchSearchVo);
-        if (branchResponseVo != null) {
-            return RespBean.ok("查询成功",branchResponseVo);
-        }
-        return RespBean.error("查询失败！");
-
+    public BranchController(BranchService branchService) {
+        this.branchService = branchService;
     }
 
     @ApiOperation("根据id查询机构信息")
-    @GetMapping("/info/{id}")
-    public RespBean info(@PathVariable("id") Integer id){
+    @GetMapping("/{branchId}")
+    public RespBean getBranch(@PathVariable("branchId") Long branchId){
 
-        if(StringUtils.isBlank(id.toString())){
+        if(StringUtils.isBlank(branchId.toString())){
             return RespBean.error("id不能为空");
         }
 
-        Branch branch = branchService.queryObject(id);
+        RespVos<BranchVo> respVos = branchService.getBranch(branchId);
 
-        return RespBean.ok("成功",branch);
+        if (respVos != null) {
+            return RespBean.ok("成功!", respVos);
+        }
+
+        return RespBean.error("失败!");
     }
 
-    @ApiOperation("添加机构信息")
-    @PutMapping("/save")
-    public RespBean save(@RequestBody Branch branch, HttpServletRequest request){
+    @ApiOperation("显示Branch列表")
+    @PostMapping("/list")
+    public RespBean listBranches(@RequestBody BranchSearchVo branchSearchVo){
+        RespVos<BranchVo> respVos = branchService.listBranches(branchSearchVo);
 
-//        //设置部门名称
-//        branchService.queryObject(Integer.parseInt(branch.getId().toString()));
-//        branch.setBranchName(branch.getBranchName());
-
-        branch.setBranchId(IdWorker.get().nextId());
-
-        boolean result = branchService.save(branch);
-
-
-        //判断是否成功
-        if(result){
-            return RespBean.ok("添加成功",branch);
+        if (respVos != null) {
+            return RespBean.ok("查询成功!", respVos);
         }
-        else {
-            return RespBean.error("添加失败");
-        }
+
+        return RespBean.error("查询失败！");
     }
 
+    @ApiOperation("添加Branch信息")
+    @PostMapping("/add")
+    public RespBean addBranch(@RequestBody BranchEditVo branchEditVo){
 
-    /**
-     * 修改
-     */
-    @ApiOperation("修改机构信息")
-    @PostMapping("/update")
-    public RespBean update(@RequestBody Branch branch,HttpServletRequest request){
-
-        boolean result = branchService.update(branch);
-
-        //判断是否成功
-        if(result){
-            return RespBean.ok("修改成功",branch);
-        }
-        else {
-            return RespBean.error("修改失败");
-        }
+        return branchService.addBranch(branchEditVo) > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
+    @ApiOperation("修改Branch信息")
+    @PutMapping("/update")
+    public RespBean updateBranch(@RequestBody BranchEditVo branchEditVo){
 
-    /**
-     * 删除
-     */
-    @ApiOperation("删除机构信息")
-    @DeleteMapping(value = "/delete/{id}")
-    public RespBean delete (@PathVariable Integer id, HttpServletRequest request){
+        return branchService.updateBranch(branchEditVo) > 0 ? RespBean.ok("编辑成功!") : RespBean.error("编辑失败!");
+    }
 
-        if (StringUtils.isBlank(id.toString())) {
-            return RespBean.error("删除失败");
-        }
+    @ApiOperation("删除Branch信息")
+    @PostMapping("/delete")
+    public RespBean deleteBranches(@RequestBody List<Long> branchIds){
 
-        boolean result = branchService.delete(id);
-
-        //判断是否成功
-        if(result){
-            return RespBean.ok("删除成功");
-        }
-        else {
-            return RespBean.error("删除失败");
-        }
-
+        return branchService.deleteBranches(branchIds) > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
 }

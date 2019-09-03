@@ -1,23 +1,23 @@
-package com.capgemini.cn.deemo.data.domain;
+package com.capgemini.cn.deemo.vo.response;
 
 import lombok.Data;
 
 /**
- * @Description:部门管理实体类
- * @Classname :Department
+ * @Description:
+ * @Classname :
  * @author: GuoBingjun
- * @date:2019-8-26 11:35
+ * @date:
  */
 @Data
-public class Department {
+public class DepartmentVo {
     /**
-     * 部门ID
+     * 部门Id
      */
     private Long departmentId;
 
-    /*
+    /**
      * 部门名称
-     * */
+     */
     private String departmentName;
 
     /**
@@ -31,13 +31,27 @@ public class Department {
     private String connectTelephone;
 
     /**
-     * 部门负责人ID
+     * 法人ID
      */
     private Long principalUserId;
+
+    /**
+     * 主管姓名
+     */
+    private String principalUserName;
 
     /**
      * 所属机构ID
      */
     private Long branchId;
 
+    /**
+     * 所属机构名称
+     */
+    private String branchName;
+
+    /**
+     * 所属机构简称
+     */
+    private String branchShortName;
 }

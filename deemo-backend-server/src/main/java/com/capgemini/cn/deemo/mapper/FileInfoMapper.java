@@ -4,6 +4,7 @@ import com.capgemini.cn.deemo.data.domain.FileInfo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @author hasaker
  * @since 2019-08-22 10:15
  */
+@Service
 public interface FileInfoMapper {
     FileInfo getFile(@Param("fileId") Long fileId);
 

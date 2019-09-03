@@ -1,9 +1,10 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.Department;
-import com.capgemini.cn.deemo.data.dto.DepartmentDto;
+import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,8 +14,17 @@ import java.util.List;
  * @author: GuoBingjun
  * @date:2019-8-26 13:30
  */
-public interface DepartmentMapper extends BaseMapper<Department> {
-    List<Department> listDepart(@Param("departmentSearch") DepartmentSearchVo departmentSearchVo);
-    Long countDepart(@Param("departmentSearch") DepartmentSearchVo departmentSearchVo);
-    List<DepartmentDto> queryAll();
+@Service
+public interface DepartmentMapper {
+    Department getDepartment(@Param("departmentId") Long departmentId);
+
+    List<Department> listDepartments(@Param("departmentSearchVo")DepartmentSearchVo departmentSearchVo);
+
+    Integer countDepartments(@Param("departmentSearchVo")DepartmentSearchVo departmentSearchVo);
+
+    Integer insertDepartment(@Param("departmentEditVo") DepartmentEditVo departmentEditVo);
+
+    Integer updateDepartment(@Param("departmentEditVo") DepartmentEditVo departmentEditVo);
+
+    Integer deleteDepartments(@Param("departmentIds") List<Long> departmentIds);
 }

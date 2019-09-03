@@ -3,7 +3,7 @@ package com.capgemini.cn.deemo.service;
 import com.capgemini.cn.deemo.service.impl.FileInfoServiceImpl;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
-import com.capgemini.cn.deemo.vo.response.FileInfoRespVo;
+import com.capgemini.cn.deemo.vo.response.FileInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ public class FileInfoServiceTest {
 
     @Test
     public void getFileTest() {
-        RespVos<FileInfoRespVo> res = fileInfoServiceImpl.getFile(2500924329164800L);
+        RespVos<FileInfoVo> res = fileInfoServiceImpl.getFile(2500924329164800L);
 
         assert res.getSize() > 0;
         log.info(res.getSize().toString());
@@ -41,7 +41,7 @@ public class FileInfoServiceTest {
         FileInfoSearchVo fileInfoSearchVo = new FileInfoSearchVo();
         fileInfoSearchVo.setFileName("rar");
 
-        RespVos<FileInfoRespVo> res = fileInfoServiceImpl.listFiles(fileInfoSearchVo);
+        RespVos<FileInfoVo> res = fileInfoServiceImpl.listFiles(fileInfoSearchVo);
         log.info(fileInfoSearchVo.toString());
         log.info(res.toString());
     }

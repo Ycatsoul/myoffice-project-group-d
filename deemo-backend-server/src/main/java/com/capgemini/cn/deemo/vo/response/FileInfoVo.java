@@ -1,17 +1,15 @@
-package com.capgemini.cn.deemo.data.domain;
+package com.capgemini.cn.deemo.vo.response;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.sql.Date;
 
 /**
  * @author hasaker
- * @since 2019-08-21 15:06
+ * @since 2019-08-23 15:46
  */
 @Data
-@ApiModel
-public class FileInfo {
+public class FileInfoVo {
 
     /**
      * 文件ID
@@ -19,7 +17,7 @@ public class FileInfo {
     private Long fileId;
 
     /**
-     * 文件名
+     * 文件名称
      */
     private String fileName;
 
@@ -34,12 +32,27 @@ public class FileInfo {
     private Long fileTypeId;
 
     /**
-     * 文件所有者ID
+     * 文件类型名称
+     */
+    private String fileTypeName;
+
+    /**
+     * 文件类型图标
+     */
+    private String fileTypeImage;
+
+    /**
+     * 文件拥有者ID
      */
     private Long fileOwnerId;
 
     /**
-     * 文件父目录ID
+     * 文件拥有者名字
+     */
+    private String fileOwnerName;
+
+    /**
+     * 父文件夹ID
      */
     private Long parentId;
 
@@ -49,22 +62,22 @@ public class FileInfo {
     private Date uploadTime;
 
     /**
-     * 备注
+     * 文件备注
      */
     private String remark;
 
     /**
-     * 文件是否被删除
+     * 文件是否已放入回收站
      */
     private Boolean isDeleted;
 
     /**
-     * 在回收站中的父文件夹ID
+     * 文件在回收站中的父文件夹
      */
     private Long parentIdInTrash;
 
     /**
-     * 删除时间
+     * 文件放入回收站的时间
      */
     private Date deleteTime;
 }

@@ -1,19 +1,22 @@
 package com.capgemini.cn.deemo.service.impl;
 
+import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.data.domain.Department;
-import com.capgemini.cn.deemo.data.dto.DepartmentDto;
+import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.mapper.BranchMapper;
 import com.capgemini.cn.deemo.mapper.DepartmentMapper;
+import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.DepartmentService;
-import com.capgemini.cn.deemo.utils.ConvertUtils;
+import com.capgemini.cn.deemo.utils.IdWorker;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
-import com.capgemini.cn.deemo.vo.request.DepartmentVo;
-import com.capgemini.cn.deemo.vo.response.DepartmentResponseVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.capgemini.cn.deemo.vo.response.DepartmentVo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Description:部门管理实现类
@@ -24,62 +27,85 @@ import java.util.Map;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    @Autowired
-    private DepartmentMapper departmentMapper;
+    private final DepartmentMapper departmentMapper;
+    private final BranchMapper branchMapper;
+    private final UserMapper userMapper;
 
-    @Override
-    public Department queryObject(Integer id) {
-        return departmentMapper.queryObject(id);
+    public DepartmentServiceImpl(DepartmentMapper departmentMapper, BranchMapper branchMapper, UserMapper userMapper) {
+        this.departmentMapper = departmentMapper;
+        this.branchMapper = branchMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public List<Department> queryList(Map<String, Object> map) {
-        return departmentMapper.queryList(map);
-    }
+    public RespVos<DepartmentVo> getDepartment(Long departmentId) {
+        Department department = departmentMapper.getDepartment(departmentId);
 
-    @Override
-    public int queryTotal(Map<String, Object> map) {
-        return departmentMapper.queryTotal(map);
-    }
+        if (department != null) {
+            RespVos<DepartmentVo> respVos = new RespVos<>();
+            respVos.setSize(1);
+            respVos.setVos(new ArrayList<DepartmentVo>(){{
+                add(convertToVo(department));
+            }});
 
-    @Override
-    public boolean save(Department department) {
-        return departmentMapper.save(department) > 0;
-    }
-
-    @Override
-    public boolean update(Department department) {
-        return departmentMapper.update(department) > 0;
-    }
-
-    @Override
-    public boolean delete(Integer id) {
-        return departmentMapper.delete(id) > 0;
-    }
-
-    @Override
-    public boolean deleteBatch(Integer[] ids) {
-        return departmentMapper.deleteBatch(ids) > 0;
-    }
-
-    @Override
-    public DepartmentResponseVo listDepart(DepartmentSearchVo departmentSearchVo) {
-        DepartmentResponseVo departmentResponseVo = new DepartmentResponseVo();
-        List<Department> departmentList = departmentMapper.listDepart(departmentSearchVo);
-        List<DepartmentVo> departmentVos = new ArrayList<DepartmentVo>();
-        for (Department department : departmentList) {
-            DepartmentVo departmentVo = new DepartmentVo();
-            departmentVos.add(ConvertUtils.convertDepartmentToVo(department));
+            return respVos;
         }
-        departmentResponseVo.setDepartmentVos(departmentVos);
-        departmentResponseVo.setListCount(departmentMapper.countDepart(departmentSearchVo));
-        return departmentResponseVo;
+
+        return null;
     }
 
     @Override
-    public List<DepartmentDto> queryAll() {
-        return departmentMapper.queryAll();
+    public RespVos<DepartmentVo> listDepartments(DepartmentSearchVo departmentSearchVo) {
+        List<Department> departments = departmentMapper.listDepartments(departmentSearchVo);
+
+        if (departments != null && departments.size() > 0) {
+            RespVos<DepartmentVo> respVos = new RespVos<>();
+            respVos.setSize(departmentMapper.countDepartments(departmentSearchVo));
+            respVos.setVos(departments.stream().map(this::convertToVo).collect(Collectors.toList()));
+
+            return respVos;
+        }
+
+        return null;
     }
 
+    @Override
+    public Integer addDepartment(DepartmentEditVo departmentEditVo) {
+        departmentEditVo.setDepartmentId(IdWorker.get().nextId());
 
+        return departmentMapper.insertDepartment(departmentEditVo);
+    }
+
+    @Override
+    public Integer updateDepartment(DepartmentEditVo departmentEditVo) {
+        return departmentMapper.updateDepartment(departmentEditVo);
+    }
+
+    @Override
+    public Integer deleteDepartments(List<Long> departmentIds) {
+        return departmentMapper.deleteDepartments(departmentIds);
+    }
+
+    /**
+     * 将Department装换为DepartmentVo
+     * @param department entity
+     * @return departmentVo
+     */
+    private DepartmentVo convertToVo(Department department) {
+        DepartmentVo departmentVo = new DepartmentVo();
+        Branch branch = branchMapper.getBranch(department.getBranchId());
+        User user = userMapper.getUser(department.getPrincipalUserId());
+
+        departmentVo.setDepartmentId(department.getDepartmentId());
+        departmentVo.setDepartmentName(department.getDepartmentName());
+        departmentVo.setConnectPhone(department.getConnectPhone());
+        departmentVo.setConnectTelephone(department.getConnectTelephone());
+        departmentVo.setPrincipalUserId(department.getPrincipalUserId());
+        departmentVo.setPrincipalUserName(user.getName());
+        departmentVo.setBranchId(department.getBranchId());
+        departmentVo.setBranchName(branch.getBranchName());
+        departmentVo.setBranchShortName(branch.getBranchShortName());
+
+        return departmentVo;
+    }
 }

@@ -105,7 +105,7 @@ UNLOCK TABLES;
 -- Table structure for table `file`
 --
 
-DROP TABLE IF EXISTS `file`;
+DROP TABLE IF EXISTS FileInfo;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `file` (
@@ -135,10 +135,10 @@ CREATE TABLE `file` (
 -- Dumping data for table `file`
 --
 
-LOCK TABLES `file` WRITE;
-/*!40000 ALTER TABLE `file` DISABLE KEYS */;
-INSERT INTO `file` VALUES (273734225100800,'文件管理','',2458562643099648,0,0,'2019-08-23 15:05:31','文件管理根目录',0,0,'2019-08-29 14:23:19'),(273734225100889,'回收站','',2458562643099648,0,0,'2019-08-27 10:04:36','回收站根目录',0,0,'2019-08-29 14:23:19'),(2543243162025984,'文件夹','/Users/hasaker/Desktop/Deemo/Files/文件夹',2458562643099648,0,273734225100800,'2019-08-28 17:15:42','这是一个文件夹',0,2543243162025984,'2019-08-29 14:23:19'),(2543472582066176,'文件夹2','/Users/hasaker/Desktop/Deemo/Files/文件夹2',2458562643099648,0,273734225100800,'2019-08-28 17:16:37','这是一个文件夹2',0,273734225100800,'2019-08-29 14:23:19'),(2543951856795648,'文件2.jpg','/Users/hasaker/Desktop/Deemo/Files/文件2.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:31','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543967245697024,'文件1.jpg','/Users/hasaker/Desktop/Deemo/Files/文件1.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:35','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543998661033984,'文件3.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件3.xlsx',2458562408218624,0,273734225100800,'2019-08-28 17:18:42','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2544093049651200,'文件4.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件4.xlsx',2458562408218624,0,2543243162025984,'2019-08-28 17:19:05','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544125391929344,'文件5.ppt','/Users/hasaker/Desktop/Deemo/Files/文件5.ppt',2458562521464832,0,2543243162025984,'2019-08-28 17:19:13','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544166298976256,'文件6.pdf','/Users/hasaker/Desktop/Deemo/Files/文件6.pdf',2458562479521792,0,2543243162025984,'2019-08-28 17:19:22','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544764712910848,'文件7.pdf','/Users/hasaker/Desktop/Deemo/Files/文件7.pdf',2458562479521792,0,2543472582066176,'2019-08-28 17:21:45','这是一个文件2',0,2543472582066176,'2019-08-29 14:23:19');
-/*!40000 ALTER TABLE `file` ENABLE KEYS */;
+LOCK TABLES FileInfo WRITE;
+/*!40000 ALTER TABLE FileInfo DISABLE KEYS */;
+INSERT INTO FileInfo VALUES (273734225100800,'文件管理','',2458562643099648,0,0,'2019-08-23 15:05:31','文件管理根目录',0,0,'2019-08-29 14:23:19'),(273734225100889,'回收站','',2458562643099648,0,0,'2019-08-27 10:04:36','回收站根目录',0,0,'2019-08-29 14:23:19'),(2543243162025984,'文件夹','/Users/hasaker/Desktop/Deemo/Files/文件夹',2458562643099648,0,273734225100800,'2019-08-28 17:15:42','这是一个文件夹',0,2543243162025984,'2019-08-29 14:23:19'),(2543472582066176,'文件夹2','/Users/hasaker/Desktop/Deemo/Files/文件夹2',2458562643099648,0,273734225100800,'2019-08-28 17:16:37','这是一个文件夹2',0,273734225100800,'2019-08-29 14:23:19'),(2543951856795648,'文件2.jpg','/Users/hasaker/Desktop/Deemo/Files/文件2.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:31','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543967245697024,'文件1.jpg','/Users/hasaker/Desktop/Deemo/Files/文件1.jpg',2458562466938880,0,273734225100800,'2019-08-28 17:18:35','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2543998661033984,'文件3.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件3.xlsx',2458562408218624,0,273734225100800,'2019-08-28 17:18:42','这是一个文件2',0,273734225100800,'2019-08-29 14:23:19'),(2544093049651200,'文件4.xlsx','/Users/hasaker/Desktop/Deemo/Files/文件4.xlsx',2458562408218624,0,2543243162025984,'2019-08-28 17:19:05','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544125391929344,'文件5.ppt','/Users/hasaker/Desktop/Deemo/Files/文件5.ppt',2458562521464832,0,2543243162025984,'2019-08-28 17:19:13','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544166298976256,'文件6.pdf','/Users/hasaker/Desktop/Deemo/Files/文件6.pdf',2458562479521792,0,2543243162025984,'2019-08-28 17:19:22','这是一个文件2',0,2543243162025984,'2019-08-29 14:23:19'),(2544764712910848,'文件7.pdf','/Users/hasaker/Desktop/Deemo/Files/文件7.pdf',2458562479521792,0,2543472582066176,'2019-08-28 17:21:45','这是一个文件2',0,2543472582066176,'2019-08-29 14:23:19');
+/*!40000 ALTER TABLE FileInfo ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -198,7 +198,7 @@ UNLOCK TABLES;
 -- Table structure for table `ManualSigin`
 --
 
-DROP TABLE IF EXISTS `ManualSigin`;
+DROP TABLE IF EXISTS ManualSign;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ManualSigin` (
@@ -215,9 +215,9 @@ CREATE TABLE `ManualSigin` (
 -- Dumping data for table `ManualSigin`
 --
 
-LOCK TABLES `ManualSigin` WRITE;
-/*!40000 ALTER TABLE `ManualSigin` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ManualSigin` ENABLE KEYS */;
+LOCK TABLES ManualSign WRITE;
+/*!40000 ALTER TABLE ManualSign DISABLE KEYS */;
+/*!40000 ALTER TABLE ManualSign ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -337,7 +337,7 @@ UNLOCK TABLES;
 -- Table structure for table `messageTrans`
 --
 
-DROP TABLE IF EXISTS `messageTrans`;
+DROP TABLE IF EXISTS MessageTrans;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `messageTrans` (
@@ -353,9 +353,9 @@ CREATE TABLE `messageTrans` (
 -- Dumping data for table `messageTrans`
 --
 
-LOCK TABLES `messageTrans` WRITE;
-/*!40000 ALTER TABLE `messageTrans` DISABLE KEYS */;
-/*!40000 ALTER TABLE `messageTrans` ENABLE KEYS */;
+LOCK TABLES MessageTrans WRITE;
+/*!40000 ALTER TABLE MessageTrans DISABLE KEYS */;
+/*!40000 ALTER TABLE MessageTrans ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

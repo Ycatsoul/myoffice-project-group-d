@@ -1,18 +1,18 @@
-package com.capgemini.cn.deemo.data.domain;
+package com.capgemini.cn.deemo.vo.response;
 
 import lombok.Data;
 
 /**
- * @Description:机构管理实体类
- * @Classname :Branch
- * @author: Cola Guo
- * @date:2019-8-26 16:47
+ * @Description:
+ * @Classname :
+ * @author: GuoBingjun
+ * @date:
  */
 @Data
-public class Branch {
+public class BranchVo {
 
     /**
-     * 机构Id
+     * 机构ID
      */
     private Long branchId;
 

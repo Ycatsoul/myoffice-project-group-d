@@ -1,30 +1,25 @@
-package com.capgemini.cn.deemo.data.domain;
-
+package com.capgemini.cn.deemo.vo.response;
 
 import lombok.Data;
 
 /**
- * @Description:员工信息实体类
- * @Classname :User
+ * @Description:
+ * @Classname :
  * @author: GuoBingjun
- * @date:2019-8-21 15:27
+ * @date:
  */
 @Data
-public class User {
+public class UserVo {
+
     /**
-    * 用户id
-    */
+     * 用户id
+     */
     private Long userId;
 
     /**
-     * 用户名
+     * 用户姓名
      */
     private String username;
-
-    /**
-     * 用户密码
-     */
-    private String password;
 
     /**
      * 姓名
@@ -32,19 +27,24 @@ public class User {
     private String name;
 
     /**
-     * 性别
+     * 用户性别
      */
     private String gender;
 
     /**
-     * 头像
+     * 用户头像
      */
     private String avatar;
 
     /**
-     * 所属部门id
+     * 所属部门ID
      */
     private Long departmentId;
+
+    /**
+     * 所属部门名称
+     */
+    private String departmentName;
 
     /**
      * 是否被屏蔽
