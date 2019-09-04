@@ -19,6 +19,7 @@ import menuOrder from '@/components/system/menuOrder'
 import roleManage from '@/components/system/roleManage'
 import checkCount from '@/components/check/checkCount'
 import checkInquiry from '@/components/check/checkInquiry'
+import employeeCheck from '@/components/check/employeeCheck'
 
 Vue.use(Router)
 
@@ -202,8 +203,18 @@ export default new Router({
         },
         {
           path: '/check/checkInquiry',
-          name: '考勤历史记录查询',
+          name: '员工考勤历史记录查询',
           component: checkInquiry,
+          hidden: true,
+          meta: {
+            keepAlive: false,
+            requireAuth: true
+          }
+        },
+        {
+          path: '/check/employeeCheck',
+          name: '员工签到、签退',
+          component: employeeCheck,
           hidden: true,
           meta: {
             keepAlive: false,

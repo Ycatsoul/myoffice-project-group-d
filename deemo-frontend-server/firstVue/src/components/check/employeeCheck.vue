@@ -11,93 +11,85 @@
           <el-row style="margin-top: 20px;padding: 0px;">
             <el-col :span="10">
               <div>
-                <el-form-item label="机构名称:" prop="branchName">
+                <el-form-item label="签卡日期:" prop="singinTime">
                   <el-input prefix-icon="el-icon-edit" v-model="branch.branchName" size="mini" style="width: 300px"
                            ></el-input>
                 </el-form-item>
               </div>
             </el-col>
+          </el-row>
+          <el-row>]
               <el-col :span="10">
               <div>
-                <el-form-item label="机构简称:" prop="branchShortName">
-                  <el-input prefix-icon="el-icon-edit" v-model="branch.branchShortName" size="mini" style="width: 300px"
+                <el-form-item label="签卡备注:" prop="singinDesc">
+                  <el-input type="textarea" prefix-icon="el-icon-edit" v-model="branch.branchShortName" size="mini" style="width: 300px"
                            ></el-input>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="4">
             <div style="margin-top:6px;">
-            <el-button size="mini" type="primary" @click="addBranch('addBranchForm')" :disabled="isDisabled=='1'">添加</el-button>
-            <el-button size="mini" type="primary" @click="changeBranch('addBranchForm')" :disabled="isDisabled=='0'">保存修改</el-button>
+            <el-form-item prop="singinTag">
+            <el-button size="mini" type="primary"  v-model="branch.singinTag" @click="addBranch('addBranchForm')" :disabled="isDisabled=='1'">签到</el-button>
+            <el-button size="mini" type="primary" v-model="branch.singinTag" @click="changeBranch('addBranchForm')" :disabled="isDisabled=='0'">签退</el-button>
+            </el-form-item>
             </div>
             </el-col>
           </el-row>
       </div>
     </el-form>
   </div>
-     <div class="main" >
-          <el-table
-            :data="branchs"
-            v-loading="tableLoading"
-            border
-            stripe
-            @selection-change="handleSelectionChange"
-            size="mini"
-            style="width: 100%">
-            <el-table-column
-              prop="id"
-              type="selection"
-              align="left"
-              width="30">
-            </el-table-column>
-            <el-table-column
-              prop="branchName"
-              align="center"    
-              label="机构名称"
-              width="">
-            </el-table-column>
-            <el-table-column
-              align="center"
-              prop="branchShortName"
-              label="机构简称"
-              width="">
-            </el-table-column>
-            <el-table-column
-              align="center"
-              label="修改"
-              width="150">
-              <template slot-scope="scope">
-                <el-button @click="showBranchView(scope.row)" style="padding: 3px 4px 3px 4px;margin: 2px"
-                           size="mini">
-                           <i class="el-icon-edit" ></i>
-                </el-button>
-                 </template>
-               </el-table-column>
-              <el-table-column
-              align="center"
-              label="删除"
-              width="150">
-              <template slot-scope="scope">
-                <el-button type="danger" style="padding: 3px 4px 3px 4px;margin: 2px" size="mini"
-                           @click="deleteBranch(scope.row)">
-                           <i class="el-icon-delete"></i>
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <div style="display: flex;justify-content: space-between;margin: 2px">
-            <el-button type="danger" size="mini"  :disabled="multipleSelection.length==0"
-                       @click="deleteManyBranch">批量删除
-            </el-button>
-            <el-pagination
-              background
-              :page-size="10"
-              :current-page="currentPage"
-              @current-change="currentChange"
-              layout="prev, pager, next"
-              :total="totalCount">
-            </el-pagination>
-          </div> 
+     <div class="main" v-if="show">
+       <el-row>
+         <el-col span="3">
+           <p>您的签到信息:</p>
+         </el-col>
+       </el-row>
+         <el-form :model="branch">
+           <el-row>
+             <el-col span="10">
+                <el-form-item label="用 户 号:" prop="username">
+                  <el-input prefix-icon="el-icon-edit" v-model="branch.username" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+             </el-col>
+             <el-col span="10">
+                <el-form-item label="姓 名:" prop="name">
+                  <el-input prefix-icon="el-icon-edit" v-model="branch.username" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+             </el-col>
+           </el-row>
+            <el-row>
+             <el-col span="10">
+                <el-form-item label="所属部门:" prop="departName">
+                  <el-input prefix-icon="el-icon-edit" v-model="branch.departName" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+             </el-col>
+             <el-col span="10">
+                <el-form-item label="所属机构:" prop="branchName">
+                  <el-input prefix-icon="el-icon-edit" v-model="branch.branchName" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+             </el-col>
+           </el-row>  
+           <el-row>
+             <el-col span="10">
+               <el-form-item label="您的签到时间:" prop="singinTime">
+                  {{branch.singinTime}}
+                </el-form-item>
+             </el-col>
+           </el-row>
+           <el-row>
+             <el-col span="10">
+               <el-form-item label="签卡备注:" prop="singinDesc">
+                  <el-input type="textarea" prefix-icon="el-icon-edit" v-model="branch.branchName" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+             </el-col>
+           </el-row>
+         </el-form>
      </div>
    </div>
 </el-container>
@@ -110,10 +102,16 @@ export default {
     return {
       branch:{
         id:'',
-        branchId:'',
+        name:'',
+        singinTime:'',
+        singinTag:'',
+        singinDesc:'',
+        username:'',
+        departmentName:'',
         branchName:'',
-        branchShortName:'',
       },
+   
+      show:false,
       isDisabled:0,
       totalCount: -1,
       currentPage: 1,
@@ -177,18 +175,15 @@ export default {
       },
       //增加
        addBranch(formName){
+         
         var _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              this.tableLoading = true;
               this.postRequest("/user/branch/save", this.branch).then(resp=> {
-                _this.tableLoading = false;
                 console.log("增加部分",resp);
                 if (resp && resp.status == 200) {
                   var data = resp.data;
-                  _this.dialogVisible = false;
-                  _this.emptyBranchData();
-                  _this.loadBranchs();
+                  _this.showBranchView(data);
                 }
               })
           }
@@ -228,6 +223,7 @@ export default {
         })
       },
        loadBranchs(){
+        
         var _this = this;
         var datas = {
           "branchName":'',
@@ -248,9 +244,14 @@ export default {
       },
       showBranchView(row){
         console.log(row);
+        this.show=true;
         this.isDisabled = 1;
         this.branch.branchName = row.branchName;
         this.branch.branchShortName = row.branchShortName;
+        this.branch.name=row.name;
+        this.branch.username=row.username;
+        this.branch.singinTime=row.singinTime;
+        this.branch.singinDesc=row.singinDesc;
       },
       deleteBranch(row){
           this.$confirm('此操作将永久删除, 是否继续?', '提示', {
@@ -309,7 +310,7 @@ export default {
 .main{
   position:relative;
   top:200px;
-  left:100px;
+  left:140px;
 }
 h1, h2 {
   font-weight: normal;

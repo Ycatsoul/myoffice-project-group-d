@@ -22,7 +22,7 @@
             stripe
             @selection-change="handleSelectionChange"
             size="mini"
-            style="width: 100%">
+            style="width:100%">
             <el-table-column
               prop="id"
               type="selection"
@@ -61,7 +61,7 @@
                 <el-button @click="showEmployeeDetail(scope.row)" style="padding: 3px 4px 3px 4px;margin: 2px"
                            size="mini">详情             
                 </el-button>
-                 </template>
+              </template>
             </el-table-column>
             <el-table-column
               align="center"
@@ -72,7 +72,7 @@
                            size="mini">
                            <i class="el-icon-edit" ></i>
                 </el-button>
-                 </template>
+              </template>
                </el-table-column>
               <el-table-column
               align="center"
@@ -123,31 +123,29 @@
              <el-col :span="12">
               <div>
                 <el-form-item label="密码:" prop="password">
-                <el-input prefix-icon="el-icon-edit" v-model="employee.password" size="mini" style="width: 300px"
-                           ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div>
-                <el-form-item label="确认密码:" prop="rPassword">
-                <el-input prefix-icon="el-icon-edit" v-model="employee.rPassword" size="mini" style="width: 300px"
-                           ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-           <el-col :span="12">
-              <div>
-                <el-form-item label="真实姓名:" prop="name">
-                   <el-input prefix-icon="el-icon-edit" v-model="employee.name" size="mini" style="width: 300px"
-                           ></el-input>
+                <el-input prefix-icon="el-icon-edit" v-model="employee.password" size="mini" style="width: 300px"></el-input>
                 </el-form-item>
               </div>
             </el-col>
           </el-row>
+          <el-row>
+            <el-col :span="12">
+                <el-form-item label="确认密码:" prop="rPassword">
+                <el-input prefix-icon="el-icon-edit" v-model="employee.rPassword" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+           <el-col :span="12">
+                <el-form-item label="真实姓名:" prop="name">
+                   <el-input prefix-icon="el-icon-edit" v-model="employee.name" size="mini" style="width: 300px"
+                           ></el-input>
+                </el-form-item>
+           </el-col>
+          </el-row>
            <el-row>
-             <el-col :span="24">
-              <div>
+             <el-col :span="12">
                 <el-form-item label="所在部门:" prop="departmentName">
                   <el-select v-model="employee.departmentName" style="width: 300px" size="mini" >
                     <el-option
@@ -158,28 +156,28 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-              </div>
             </el-col>
+           </el-row>
+           <el-row>
             <el-col :span="24">
-              <div>
-                <el-form-item label="gender:" prop="gender">
+                <el-form-item label="性别:" prop="gender">
                   <el-radio-group v-model="employee.gender">
-                    <el-radio label="man">男</el-radio>
-                    <el-radio style="margin-left: 15px" label="woman">女</el-radio>
+                    <el-radio label="男" >男</el-radio>
+                    <el-radio style="margin-left: 15px" label="女">女</el-radio>
                   </el-radio-group>
                 </el-form-item>
-              </div>
             </el-col>
+            </el-row>
+            <el-row>
             <el-col :span="12">
-              <div>
                 <el-form-item label="角色:" prop="roleName">
                   <el-input prefix-icon="el-icon-edit" v-model="employee.roleName" size="mini" style="width: 300px"
                          ></el-input>
                 </el-form-item>
-              </div>
             </el-col>
-             <el-col :span="24">
-              <div>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
                 <el-form-item label="添加头像" prop="imageUrl">
                  <el-upload
                     class="avatar-uploader"
@@ -187,25 +185,98 @@
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar" v-model="employee.imageUrl">
+                    <img v-if="employee.imageUrl" :src="employee.imageUrl" class="avatar" v-model="employee.imageUrl">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </el-form-item>
-              </div>
-            </el-col>
+             </el-col>
+            </el-row>
+            <el-row>
              <el-col :span="12">
-              <div>
                 <el-form-item label="当前状态" prop="idBlocked">
-                  <el-input prefix-icon="el-icon-edit" v-model="employee.idBlocked" size="mini" style="width: 300px"
-                         ></el-input>
+                  <el-select v-model="employee.idBlocked" style="width: 300px" size="mini" >
+                    <el-option
+                      v-for="item in status"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
-              </div>
             </el-col>
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
             <el-button size="mini" type="primary" @click="addEmployee('addEmployeeForm')">确 定</el-button>
           </span>
+        </el-dialog>
+      </div>
+   </el-form>  
+   <!-- 显示员工信息详情 -->
+   <el-form :model="employee" :rules="rules" ref="showEmployeeForm" style="margin:200px;padding: 0px;">
+      <div style="text-align: left">
+        <el-dialog
+          :title="dialogTitle2"
+          style="padding: 0px;"
+          :close-on-click-modal="false"
+          :visible.sync="dialogVisible2"
+          width="60%">
+          <el-row>
+            <el-col :span="12">
+                <el-form-item label="用户登录名:" prop="username"> 
+                {{employee.username}}
+                </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+             <el-col :span="12">
+                <el-form-item label="密码:" prop="password">
+                 {{employee.password}}
+                </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+           <el-col :span="12">
+                <el-form-item label="真实姓名:" prop="name">
+                   {{employee.name}}
+                </el-form-item>
+            </el-col>
+          </el-row>
+           <el-row>
+             <el-col :span="24">
+                <el-form-item label="所在部门:" prop="departmentName">
+                  {{employee.departmentName}}
+                </el-form-item>
+            </el-col>
+            <el-col :span="24">
+                <el-form-item label="gender:" prop="gender">
+                  {{employee.gender}}
+                </el-form-item>
+            </el-col>
+           </el-row>
+            <el-row>
+            <el-col :span="12">
+                <el-form-item label="角色:" prop="roleName">
+                {{employee.roleName}}
+                </el-form-item>
+            </el-col>
+           </el-row>
+             <el-col :span="12">
+                <el-form-item label="当前状态" prop="idBlocked">
+                  <span v-if="employee.idBlocked==1">正常</span>
+                  <span v-if="employee.idBlocked==0">被屏蔽</span>
+                </el-form-item>
+            </el-col>
+          </el-row>
+          <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="cancelEidt">返回</el-button>
+          </span>
+       <div style="width:200px;height:200px;position:relative;bottom:400px;left:500px;">
+        <el-col :span="24">
+                 <img :src="employee.imageUrl" class="avatar">
+                </el-form-item>
+        </el-col>
+      </div>
         </el-dialog>
       </div>
    </el-form>  
@@ -228,7 +299,17 @@ export default {
         departmentName:'',
         idBlocked:'',
       },
-      employees:[],
+      status:[{id:0,name:"被屏蔽"},{id:1,name:"正常"}],
+      employees:[
+        {
+          username:"ad123",
+          password:123456,
+          name:"帅哥",
+          gender:"男",
+          idBlocked:1,
+          imageUrl:require("@/assets/1.jpg"),
+        }
+      ],
       allPrincipals:[],
       departments: [{
           id:1,
@@ -244,6 +325,9 @@ export default {
            name: '大唐国际盘山发电有限公司',
         }],
       dialogVisible:false,
+      dialogVisible2:false,
+      dialogTitle:'',
+      dialogTitle2:'',
       isDisabled:0,
       totalCount: -1,
       currentPage: 1,
@@ -256,8 +340,22 @@ export default {
       this.getAllUsersInfo();
     },
   methods:{
+    showEmployeeDetail(row){
+        this.dialogTitle2 = "用户详细信息";
+        this.$refs['showEmployeeForm'].clearValidate() // 重置验证
+        this.employee = row;
+        this.employee.departmentName = row.departmentName;
+        this.employee.gender = row.gender;
+        this.employee.imageUrl = row.imageUrl;
+        this.employee.roleName = row.roleName;
+        this.employee.username = row.username;
+        this.employee.name = row.name;
+        this.employee.idBlocked = row.idBlocked;
+        this.employee.password = row.password;
+        this.dialogVisible2 = true;
+    },
       handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+        this.employee.imageUrl = URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -284,12 +382,14 @@ export default {
         this.dialogTitle = "添加员工记录";
         this.$refs['addEmployeeForm'].clearValidate() // 重置验证
         this.employee.departmentName = '';
+        this.employee.rPassword='',
+        this.employee.imageUrl = '';
         this.employee.gender = '';
         this.employee.name = '';
         this.employee.roleName = '';
         this.employee.idBlocked = '';
-        this.employee.password = '';
         this.employee.username = '';
+         this.employee.password = '';
         this.dialogVisible = true;
         // this.getRequest("/employee/basic/maxWorkID").then(resp=> {
         //   if (resp && resp.status == 200) {
@@ -297,6 +397,22 @@ export default {
         //   }
         // })
     },
+     showEmployeeView(row){
+        console.log(row);
+        this.dialogTitle = "修改员工信息";
+        this.$refs['addEmployeeForm'].clearValidate() // 重置验证
+        // this.employee = row;
+        this.employee.departmentName = row.departmentName;
+        this.employee.name = row.name;
+        this.employee.gender = row.gender;
+        this.employee.imageUrl = row.imageUrl;
+        this.employee.roleName = row.roleName;
+        this.employee.username = row.username;
+        this.employee.idBlocked = row.idBlocked;
+        this.employee.password = row.password;
+        this.employee.rPassword = row.rPassword;
+        this.dialogVisible = true;
+      },
      handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -392,20 +508,7 @@ export default {
           }
         })
       },
-      showEmployeeView(row){
-        console.log(row);
-        this.dialogTitle = "编辑员工信息";
-        this.$refs['addEmployeeForm'].clearValidate() // 重置验证
-        this.employee = row;
-        this.employee.departmentName = row.departmentName;
-        this.employee.gender = row.gender;
-        this.employee.roleName = row.roleName;
-        this.employee.username = row.username;
-        this.employee.name = row.name;
-        this.employee.idBlocked = row.idBlocked;
-        this.employee.password = row.password;
-        this.dialogVisible = true;
-      },
+     
       deleteEmployee(){
           this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -442,10 +545,12 @@ export default {
          idBlocked:'',
          username:'',
          password:'',
+         rPassword:'',
          name:'',
         }
       },
        cancelEidt(){
+        this.dialogVisible2=false;
         this.dialogVisible = false;
         this.idIsDisabled = 0;
         this.emptyEmployeeData();

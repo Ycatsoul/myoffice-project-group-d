@@ -125,7 +125,6 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-              
             </el-col>
           </el-row>
            <el-row>
@@ -137,7 +136,7 @@
                       v-for="item in allPrincipals"
                       :key="item.id"
                       :label="item.name"
-                      :value="item.name">
+                      :value="item.id">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -185,7 +184,7 @@ export default {
         principalUserId:'',
         branchName:'',
       },
-      branchNames:[{id:1,name:"华北电力科学研究院"},{id:2,name:"北大青鸟集团"},{id:3,name:"中国科学院声学研究院"}],
+      branchNames:[],
       dialogVisible: false,
       isDisabled:0,
       totalCount: -1,
@@ -211,11 +210,11 @@ export default {
   },
     mounted: function () {
       this.loadDepartments();
-      this.getAllUsersInfo();
+      this.getAllBranchsInfo();
       this.display();
     },
   methods:{
-        getAllUsersInfo(){
+        getAllBranchsInfo(){
           this.postRequest("/employee/basic/listEmpVo").then(resp=> {
           if (resp.data && resp.data.status == 200) {
             console.log("获取所有机构信息",resp);
@@ -345,7 +344,7 @@ export default {
         console.log(row);
         this.dialogTitle = "编辑部门信息";
         this.$refs['addDepartmentForm'].clearValidate() // 重置验证
-        this.department = row;
+        // this.department = row;
         this.department.branchName = row.branchName;
          this.department.departmentId = row.departmentId;
         this.department.departmentName = row.departmentName;
