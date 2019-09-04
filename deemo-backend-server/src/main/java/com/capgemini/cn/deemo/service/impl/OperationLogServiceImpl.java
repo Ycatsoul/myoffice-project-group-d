@@ -8,6 +8,7 @@ import com.capgemini.cn.deemo.service.OperationLogService;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.OperationLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.OperationLogVo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
  * @author hasaker
  * @since 2019/9/4 22:27
  */
+@Service
 public class OperationLogServiceImpl implements OperationLogService {
     private final OperationLogMapper operationLogMapper;
     private final UserMapper userMapper;

@@ -1,14 +1,19 @@
 package com.capgemini.cn.deemo.service.impl;
 
+import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.data.domain.Department;
 import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.mapper.BranchMapper;
 import com.capgemini.cn.deemo.mapper.DepartmentMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
+import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
 import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
+import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
 import com.capgemini.cn.deemo.vo.response.UserVo;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +32,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final DepartmentMapper departmentMapper;
+    private final BranchMapper branchMapper;
 
-    public UserServiceImpl(UserMapper userMapper, DepartmentMapper departmentMapper) {
+    public UserServiceImpl(UserMapper userMapper, DepartmentMapper departmentMapper, BranchMapper branchMapper) {
         this.userMapper = userMapper;
         this.departmentMapper = departmentMapper;
+        this.branchMapper = branchMapper;
     }
 
     @Override
@@ -63,6 +70,107 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+//    @Override
+//    public RespVos<BraDepUserVo> getBraDepUserTree() {
+//        List<Branch> branches = branchMapper.listBranches(new BranchSearchVo(){{
+//            setStart(0);
+//            setSize(100);
+//        }});
+//        List<BraDepUserVo> braDepUserVos = new ArrayList<>(branches.size());
+//        RespVos<BraDepUserVo> respVos = new RespVos<BraDepUserVo>(){{
+//            setSize(branches.size());
+//        }};
+//
+//        for (Branch branch : branches) {
+//            List<Department> departments = departmentMapper.listDepartments(
+//                    new DepartmentSearchVo(){{
+//                        setStart(0);
+//                        setSize(100);
+//                        setBranchId(branch.getBranchId());
+//                    }}
+//            );
+//            List<BraDepUserVo.Department> braDeps = new ArrayList<>(departments.size());
+//
+//            for (Department department : departments) {
+//                List<User> users = userMapper.listUsers(
+//                        new UserSearchVo(){{
+//                            setStart(0);
+//                            setSize(1000);
+//                            setDepartmentId(department.getDepartmentId());
+//                        }}
+//                );
+//                List<BraDepUserVo.Department.User> depUsers = new ArrayList<>(users.size());
+//
+//                for (User user : users) {
+//                    depUsers.add(new BraDepUserVo.Department.User(){{
+//                        setUserId(user.getUserId());
+//                        setName(user.getName());
+//                    }});
+//                }
+//
+//                BraDepUserVo.Department braDep = new BraDepUserVo.Department(){{
+//                   setDepartmentId(department.getDepartmentId());
+//                   setDepartmentName(department.getDepartmentName());
+//                   setUsers(depUsers);
+//                }};
+//
+//                braDeps.add(braDep);
+//            }
+//
+//            BraDepUserVo braDepUserVo = new BraDepUserVo();
+//            braDepUserVo.setBranchId(branch.getBranchId());
+//            braDepUserVo.setBranchShortName(branch.getBranchShortName());
+//            braDepUserVo.setDepartments(braDeps);
+//
+//            braDepUserVos.add(braDepUserVo);
+//        }
+//
+//        respVos.setVos(braDepUserVos);
+//
+//        return respVos;
+//    }
+
+    @Override
+    public RespVos<BraDepUserVo> getBraDepUserTree() {
+        List<Branch> branches = branchMapper.listBranches(new BranchSearchVo(){{setSize(100);}});
+        List<Department> departments = departmentMapper.listDepartments(new DepartmentSearchVo(){{setSize(200);}});
+        List<User> users = userMapper.listUsers(new UserSearchVo(){{setSize(1000);}});
+        List<BraDepUserVo> braDepUserVos = new ArrayList<>();
+        RespVos<BraDepUserVo> respVos = new RespVos<>();
+
+        for (Branch branch : branches) {
+            List<BraDepUserVo.Department> convertedDepartments = new ArrayList<>();
+            for (Department department : departments) {
+                if (department.getBranchId().equals(branch.getBranchId())) {
+                    List<BraDepUserVo.Department.User> convertedUsers = new ArrayList<>();
+                    for (User user : users) {
+                        if (user.getDepartmentId().equals(department.getDepartmentId())) {
+                            convertedUsers.add(new BraDepUserVo.Department.User() {{
+                                setUserId(user.getUserId());
+                                setName(user.getName());
+                            }});
+                        }
+                    }
+                    convertedDepartments.add(new BraDepUserVo.Department(){{
+                        setDepartmentId(department.getDepartmentId());
+                        setDepartmentName(department.getDepartmentName());
+                        setUsers(convertedUsers);
+                    }});
+                }
+            }
+            braDepUserVos.add(new BraDepUserVo(){{
+                setBranchId(branch.getBranchId());
+                setBranchShortName(branch.getBranchShortName());
+                setDepartments(convertedDepartments);
+            }});
+        }
+
+        respVos.setSize(braDepUserVos.size());
+        respVos.setVos(braDepUserVos);
+
+        return respVos;
     }
 
     @Override

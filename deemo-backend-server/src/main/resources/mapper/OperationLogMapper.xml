@@ -8,7 +8,7 @@
   <sql id="search">
     <where>
       <if test="operationLogSearchVo.operationUserId != null">
-        userId = #{operationLogSearchVo.operationUserId}
+        operationUserId = #{operationLogSearchVo.operationUserId}
       </if>
       <if test="operationLogSearchVo.startTime != null and operationLogSearchVo.endTime != null">
         AND operationTime BETWEEN #{operationLogSearchVo.startTime} AND #{operationLogSearchVo.endTime}
@@ -39,7 +39,7 @@
   <insert id="insertOperationLog" parameterType="com.capgemini.cn.deemo.data.domain.OperationLog">
     INSERT INTO OperationLog
     (
-      operationId, opeartionUserId, operationName, opeartionDesc, operationTime
+      operationId, operationUserId, operationName, operationDesc, operationTime
     )
     VALUES
     (

@@ -7,8 +7,8 @@
   <!-- 搜索字段 -->
   <sql id="search">
     <where>
-      <if test="loginLogSearchVo.userId != null">
-        userId = #{loginLogSearchVo.loginUserId}
+      <if test="loginLogSearchVo.loginUserId != null">
+        loginUserId = #{loginLogSearchVo.loginUserId}
       </if>
       <if test="loginLogSearchVo.startTime != null and loginLogSearchVo.endTime != null">
         AND loginTime BETWEEN #{loginLogSearchVo.startTime} AND #{loginLogSearchVo.endTime}

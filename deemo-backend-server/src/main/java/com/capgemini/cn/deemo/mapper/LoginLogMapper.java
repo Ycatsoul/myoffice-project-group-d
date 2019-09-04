@@ -20,5 +20,5 @@ public interface LoginLogMapper {
 
     Integer insertLoginLog(@Param("loginLog") LoginLog loginLog);
 
-    Integer deleteLoginLog(@Param("loginIds") List<Long> loginIds);
+    Integer deleteLoginLogs(@Param("loginIds") List<Long> loginIds);
 }
