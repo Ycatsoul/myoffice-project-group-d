@@ -19,15 +19,15 @@ public interface FileInfoService {
 
     RespVos<FileInfoVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo);
 
-    boolean uploadFile(MultipartFile multipartFile);
+    Boolean uploadFile(MultipartFile multipartFile);
 
-    int insertFile(FileInfoEditVo fileInfoEditVo);
+    Integer insertFile(FileInfoEditVo fileInfoEditVo);
 
-    int updateFile(FileInfoEditVo fileInfoEditVo);
+    Integer updateFile(FileInfoEditVo fileInfoEditVo);
 
-    int putFilesToTrash(List<Long> fileIds);
+    Integer putFilesToTrash(List<Long> fileIds);
 
-    int restoreFilesFromTrash(List<Long> fileIds);
+    Integer restoreFilesFromTrash(List<Long> fileIds);
 
-    int deleteFilesFromTrash(List<Long> fileIds);
+    Integer deleteFilesFromTrash(List<Long> fileIds);
 }

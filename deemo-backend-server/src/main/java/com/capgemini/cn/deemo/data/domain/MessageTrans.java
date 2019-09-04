@@ -28,5 +28,5 @@ public class MessageTrans {
     /**
      * 阅读状态
      */
-    private Long isRead;
+    private Boolean isRead;
 }
