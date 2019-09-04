@@ -3,6 +3,7 @@ package com.capgemini.cn.deemo.service;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
+import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
 import com.capgemini.cn.deemo.vo.response.UserVo;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface UserService {
     RespVos<UserVo> getUser(Long userId);
 
     RespVos<UserVo> listUsers(UserSearchVo userSearchVo);
+
+    RespVos<BraDepUserVo> getBraDepUserTree();
 
     Integer addUser(UserEditVo userEditVo);
 

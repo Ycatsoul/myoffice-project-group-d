@@ -13,8 +13,8 @@ import lombok.Data;
 public class BaseSearchVo {
 
     @ApiModelProperty(value = "分页起始位置")
-    private Integer start;
+    private Integer start = 0;
     
     @ApiModelProperty(value = "分页大小")
-    private Integer size;
+    private Integer size = 15;
 }

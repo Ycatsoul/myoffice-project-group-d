@@ -6,6 +6,7 @@ import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
+import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
 import com.capgemini.cn.deemo.vo.response.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +48,18 @@ public class UserController extends BaseController {
     @PostMapping("/list")
     public RespBean listUsers(@RequestBody UserSearchVo userSearchVo){
         RespVos<UserVo> respVos = userService.listUsers(userSearchVo);
+
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok("查询成功!", respVos);
+        }
+
+        return RespBean.error("查询失败！");
+    }
+
+    @ApiOperation("获取机构-部门-用户树")
+    @GetMapping("/braDepUserTree")
+    public RespBean getBraDepUserTree() {
+        RespVos<BraDepUserVo> respVos = userService.getBraDepUserTree();
 
         if (respVos != null && respVos.getSize() > 0) {
             return RespBean.ok("查询成功!", respVos);
