@@ -49,7 +49,7 @@ public class LoginLogServiceImpl implements LoginLogService {
 
     @Override
     public Integer deleteLoginLogs(List<Long> loginIds) {
-        return loginLogMapper.deleteLoginLog(loginIds);
+        return loginLogMapper.deleteLoginLogs(loginIds);
     }
 
     private LoginLogVo convertToVo(LoginLog loginLog) {
