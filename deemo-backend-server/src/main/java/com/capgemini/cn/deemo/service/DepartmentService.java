@@ -14,6 +14,7 @@ import java.util.List;
  * @date:
  */
 public interface DepartmentService {
+    
     RespVos<DepartmentVo> getDepartment(Long departmentId);
 
     RespVos<DepartmentVo> listDepartments(DepartmentSearchVo departmentSearchVo);

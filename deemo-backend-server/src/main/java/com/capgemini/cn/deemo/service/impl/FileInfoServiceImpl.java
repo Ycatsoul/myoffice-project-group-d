@@ -103,7 +103,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 上传文件
      */
     @Override
-    public boolean uploadFile(MultipartFile multipartFile) {
+    public Boolean uploadFile(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/Files/";
 
@@ -124,7 +124,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 添加文件记录
      */
     @Override
-    public int insertFile(FileInfoEditVo fileInfoEditVo) {
+    public Integer insertFile(FileInfoEditVo fileInfoEditVo) {
         String fileName = fileInfoEditVo.getFileName();
         String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/Files/";
         String fileSuffix = "";
@@ -158,7 +158,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 更新一条文件记录
      */
     @Override
-    public int updateFile(FileInfoEditVo fileInfoEditVo) {
+    public Integer updateFile(FileInfoEditVo fileInfoEditVo) {
         return fileInfoMapper.updateFile(fileInfoEditVo);
     }
 
@@ -168,7 +168,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return 受影响的行数
      */
     @Override
-    public int putFilesToTrash(List<Long> fileIds) {
+    public Integer putFilesToTrash(List<Long> fileIds) {
         int a = fileInfoMapper.putFilesToTrash(fileIds);
         int b = 0;
         List<Long> childIds = getChildIds(fileIds);
@@ -185,7 +185,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹从回收站中取回
      */
     @Override
-    public int restoreFilesFromTrash(List<Long> fileIds) {
+    public Integer restoreFilesFromTrash(List<Long> fileIds) {
         List<Long> childIds = getChildIds(fileIds);
         int a = 0;
         int b = 0;
@@ -206,7 +206,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹彻底删除
      */
     @Override
-    public int deleteFilesFromTrash(List<Long> fileIds) {
+    public Integer deleteFilesFromTrash(List<Long> fileIds) {
         fileIds.addAll(getChildIds(fileIds));
 
         return fileInfoMapper.deleteFilesFromTrash(fileIds);

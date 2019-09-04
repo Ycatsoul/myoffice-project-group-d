@@ -31,14 +31,14 @@ public interface BranchService {
     /**
      * 添加Branch
      * @param branchEditVo BranchEditVo
-     * @return 1
+     * @return 1 if add successfully else 0
      */
     Integer addBranch(BranchEditVo branchEditVo);
 
     /**
      * 编辑Branch
      * @param branchEditVo BranchEditVo
-     * @return 1
+     * @return 1 if add successfully else 0
      */
     Integer updateBranch(BranchEditVo branchEditVo);
 
