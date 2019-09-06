@@ -7,10 +7,7 @@ import com.capgemini.cn.deemo.vo.request.OperationLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.OperationLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
  */
 @Api
 @RestController
-@RequestMapping("/operation_log")
+@RequestMapping("/operationLog")
 public class OperationLogController {
 
     private final OperationLogService operationLogService;
@@ -30,7 +27,7 @@ public class OperationLogController {
     }
 
     @ApiOperation("列出OperationLog")
-    @PostMapping("/list")
+    @PostMapping("/")
     public RespBean listOperationLogs(@RequestBody OperationLogSearchVo operationLogSearchVo) {
         RespVos<OperationLogVo> respVos = operationLogService.listOperationLogs(operationLogSearchVo);
 
@@ -42,7 +39,7 @@ public class OperationLogController {
     }
 
     @ApiOperation("删除OperationLog")
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public RespBean deleteOperationLogs(@RequestBody List<Long> loginIds) {
         Integer res = operationLogService.deleteOperationLogs(loginIds);
 

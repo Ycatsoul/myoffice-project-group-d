@@ -91,7 +91,7 @@ public class FileInfoController {
     }
 
     @ApiOperation(value = "将文件放入回收站")
-    @PutMapping("/delete")
+    @DeleteMapping("/delete")
     public RespBean putFileToTrash(@RequestBody List<Long> fileIds) {
         int res = fileInfoService.putFilesToTrash(fileIds);
 
@@ -107,7 +107,7 @@ public class FileInfoController {
     }
 
     @ApiOperation(value = "将文件从回收站中彻底删除")
-    @PutMapping("/destroy")
+    @DeleteMapping("/destroy")
     public RespBean deleteFilesInTrash(@RequestBody List<Long> fileIds) {
         int res = fileInfoService.deleteFilesFromTrash(fileIds);
 

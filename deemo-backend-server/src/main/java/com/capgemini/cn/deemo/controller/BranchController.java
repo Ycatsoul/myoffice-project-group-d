@@ -61,21 +61,21 @@ public class BranchController extends BaseController {
     }
 
     @ApiOperation("添加Branch信息")
-    @PostMapping("/add")
+    @PostMapping("/")
     public RespBean addBranch(@RequestBody BranchEditVo branchEditVo){
 
         return branchService.addBranch(branchEditVo) > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
     @ApiOperation("修改Branch信息")
-    @PutMapping("/update")
+    @PutMapping("/")
     public RespBean updateBranch(@RequestBody BranchEditVo branchEditVo){
 
         return branchService.updateBranch(branchEditVo) > 0 ? RespBean.ok("编辑成功!") : RespBean.error("编辑失败!");
     }
 
     @ApiOperation("删除Branch信息")
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public RespBean deleteBranches(@RequestBody List<Long> branchIds){
 
         return branchService.deleteBranches(branchIds) > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");

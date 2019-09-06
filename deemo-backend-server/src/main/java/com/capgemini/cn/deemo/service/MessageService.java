@@ -1,8 +1,9 @@
 package com.capgemini.cn.deemo.service;
 
-import com.capgemini.cn.deemo.data.domain.Message;
-import com.capgemini.cn.deemo.data.domain.MessageTrans;
-import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.MessageEditVo;
+import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
+import com.capgemini.cn.deemo.vo.response.MessageVo;
 
 import java.util.List;
 
@@ -12,17 +13,22 @@ import java.util.List;
  */
 
 public interface MessageService {
-    public boolean sendMsg(Message message);
 
-    public int addMsgToAllUser(List<User> users, Long messageId);
+    RespVos<MessageVo> listMessages(MessageSearchVo messageSearchVo);
 
-    public List<MessageTrans> getMsgByPage(Integer page, Integer size, Long userId);
+    RespVos<MessageVo> getMessage(Long messageId);
 
-    public boolean markPublished(Long isPublished);
+    Integer addMessage(MessageEditVo messageEditVo);
 
-    public boolean markRead(Long isRead);
+    Integer updateMessage(MessageEditVo messageEditVo);
 
-    public int updateMsg(Long messageId);
+    Integer deleteMessages(List<Long> messageIds);
 
-    public int deleteMsg(Long messageId);
+    Integer sendMessage(Long messageId);
+
+    Integer readMessages(List<Long> messageIds, Long currentUserId);
+
+    Integer deleteMessageTranses(List<Long> messageTransIds);
+
+    Integer deleteMessageTransesByMessageId(List<Long> messageIds);
 }

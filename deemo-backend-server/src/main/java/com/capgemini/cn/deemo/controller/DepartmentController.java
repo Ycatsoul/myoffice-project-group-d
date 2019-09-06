@@ -55,7 +55,7 @@ public class DepartmentController extends BaseController {
     }
 
     @ApiOperation("添加一个部门")
-    @PostMapping("/add")
+    @PostMapping("/")
     public RespBean addDepartment(@RequestBody DepartmentEditVo departmentEditVo) {
         Integer res = departmentService.addDepartment(departmentEditVo);
 
@@ -63,7 +63,7 @@ public class DepartmentController extends BaseController {
     }
 
     @ApiOperation("修改部门信息")
-    @PutMapping("/update")
+    @PutMapping("/")
     public RespBean updateDepartment(@RequestBody DepartmentEditVo departmentEditVo) {
         Integer res = departmentService.updateDepartment(departmentEditVo);
 
@@ -71,7 +71,7 @@ public class DepartmentController extends BaseController {
     }
 
     @ApiOperation("删除部门")
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public RespBean deleteDepartments(@RequestBody List<Long> departmentIds) {
         Integer res = departmentService.deleteDepartments(departmentIds);
 
