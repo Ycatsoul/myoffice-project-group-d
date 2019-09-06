@@ -93,7 +93,7 @@ public class UserController extends BaseController {
     }
 
     @ApiOperation("删除User")
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public RespBean deleteUsers(@RequestBody List<Long> userIds) {
         Integer res = userService.deleteUsers(userIds);
 

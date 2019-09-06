@@ -1,9 +1,10 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.Message;
-import com.capgemini.cn.deemo.data.domain.MessageTrans;
-import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.vo.request.MessageEditVo;
+import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,20 +12,20 @@ import java.util.List;
  * @author Bowen Du
  * @since 2019-08-26 11:04
  */
-
+@Service
 public interface MessageMapper {
 
-    Integer sendMsg(Message message);
+     List<Message> listMessages(@Param("messageSearchVo") MessageSearchVo messageSearchVo);
 
-    Integer addMsgToAllUser(@Param("users") List<User> users, @Param("messageId") Long messageId);
+     Integer countMessages(@Param("messageSearchVo") MessageSearchVo messageSearchVo);
 
-    List<MessageTrans> getMsg(@Param("start") int start, @Param("size") Integer size,@Param("recipientId") Long recipientId);
+     Message getMessage(@Param("messageId") Long messageId);
 
-    Integer markPublished(@Param("messageId") Long isPublished);
+     Integer insertMessage(@Param("messageEditVo") MessageEditVo messageEditVo);
 
-    Integer markRead(@Param("isRead") Long isRead, @Param("recipientId") Long recipientId);
+     Integer updateMessage(@Param("messageEditVo") MessageEditVo messageEditVo);
 
-    Integer updateMsg(@Param("messageId") Long messageId);
+     Integer publishMessage(@Param("messageId") Long messageId);
 
-    Integer deleteMsg(@Param("messageId") Long messageId);
+     Integer deleteMessages(@Param("messageIds") List<Long> messageIds);
 }

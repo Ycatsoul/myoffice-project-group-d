@@ -52,7 +52,7 @@ public class ManualSignController {
     }
 
     @ApiOperation("添加一个签到")
-    @PostMapping("/add")
+    @PostMapping("/")
     public RespBean addManualSign(@RequestBody ManualSignEditVo manualSignEditVo) {
         Integer res = manualSignService.addManualSign(manualSignEditVo);
 
@@ -60,7 +60,7 @@ public class ManualSignController {
     }
 
     @ApiOperation("修改签到信息")
-    @PutMapping("/update")
+    @PutMapping("/")
     public RespBean updateManualSign(@RequestBody ManualSignEditVo manualSignEditVo) {
         Integer res = manualSignService.updateManualSign(manualSignEditVo);
 
@@ -68,7 +68,7 @@ public class ManualSignController {
     }
 
     @ApiOperation("删除签到")
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public RespBean deleteManualSigns(@RequestBody List<Long> manualSignIds) {
         Integer res = manualSignService.deleteManualSigns(manualSignIds);
 

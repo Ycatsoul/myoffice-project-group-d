@@ -7,10 +7,7 @@ import com.capgemini.cn.deemo.vo.request.LoginLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.LoginLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
  */
 @Api
 @RestController
-@RequestMapping("/login_log")
+@RequestMapping("/loginLog")
 public class LoginLogController {
     private final LoginLogService loginLogService;
 
@@ -29,7 +26,7 @@ public class LoginLogController {
     }
 
     @ApiOperation("列出LoginLog")
-    @PostMapping("/list")
+    @PostMapping("/")
     public RespBean listLoginLogs(@RequestBody LoginLogSearchVo loginLogSearchVo) {
         RespVos<LoginLogVo> respVos = loginLogService.listLoginLogs(loginLogSearchVo);
 
@@ -41,7 +38,7 @@ public class LoginLogController {
     }
 
     @ApiOperation("删除LoginLog")
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public RespBean deleteLoginLogs(@RequestBody List<Long> loginIds) {
         Integer res = loginLogService.deleteLoginLogs(loginIds);
 

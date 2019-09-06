@@ -46,7 +46,22 @@ public class Message {
     /**
      * 发送用户ID
      */
-    private String sendUserId;
+    private Long createUserId;
+
+    /**
+     * 接收机构ID
+     */
+    private Long branchId;
+
+    /**
+     * 接收部门ID
+     */
+    private Long departmentId;
+
+    /**
+     * 接收用户ID
+     */
+    private Long recipientId;
 
     /**
      * 发布状态

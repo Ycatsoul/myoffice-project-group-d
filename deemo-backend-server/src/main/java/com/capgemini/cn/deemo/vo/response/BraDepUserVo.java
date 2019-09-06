@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author hasaker
  * @since 2019/9/4 23:17
- * 获取
+ * 获取机构-部门-用户目录树
  */
 @Data
 public class BraDepUserVo {
