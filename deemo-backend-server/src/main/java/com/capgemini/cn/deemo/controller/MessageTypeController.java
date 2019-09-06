@@ -3,13 +3,12 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.deemo.service.MessageTypeService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.MessageTypeEditVo;
 import com.capgemini.cn.deemo.vo.response.MessageTypeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -53,8 +52,8 @@ public class MessageTypeController {
 
     @ApiOperation("删除消息类型")
     @DeleteMapping("/")
-    RespBean deleteMessageTypes(@RequestBody List<Long> messageTypeIds) {
-        Integer res = messageTypeService.deleteMessageTypes(messageTypeIds);
+    RespBean deleteMessageTypes(@RequestBody DeleteVo deleteVo) {
+        Integer res = messageTypeService.deleteMessageTypes(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
     }

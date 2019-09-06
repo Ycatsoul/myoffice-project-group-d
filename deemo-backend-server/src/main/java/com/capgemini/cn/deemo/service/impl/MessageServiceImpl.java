@@ -5,10 +5,7 @@ import com.capgemini.cn.deemo.mapper.*;
 import com.capgemini.cn.deemo.service.MessageService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
-import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
-import com.capgemini.cn.deemo.vo.request.MessageEditVo;
-import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
-import com.capgemini.cn.deemo.vo.request.UserSearchVo;
+import com.capgemini.cn.deemo.vo.request.*;
 import com.capgemini.cn.deemo.vo.response.MessageVo;
 import org.springframework.stereotype.Service;
 
@@ -173,8 +170,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Integer readMessages(List<Long> messageIds, Long currentUserId) {
-        return messageTransMapper.readMessages(messageIds, currentUserId);
+    public Integer readMessages(MessageReadVo messageReadVo) {
+        return messageTransMapper.readMessages(messageReadVo);
     }
 
     @Override
@@ -189,18 +186,19 @@ public class MessageServiceImpl implements MessageService {
 
     private MessageVo convertToVo(Message message) {
         MessageVo messageVo = new MessageVo();
+
         User createUser = userMapper.getUser(message.getCreateUserId());
         MessageType messageType = messageTypeMapper.getMessageType(message.getMessageTypeId());
 
         messageVo.setMessageId(message.getMessageId());
         messageVo.setMessageTypeId(message.getMessageTypeId());
-        messageVo.setMessageTypeName(messageType.getMessageTypeName());
+        messageVo.setMessageTypeName(messageType == null ? null : messageType.getMessageTypeName());
         messageVo.setMessageTitle(message.getMessageTitle());
         messageVo.setMessageContent(message.getMessageContent());
         messageVo.setBeginTime(message.getBeginTime());
         messageVo.setEndTime(message.getEndTime());
         messageVo.setCreateUserId(message.getCreateUserId());
-        messageVo.setCreateUserName(createUser.getName());
+        messageVo.setCreateUserName(createUser == null ? null : createUser.getName());
         messageVo.setBranchId(message.getBranchId());
         messageVo.setDepartmentId(message.getDepartmentId());
         messageVo.setRecipientId(message.getRecipientId());

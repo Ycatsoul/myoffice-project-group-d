@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.MessageTrans;
+import com.capgemini.cn.deemo.vo.request.MessageReadVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public interface MessageTransMapper {
 
     Integer sendMessages(@Param("messageTranses") List<MessageTrans> messageTranses);
 
-    Integer readMessages(@Param("messageIds") List<Long> messageIds, @Param("currentUserId") Long currentUserId);
+    Integer readMessages(@Param("messageReadVo") MessageReadVo messageReadVo);
 
     Integer deleteMessageTranses(@Param("messageTransIds") List<Long> messageTransIds);
 

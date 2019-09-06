@@ -4,6 +4,7 @@ import com.capgemini.cn.core.commons.BaseController;
 import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
 import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
@@ -69,7 +70,7 @@ public class UserController extends BaseController {
     }
 
     @ApiOperation("添加User")
-    @PostMapping("/add")
+    @PostMapping("/")
     public RespBean addUser(@RequestBody UserEditVo userEditVo) {
         Integer res = userService.addUser(userEditVo);
 
@@ -77,7 +78,7 @@ public class UserController extends BaseController {
     }
 
     @ApiOperation("更新User信息")
-    @PutMapping("/update")
+    @PutMapping("/")
     public RespBean updateUser(@RequestBody UserEditVo userEditVo) {
         Integer res = userService.updateUser(userEditVo);
 
@@ -94,8 +95,8 @@ public class UserController extends BaseController {
 
     @ApiOperation("删除User")
     @DeleteMapping("/")
-    public RespBean deleteUsers(@RequestBody List<Long> userIds) {
-        Integer res = userService.deleteUsers(userIds);
+    public RespBean deleteUsers(@RequestBody DeleteVo deleteVo) {
+        Integer res = userService.deleteUsers(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "个用户!") : RespBean.error("删除失败!");
     }

@@ -237,41 +237,24 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 将FileInfo转换为FileInfoVo
      */
     private FileInfoVo convertToVo(FileInfo fileInfo) {
-        FileType fileType = fileTypeMapper.getFileTypeByFileTypeId(fileInfo.getFileTypeId());
         FileInfoVo fileInfoVo = new FileInfoVo();
+
+        FileType fileType = fileTypeMapper.getFileTypeByFileTypeId(fileInfo.getFileTypeId());
         User user = userMapper.getUser(fileInfo.getFileOwnerId());
 
         fileInfoVo.setFileId(fileInfo.getFileId());
         fileInfoVo.setFileName(fileInfo.getFileName());
         fileInfoVo.setFilePath(fileInfo.getFilePath());
         fileInfoVo.setFileTypeId(fileInfo.getFileTypeId());
-        fileInfoVo.setFileTypeName(fileType.getFileTypeName());
-        fileInfoVo.setFileTypeImage(fileType.getFileTypeImage());
+        fileInfoVo.setFileTypeName(fileType == null ? null : fileType.getFileTypeName());
+        fileInfoVo.setFileTypeImage(fileType == null ? null : fileType.getFileTypeImage());
         fileInfoVo.setFileOwnerId(fileInfo.getFileOwnerId());
-        fileInfoVo.setFileOwnerName(user.getName());
+        fileInfoVo.setFileOwnerName(user == null ? null : user.getName());
         fileInfoVo.setParentId(fileInfo.getParentId());
         fileInfoVo.setRemark(fileInfo.getRemark());
         fileInfoVo.setIsDeleted(fileInfo.getIsDeleted());
         fileInfoVo.setDeleteTime(fileInfo.getDeleteTime());
 
         return fileInfoVo;
-    }
-
-    /**
-     * 将FileInfoEditVo装换为FileInfo
-     */
-    private FileInfo convertFromVo(FileInfoEditVo fileInfoEditVo) {
-        FileInfo fileInfo = new FileInfo();
-
-        fileInfo.setFileId(fileInfoEditVo.getFileId() == null ?
-                IdWorker.get().nextId() : fileInfoEditVo.getFileId());
-        fileInfo.setFileName(fileInfoEditVo.getFileName());
-        fileInfo.setFilePath(fileInfoEditVo.getFilePath());
-        fileInfo.setFileTypeId(fileInfoEditVo.getFileTypeId());
-        fileInfo.setFileOwnerId(fileInfoEditVo.getFileOwnerId());
-        fileInfo.setParentId(fileInfo.getParentId());
-        fileInfo.setRemark(fileInfoEditVo.getRemark());
-
-        return fileInfo;
     }
 }

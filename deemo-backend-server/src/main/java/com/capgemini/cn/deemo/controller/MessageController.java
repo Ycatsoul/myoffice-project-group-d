@@ -3,14 +3,14 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.deemo.service.MessageService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.MessageEditVo;
+import com.capgemini.cn.deemo.vo.request.MessageReadVo;
 import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
 import com.capgemini.cn.deemo.vo.response.MessageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -27,18 +27,6 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @ApiOperation("获取信息列表")
-    @PostMapping("/list")
-    RespBean listMessages(@RequestBody MessageSearchVo messageSearchVo) {
-        RespVos<MessageVo> respVos = messageService.listMessages(messageSearchVo);
-
-        if (respVos != null && respVos.getSize() > 0) {
-            return RespBean.ok(respVos);
-        }
-
-        return RespBean.error("查询失败!");
-    }
-
     @ApiOperation("获取一条消息")
     @GetMapping("/{messageId}")
     RespBean getMessage(@PathVariable Long messageId) {
@@ -49,6 +37,18 @@ public class MessageController {
         }
 
         return RespBean.error("未找到相关消息!");
+    }
+
+    @ApiOperation("获取信息列表")
+    @PostMapping("/list")
+    RespBean listMessages(@RequestBody MessageSearchVo messageSearchVo) {
+        RespVos<MessageVo> respVos = messageService.listMessages(messageSearchVo);
+
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok(respVos);
+        }
+
+        return RespBean.error("查询失败!");
     }
 
     @ApiOperation("添加消息为草稿")
@@ -65,8 +65,8 @@ public class MessageController {
 
     @ApiOperation("删除消息")
     @DeleteMapping("/deleteMessages")
-    RespBean deleteMessages(@RequestBody List<Long> messageIds) {
-        Integer res = messageService.deleteMessages(messageIds);
+    RespBean deleteMessages(@RequestBody DeleteVo deleteVo) {
+        Integer res = messageService.deleteMessages(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条消息!") : RespBean.error("删除失败!");
     }
@@ -81,17 +81,17 @@ public class MessageController {
 
     @ApiOperation("阅读消息/将消息标记为已读")
     @PostMapping("/read")
-    RespBean readMessages(@RequestBody List<Long> messageIds) {
-        Long currentUserId = 4715897054822400L;
-        Integer res = messageService.readMessages(messageIds, currentUserId);
+    RespBean readMessages(@RequestBody MessageReadVo messageReadVo) {
+        messageReadVo.setCurrentUserId(4715897054822400L);
+        Integer res = messageService.readMessages(messageReadVo);
 
         return res > 0 ? RespBean.ok("成功阅读" + res + "条信息!") : RespBean.error("阅读失败!");
     }
 
     @ApiOperation("删除收件箱里的消息")
     @DeleteMapping("/deleteMessageTrans")
-    RespBean deleteMessageTranses(@RequestBody List<Long> messageTransIds) {
-        Integer res = messageService.deleteMessageTranses(messageTransIds);
+    RespBean deleteMessageTranses(@RequestBody DeleteVo deleteVo) {
+        Integer res = messageService.deleteMessageTranses(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
     }

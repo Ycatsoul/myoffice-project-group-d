@@ -93,6 +93,7 @@ public class DepartmentServiceImpl implements DepartmentService {
      */
     private DepartmentVo convertToVo(Department department) {
         DepartmentVo departmentVo = new DepartmentVo();
+
         Branch branch = branchMapper.getBranch(department.getBranchId());
         User user = userMapper.getUser(department.getPrincipalUserId());
 
@@ -101,10 +102,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentVo.setConnectPhone(department.getConnectPhone());
         departmentVo.setConnectTelephone(department.getConnectTelephone());
         departmentVo.setPrincipalUserId(department.getPrincipalUserId());
-        departmentVo.setPrincipalUserName(user.getName());
+        departmentVo.setPrincipalUserName(user == null ? null : user.getName());
         departmentVo.setBranchId(department.getBranchId());
-        departmentVo.setBranchName(branch.getBranchName());
-        departmentVo.setBranchShortName(branch.getBranchShortName());
+        departmentVo.setBranchName(branch== null ? null : branch.getBranchName());
+        departmentVo.setBranchShortName(branch== null ? null : branch.getBranchShortName());
 
         return departmentVo;
     }

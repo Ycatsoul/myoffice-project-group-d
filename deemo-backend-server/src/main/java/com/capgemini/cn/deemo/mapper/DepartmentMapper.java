@@ -18,9 +18,9 @@ import java.util.List;
 public interface DepartmentMapper {
     Department getDepartment(@Param("departmentId") Long departmentId);
 
-    List<Department> listDepartments(@Param("departmentSearchVo")DepartmentSearchVo departmentSearchVo);
+    List<Department> listDepartments(@Param("departmentSearchVo") DepartmentSearchVo departmentSearchVo);
 
-    Integer countDepartments(@Param("departmentSearchVo")DepartmentSearchVo departmentSearchVo);
+    Integer countDepartments(@Param("departmentSearchVo") DepartmentSearchVo departmentSearchVo);
 
     Integer insertDepartment(@Param("departmentEditVo") DepartmentEditVo departmentEditVo);
 

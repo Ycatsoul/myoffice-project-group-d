@@ -200,6 +200,7 @@ public class UserServiceImpl implements UserService {
      */
     private UserVo convertToVo(User user) {
         UserVo userVo = new UserVo();
+        
         Department department = departmentMapper.getDepartment(user.getDepartmentId());
 
         userVo.setUserId(user.getUserId());
@@ -208,7 +209,7 @@ public class UserServiceImpl implements UserService {
         userVo.setGender(user.getGender());
         userVo.setAvatar(user.getAvatar());
         userVo.setDepartmentId(user.getDepartmentId());
-        userVo.setDepartmentName(department == null ? "不属于任何部门" : department.getDepartmentName());
+        userVo.setDepartmentName(department == null ? null : department.getDepartmentName());
 
         return userVo;
     }

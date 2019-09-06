@@ -60,6 +60,7 @@ public class MessageTypeServiceImpl implements MessageTypeService {
 
     private MessageTypeVo convertToVo(MessageType messageType) {
         MessageTypeVo messageTypeVo = new MessageTypeVo();
+
         messageTypeVo.setMessageTypeId(messageType.getMessageTypeId());
         messageTypeVo.setMessageTypeName(messageType.getMessageTypeName());
         messageTypeVo.setMessageTypeDesc(messageType.getMessageTypeDesc());
