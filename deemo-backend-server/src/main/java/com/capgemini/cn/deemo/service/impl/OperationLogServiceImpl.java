@@ -54,11 +54,12 @@ public class OperationLogServiceImpl implements OperationLogService {
 
     private OperationLogVo convertToVo(OperationLog operationLog) {
         OperationLogVo operationLogVo = new OperationLogVo();
+
         User user = userMapper.getUser(operationLog.getOperationUserId());
 
         operationLogVo.setOperationLogId(operationLog.getOperationId());
         operationLogVo.setOperationUserId(operationLog.getOperationUserId());
-        operationLogVo.setOperationUserName(user.getName());
+        operationLogVo.setOperationUserName(user == null ? null : user.getName());
         operationLogVo.setOperationName(operationLog.getOperationName());
         operationLogVo.setOperationDesc(operationLog.getOperationDesc());
         operationLogVo.setOperationTime(operationLog.getOperationTime());

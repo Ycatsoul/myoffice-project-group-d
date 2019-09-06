@@ -54,12 +54,13 @@ public class LoginLogServiceImpl implements LoginLogService {
 
     private LoginLogVo convertToVo(LoginLog loginLog) {
         LoginLogVo loginLogVo = new LoginLogVo();
+
         User user = userMapper.getUser(loginLog.getLoginUserId());
 
         loginLogVo.setLoginLogId(loginLog.getLoginId());
         loginLogVo.setIsSuccess(loginLog.getIsSuccess());
         loginLogVo.setLoginUserId(loginLog.getLoginUserId());
-        loginLogVo.setLoginUserName(user.getName());
+        loginLogVo.setLoginUserName(user == null ? null : user.getName());
         loginLogVo.setLoginTime(loginLog.getLoginTime());
         loginLogVo.setLoginIp(loginLog.getLoginIp());
         loginLogVo.setLoginDesc(loginLog.getLoginDesc());

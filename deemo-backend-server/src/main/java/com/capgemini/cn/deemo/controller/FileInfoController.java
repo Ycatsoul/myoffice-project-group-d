@@ -3,6 +3,7 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
 import com.capgemini.cn.deemo.vo.response.FileInfoVo;
@@ -30,6 +31,18 @@ public class FileInfoController {
         this.fileInfoService = fileInfoService;
     }
 
+    @ApiOperation(value = "获取一个文件的详尽信息")
+    @GetMapping("/{fileId}")
+    public RespBean getFile(@PathVariable Long fileId) {
+        RespVos<FileInfoVo> respVos = fileInfoService.getFile(fileId);
+
+        if (respVos != null && respVos.getVos().size() > 0) {
+            return RespBean.ok("成功", respVos);
+        }
+
+        return RespBean.error("未找到文件");
+    }
+
     @ApiOperation(value = "上传文件")
     @PostMapping("/upload")
     public RespBean uploadFile(@RequestParam("file") MultipartFile multipartFile) {
@@ -52,18 +65,6 @@ public class FileInfoController {
         int res = fileInfoService.updateFile(fileInfoEditVo);
 
         return res > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
-    }
-
-    @ApiOperation(value = "获取一个文件的详尽信息")
-    @GetMapping("/{fileId}")
-    public RespBean getFile(@PathVariable Long fileId) {
-        RespVos<FileInfoVo> respVos = fileInfoService.getFile(fileId);
-
-        if (respVos != null && respVos.getVos().size() > 0) {
-            return RespBean.ok("成功", respVos);
-        }
-
-        return RespBean.error("未找到文件");
     }
 
     @ApiOperation(value = "获取文件列表")
@@ -92,8 +93,8 @@ public class FileInfoController {
 
     @ApiOperation(value = "将文件放入回收站")
     @DeleteMapping("/delete")
-    public RespBean putFileToTrash(@RequestBody List<Long> fileIds) {
-        int res = fileInfoService.putFilesToTrash(fileIds);
+    public RespBean putFileToTrash(@RequestBody DeleteVo deleteVo) {
+        int res = fileInfoService.putFilesToTrash(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
@@ -108,8 +109,8 @@ public class FileInfoController {
 
     @ApiOperation(value = "将文件从回收站中彻底删除")
     @DeleteMapping("/destroy")
-    public RespBean deleteFilesInTrash(@RequestBody List<Long> fileIds) {
-        int res = fileInfoService.deleteFilesFromTrash(fileIds);
+    public RespBean deleteFilesInTrash(@RequestBody DeleteVo deleteVo) {
+        int res = fileInfoService.deleteFilesFromTrash(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("彻底删除成功!") : RespBean.error("彻底删除失败!");
     }

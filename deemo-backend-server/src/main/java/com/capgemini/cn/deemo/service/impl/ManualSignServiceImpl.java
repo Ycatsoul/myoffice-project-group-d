@@ -84,11 +84,12 @@ public class ManualSignServiceImpl implements ManualSignService {
 
     private ManualSignVo convertToVo(ManualSign manualSign) {
         ManualSignVo manualSignVo = new ManualSignVo();
+
         User user = userMapper.getUser(manualSign.getUserId());
 
         manualSignVo.setManualSignId(manualSign.getManualSignId());
         manualSignVo.setUserId(manualSign.getUserId());
-        manualSignVo.setName(user.getName());
+        manualSignVo.setName(user == null ? null : user.getName());
         manualSignVo.setSignTime(manualSign.getSignTime());
         manualSignVo.setSignDesc(manualSign.getSignDesc());
         manualSignVo.setSignTag(manualSign.getSignTag());

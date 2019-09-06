@@ -3,13 +3,12 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.deemo.service.LoginLogService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.LoginLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.LoginLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -39,8 +38,8 @@ public class LoginLogController {
 
     @ApiOperation("删除LoginLog")
     @DeleteMapping("/")
-    public RespBean deleteLoginLogs(@RequestBody List<Long> loginIds) {
-        Integer res = loginLogService.deleteLoginLogs(loginIds);
+    public RespBean deleteLoginLogs(@RequestBody DeleteVo deleteVo) {
+        Integer res = loginLogService.deleteLoginLogs(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条登录日志!") : RespBean.error("删除失败!");
     }

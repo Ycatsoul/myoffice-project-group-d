@@ -3,14 +3,13 @@ package com.capgemini.cn.deemo.controller;
 import com.capgemini.cn.deemo.service.ManualSignService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.ManualSignEditVo;
 import com.capgemini.cn.deemo.vo.request.ManualSignSearchVo;
 import com.capgemini.cn.deemo.vo.response.ManualSignVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -69,8 +68,8 @@ public class ManualSignController {
 
     @ApiOperation("删除签到")
     @DeleteMapping("/")
-    public RespBean deleteManualSigns(@RequestBody List<Long> manualSignIds) {
-        Integer res = manualSignService.deleteManualSigns(manualSignIds);
+    public RespBean deleteManualSigns(@RequestBody DeleteVo deleteVo) {
+        Integer res = manualSignService.deleteManualSigns(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败! 未找到相关信息!");
     }

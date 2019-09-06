@@ -2,6 +2,7 @@ package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.MessageEditVo;
+import com.capgemini.cn.deemo.vo.request.MessageReadVo;
 import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
 import com.capgemini.cn.deemo.vo.response.MessageVo;
 
@@ -26,7 +27,7 @@ public interface MessageService {
 
     Integer sendMessage(Long messageId);
 
-    Integer readMessages(List<Long> messageIds, Long currentUserId);
+    Integer readMessages(MessageReadVo messageReadVo);
 
     Integer deleteMessageTranses(List<Long> messageTransIds);
 

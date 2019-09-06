@@ -4,14 +4,13 @@ import com.capgemini.cn.core.commons.BaseController;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
 import com.capgemini.cn.deemo.vo.response.DepartmentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @Description:部门管理controller
@@ -72,8 +71,8 @@ public class DepartmentController extends BaseController {
 
     @ApiOperation("删除部门")
     @DeleteMapping("/")
-    public RespBean deleteDepartments(@RequestBody List<Long> departmentIds) {
-        Integer res = departmentService.deleteDepartments(departmentIds);
+    public RespBean deleteDepartments(@RequestBody DeleteVo deleteVo) {
+        Integer res = departmentService.deleteDepartments(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }

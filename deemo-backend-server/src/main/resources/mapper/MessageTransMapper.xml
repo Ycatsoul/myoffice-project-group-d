@@ -14,8 +14,8 @@
   <!-- 标记信息为已读状态 -->
   <update id="readMessages">
     UPDATE MessageTrans SET isRead = 1
-    WHERE recipientId = #{currentUserId} AND messageId IN
-      <foreach collection="messageIds" item="messageId" separator="," open="(" close=")">
+    WHERE recipientId = #{messageReadVo.currentUserId} AND messageId IN
+      <foreach collection="messageReadVo.messageIds" item="messageId" separator="," open="(" close=")">
         #{messageId}
       </foreach>
   </update>
