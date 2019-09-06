@@ -45,7 +45,7 @@
             size="mini"
             style="width: 100%">
             <el-table-column
-              prop="id"
+              prop="branchId"
               type="selection"
               align="left"
               width="30">
@@ -109,16 +109,15 @@ export default {
   data () {
     return {
       branch:{
-        id:'',
-        branchId:'',
-        branchName:'',
-        branchShortName:'',
+        branchId: '',
+        branchNamex: '',
+        branchShortName: '',
       },
       isDisabled:0,
       totalCount: -1,
       currentPage: 1,
       tableLoading:false,
-      multipleSelection:[],
+      multipleSelection:[], 
       branchs: [{
           branchName:'华北电力科学研究院',
           branchShortName: '华电',
@@ -159,7 +158,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.tableLoading = true;
-              this.postRequest("/user/branch/update", this.branch).then(resp=> {
+              this.putRequest("/branch/update", this.branch).then(resp=> {
                 _this.tableLoading = false;
                 console.log("修改",this.branch);
                 if (resp && resp.status == 200) {
@@ -181,7 +180,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.tableLoading = true;
-              this.postRequest("/user/branch/save", this.branch).then(resp=> {
+              this.postRequest("/branch/add", this.branch).then(resp=> {
                 _this.tableLoading = false;
                 console.log("增加部分",resp);
                 if (resp && resp.status == 200) {
@@ -203,10 +202,12 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var ids = '';
+          var ids=[];
           for (var i = 0; i < this.multipleSelection.length; i++) {
-            ids += this.multipleSelection[i].id + ",";
+            ids.push(this.multipleSelection[i].branchId);
+            // ids += this.multipleSelection[i].branchId + ',';
           }
+          // ids = '[' + ids.substr(0, ids.length - 1) + ']';
           this.doDeleteMultiBranch(ids);
         }).catch(() => {
         });
@@ -215,9 +216,9 @@ export default {
         this.tableLoading = true;
         var _this = this;
         var datas = {
-          deleteList:ids
+          ids:ids
         }
-        this.postRequest("/employee/prize/deleteBatchPrize",datas).then(resp=> {
+        this.postRequest("/branch/delete",datas).then(resp=> {
           _this.tableLoading = false;
           console.log("==============",datas);
           if (resp && resp.status == 200) {
@@ -230,17 +231,17 @@ export default {
        loadBranchs(){
         var _this = this;
         var datas = {
-          "branchName":'',
-          "branchId": "",
+          "branchName":null,
+          "branchId":null,
           "size": "10",
           "start": (this.currentPage-1)*10          
         };
         this.tableLoading = true;
-        this.postRequest("/user/branch/list",datas).then(resp=> {
+        this.postRequest("/branch/list",datas).then(resp=> {
           this.tableLoading = false;
           console.log("界面显示",resp);
           if (resp.data && resp.status == 200) {
-            var data = resp.data.obj.branchVos;
+            var data = resp.data.obj.vos;
             _this.branchs = data;
             _this.totalCount = resp.data.obj.listCount;
           }
@@ -249,6 +250,7 @@ export default {
       showBranchView(row){
         console.log(row);
         this.isDisabled = 1;
+        this.branch.branchId=row.branchId;
         this.branch.branchName = row.branchName;
         this.branch.branchShortName = row.branchShortName;
       },
@@ -258,17 +260,19 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.doDeleteBranch(row.id);
+          this.doDeleteBranch(row.branchId);
         }).catch(() => {
         });
       },
       doDeleteBranch(ids){
+        var m = [];
+        m.push(ids);
         this.tableLoading = true;
         var _this = this;
         var datas = {
-          id:ids,
+          ids:m,
         }
-        this.postRequest("/user/branch/delete/{id}",datas).then(resp=> {
+        this.postRequest("/branch/delete",datas).then(resp=> {
           _this.tableLoading = false;
           console.log(datas);
           if (resp && resp.status == 200) {
@@ -280,10 +284,9 @@ export default {
       },
       emptyBranchData(){
         this.branch = {
-         id: '',
-         branchId: '',
-         branchName:'',
-         branchShortName:'',
+         branchId: null,
+         branchName:null,
+         branchShortName:null,
         }
       }
   }

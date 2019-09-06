@@ -18,8 +18,10 @@
           <el-table
             :data="departments"
             v-loading="tableLoading"
+            element-loading-background = "rgba(0, 0, 0, 0.5)"
+            element-loading-text = "数据正在加载中"
+            element-loading-spinner = "el-icon-loading"
             border
-            stripe
             @selection-change="handleSelectionChange"
             size="mini"
             style="width: 100%">
@@ -99,7 +101,7 @@
    </div>
 </el-container>
 <!-- 点击增加部门情况界面 -->
- <el-form :model="department" :rules="rules" ref="addDepartmentForm" style="margin: 0px;padding: 0px;">
+ <el-form :model="department"  ref="addDepartmentForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -176,7 +178,6 @@ export default {
   data () {
     return {
       department:{
-        id:'',
         departmentId:'',
         departmentName:'',
         connectPhone:'',
@@ -184,6 +185,7 @@ export default {
         principalUserId:'',
         branchName:'',
       },
+      dialogTitle:'',
       branchNames:[],
       dialogVisible: false,
       isDisabled:0,
@@ -192,43 +194,30 @@ export default {
       tableLoading:false,
       multipleSelection:[],
       show:false,
-      departments: [
-        //   branchName:'华北电力科学研究院',
-        //   branchShortName: '华电',
-        // }, {
-        //    branchName: '中国科学院声学研究院',
-        //    branchShortName: '中科声研究院',
-        // }, {
-        //    branchName: '北大青岛集团',
-        //    branchShortName: '青岛',
-        // }, {
-        //    branchName: '大唐国际盘山发电有限公司',
-        //    branchShortName: '盘电',
-        ],
-        allPrincipals:[],
+      departments: [],
+      allPrincipals:[],
     }
   },
     mounted: function () {
       this.loadDepartments();
-      this.getAllBranchsInfo();
+      // this.getAllBranchsInfo();
       this.display();
     },
   methods:{
-        getAllBranchsInfo(){
-          this.postRequest("/employee/basic/listEmpVo").then(resp=> {
-          if (resp.data && resp.data.status == 200) {
-            console.log("获取所有机构信息",resp);
-            this.branchNames = resp.data.obj;
-          }
-        });
-        },
+        // getAllBranchsInfo(){
+        //   this.postRequest("/branch").then(resp=> {
+        //   if (resp.data && resp.data.status == 200) {
+        //     console.log("获取所有机构信息",resp);
+        //     this.branchNames = resp.data.obj;
+        //   }
+        // });
+        // },
         display(){
           if(this.departments.length>0){
             this.show=true
           }
         },
        showAddDepartmentView(){
-        this.idIsDisabled = 1;
         this.dialogTitle = "添加部门信息";
         this.$refs['addDepartmentForm'].clearValidate() // 重置验证
         this.department.branchName = '';
@@ -262,7 +251,7 @@ export default {
             if (this.department.id) {
               //更新
               this.tableLoading = true;
-              this.postRequest("/employee/prize/updateEmpById", this.emp).then(resp=> {
+              this.postRequest("/department/update", this.emp).then(resp=> {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
@@ -274,9 +263,10 @@ export default {
             } else {
               //添加
               this.tableLoading = true;              
-              this.postRequest("/employee/prize/addPrize", this.emp).then(resp=> {
+              this.postRequest("/department/add", this.emp).then(resp=> {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
+                  console.log("添加",resp);
                   var data = resp.data;
                   _this.dialogVisible = false;
                   _this.emptyDepartmentData();
@@ -284,7 +274,6 @@ export default {
                 }
               })
             }
-            _this.idIsDisabled = 0;
           } else {
             return false;
           }
@@ -310,7 +299,7 @@ export default {
         var datas = {
           deleteList:ids
         }
-        this.postRequest("/employee/prize/deleteBatchPrize",datas).then(resp=> {
+        this.postRequest("/department/delete",datas).then(resp=> {
           _this.tableLoading = false;
           console.log("==============",datas);
           if (resp && resp.status == 200) {
@@ -323,18 +312,17 @@ export default {
        loadDepartments(){
         var _this = this;
         var datas = {
-          "id":"",
-          "branchId": "",
-          "branchName":"",
+          "branchId": null,
+          "departmentName":  null,
           "size": "10",
-          "start": (this.currentPage-1)*10          
+          "start": (this.currentPage - 1) * 10          
         };
         this.tableLoading = true;
-        this.postRequest("/user/branch/list",datas).then(resp=> {
+        this.postRequest("/department/list",datas).then(resp=> {
           this.tableLoading = false;
-          console.log("haha",resp);
+          console.log("查询",resp);
           if (resp.data && resp.status == 200) {
-            var data = resp.data.obj.empPrizeVoList;
+            var data = resp.data.obj.vos;
             _this.departments = data;
             _this.totalCount = resp.data.obj.listCount;
           }
@@ -370,7 +358,7 @@ export default {
           id:ids,
           operationUserId:1
         }
-        this.postRequest("/user/branch/delete/{id}",datas).then(resp=> {
+        this.postRequest("/department/delete",datas).then(resp=> {
           _this.tableLoading = false;
           console.log(datas);
           if (resp && resp.status == 200) {
@@ -392,7 +380,6 @@ export default {
       },
        cancelEidt(){
         this.dialogVisible = false;
-        this.idIsDisabled = 0;
         this.emptyDepartmentData();
       },
   }

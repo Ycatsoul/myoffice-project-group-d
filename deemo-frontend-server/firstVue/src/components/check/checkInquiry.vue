@@ -205,7 +205,7 @@ data () {
               var minutes = start.getMinutes();
               var seconds = start.getSeconds();
               var milliseconds = hours*3600*1000+minutes*60*1000+seconds*1000;
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * m - milliseconds);
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * (m-1) - milliseconds);
               end.setTime(end.getTime() + 3600 * 1000 * 24 * (7-m+1) - milliseconds);
               picker.$emit('pick', [start, end]);
             }
