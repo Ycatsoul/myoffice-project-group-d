@@ -110,7 +110,7 @@ export default {
     return {
       branch:{
         branchId: '',
-        branchNamex: '',
+        branchName: '',
         branchShortName: '',
       },
       isDisabled:0,
@@ -158,7 +158,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.tableLoading = true;
-              this.putRequest("/branch/update", this.branch).then(resp=> {
+              this.putRequest("/branch/", this.branch).then(resp=> {
                 _this.tableLoading = false;
                 console.log("修改",this.branch);
                 if (resp && resp.status == 200) {
@@ -180,7 +180,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.tableLoading = true;
-              this.postRequest("/branch/add", this.branch).then(resp=> {
+              this.postRequest("/branch/", this.branch).then(resp=> {
                 _this.tableLoading = false;
                 console.log("增加部分",resp);
                 if (resp && resp.status == 200) {
@@ -218,7 +218,7 @@ export default {
         var datas = {
           ids:ids
         }
-        this.postRequest("/branch/delete",datas).then(resp=> {
+        this.deleteRequest("/branch/",datas).then(resp=> {
           _this.tableLoading = false;
           console.log("==============",datas);
           if (resp && resp.status == 200) {
@@ -231,8 +231,8 @@ export default {
        loadBranchs(){
         var _this = this;
         var datas = {
-          "branchName":null,
-          "branchId":null,
+          "branchName":'',
+          "branchId":'',
           "size": "10",
           "start": (this.currentPage-1)*10          
         };
@@ -272,7 +272,7 @@ export default {
         var datas = {
           ids:m,
         }
-        this.postRequest("/branch/delete",datas).then(resp=> {
+        this.deleteRequest("/branch/",datas).then(resp=> {
           _this.tableLoading = false;
           console.log(datas);
           if (resp && resp.status == 200) {
@@ -284,9 +284,9 @@ export default {
       },
       emptyBranchData(){
         this.branch = {
-         branchId: null,
-         branchName:null,
-         branchShortName:null,
+         branchId:'',
+         branchName:'',
+         branchShortName:'',
         }
       }
   }
