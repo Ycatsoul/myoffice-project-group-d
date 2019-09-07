@@ -9,8 +9,8 @@
       <el-container>
       <div class="aside">
         <el-menu :default-active="this.$router.path" router mode="horizontal">
-          <el-submenu index="1">
-            <template slot="title">人事管理</template>
+        <el-submenu index="1">
+            <template slot="title" v-for(item,key) in ment>人事管理</template>
         <el-menu-item v-for="(item,i) in menu" :key="i" :index="item.path">
           {{ item.name }}
         </el-menu-item>
@@ -110,8 +110,8 @@
               {path:"/personal/employee",name:"员工管理" },
         ],
         menu2:[{path: '/schedule/mySchedule',name:'我的日程',},
-             { path: '/schedule/departmentSchedule', name: '部门日程', },
-             {path: '/schedule/myNotes', name: '我的便签', }
+              { path: '/schedule/departmentSchedule', name: '部门日程', },
+              {path: '/schedule/myNotes', name: '我的便签',}
         ],
         menu3:[{path:"/document/docManage",name: '文档管理',},
           {path:"/document/recycle",name:"回收站" },
@@ -127,6 +127,7 @@
         ],
          menu6:[{path:"/check/checkCount",name: '考勤统计',},
           {path:"/check/checkInquiry",name:"考勤历史记录查询" },
+          {path:"/check/employeeCheck",name:"员工签到、签退" },
         ],
       }
     },

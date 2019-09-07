@@ -46,8 +46,8 @@ export const postRequestLogin = (url, params) => {
       return ret
     }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-      // 'Content-Type': 'application/json;charset=utf-8'
+      // 'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json;charset=utf-8'
     }
   });
 }
@@ -88,19 +88,23 @@ export const putRequest = (url, params) => {
       return ret
     }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   });
 }
-export const deleteRequest = (url) => {
+export const deleteRequest = (url,params) => {
   return axios({
     method: 'delete',
-    url: `${base}${url}`
+    url: `${base}${url}`,
+    contentType: 'application/json; charset=UTF-8',
+    dataType:'json',
+    data: JSON.stringify(params),
   });
 }
 export const getRequest = (url) => {
   return axios({
     method: 'get',
-    url: `${base}${url}`
+    url: `${base}${url}`,
+
   });
 }

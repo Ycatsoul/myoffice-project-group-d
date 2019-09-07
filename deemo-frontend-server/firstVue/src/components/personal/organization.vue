@@ -4,9 +4,9 @@
     <p>{{this.$router.currentRoute.name}}</p>
      <hr>
    </div>
-   <div class="content">
-    <div class="first">
-     <el-form :model="branch"  ref="addOrganizationForm" style="margin: 0px;padding: 0px;">
+<div class="content">
+  <div class="first">
+     <el-form :model="branch"  ref="addBranchForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: center;margin-left:100px;">
           <el-row style="margin-top: 20px;padding: 0px;">
             <el-col :span="10">
@@ -27,15 +27,15 @@
             </el-col>
             <el-col :span="4">
             <div style="margin-top:6px;">
-            <el-button size="mini" type="primary" @click="addOrganization('addOrganizationForm')" :disabled="isDisabled=='1'">添加</el-button>
-            <el-button size="mini" type="primary" @click="changeOrganization('addOrganizationForm')" :disabled="isDisabled=='0'">保存修改</el-button>
+            <el-button size="mini" type="primary" @click="addBranch('addBranchForm')" :disabled="isDisabled=='1'">添加</el-button>
+            <el-button size="mini" type="primary" @click="changeBranch('addBranchForm')" :disabled="isDisabled=='0'">保存修改</el-button>
             </div>
             </el-col>
           </el-row>
       </div>
     </el-form>
-     </div>
-     <div class="main" v-if="branchs">
+  </div>
+     <div class="main" >
           <el-table
             :data="branchs"
             v-loading="tableLoading"
@@ -45,7 +45,7 @@
             size="mini"
             style="width: 100%">
             <el-table-column
-              prop="id"
+              prop="branchId"
               type="selection"
               align="left"
               width="30">
@@ -67,7 +67,7 @@
               label="修改"
               width="150">
               <template slot-scope="scope">
-                <el-button @click="showOrganizationView(scope.row)" style="padding: 3px 4px 3px 4px;margin: 2px"
+                <el-button @click="showBranchView(scope.row)" style="padding: 3px 4px 3px 4px;margin: 2px"
                            size="mini">
                            <i class="el-icon-edit" ></i>
                 </el-button>
@@ -79,15 +79,15 @@
               width="150">
               <template slot-scope="scope">
                 <el-button type="danger" style="padding: 3px 4px 3px 4px;margin: 2px" size="mini"
-                           @click="deleteOrganization(scope.row)">
+                           @click="deleteBranch(scope.row)">
                            <i class="el-icon-delete"></i>
                 </el-button>
               </template>
             </el-table-column>
           </el-table>
           <div style="display: flex;justify-content: space-between;margin: 2px">
-            <el-button type="danger" size="mini" v-if="branchs.length>0" :disabled="multipleSelection.length==0"
-                       @click="deleteManyOrganization">批量删除
+            <el-button type="danger" size="mini"  :disabled="multipleSelection.length==0"
+                       @click="deleteManyBranch">批量删除
             </el-button>
             <el-pagination
               background
@@ -109,16 +109,15 @@ export default {
   data () {
     return {
       branch:{
-        id:'',
-        branchId:'',
-        branchName:'',
-        branchShortName:'',
+        branchId: '',
+        branchName: '',
+        branchShortName: '',
       },
       isDisabled:0,
       totalCount: -1,
       currentPage: 1,
       tableLoading:false,
-      multipleSelection:[],
+      multipleSelection:[], 
       branchs: [{
           branchName:'华北电力科学研究院',
           branchShortName: '华电',
@@ -136,7 +135,7 @@ export default {
   },
     mounted: function () {
 
-      this.loadOrganizations();
+      this.loadBranchs();
  
     },
   methods:{
@@ -145,28 +144,28 @@ export default {
       },
      keywordsChange(val){
         if (val == '') {
-          this.loadOrganizations();
+          this.loadBranchs();
         }
       },
      currentChange(currentChange){
         this.currentPage = currentChange;
-        this.loadOrganizations();
+        this.loadBranchs();
       },
       //修改
-      changeOrganization(formName){
+      changeBranch(formName){
         var _this = this;
         _this.isDisabled=0;
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.tableLoading = true;
-              this.postRequest("/user/branch/update", this.branch).then(resp=> {
+              this.putRequest("/branch/", this.branch).then(resp=> {
                 _this.tableLoading = false;
                 console.log("修改",this.branch);
                 if (resp && resp.status == 200) {
                   var data = resp.data;
                   _this.dialogVisible = false;
-                  _this.emptyOrganizationData();
-                  _this.loadOrganizations();
+                  _this.emptyBranchData();
+                  _this.loadBranchs();
                 }
               })
           }
@@ -176,19 +175,19 @@ export default {
         });
       },
       //增加
-       addOrganization(formName){
+       addBranch(formName){
         var _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.tableLoading = true;
-              this.postRequest("/user/branch/save", this.branch).then(resp=> {
+              this.postRequest("/branch/", this.branch).then(resp=> {
                 _this.tableLoading = false;
                 console.log("增加部分",resp);
                 if (resp && resp.status == 200) {
                   var data = resp.data;
                   _this.dialogVisible = false;
-                  _this.emptyOrganizationData();
-                  _this.loadOrganizations();
+                  _this.emptyBranchData();
+                  _this.loadBranchs();
                 }
               })
           }
@@ -197,92 +196,95 @@ export default {
           }
         });
       },
-     deleteManyOrganization(){
+     deleteManyBranch(){
         this.$confirm('此操作将删除[' + this.multipleSelection.length + ']条数据, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var ids = '';
+          var ids=[];
           for (var i = 0; i < this.multipleSelection.length; i++) {
-            ids += this.multipleSelection[i].id + ",";
+            ids.push(this.multipleSelection[i].branchId);
+            // ids += this.multipleSelection[i].branchId + ',';
           }
-          this.doDeleteMultiOrganization(ids);
+          // ids = '[' + ids.substr(0, ids.length - 1) + ']';
+          this.doDeleteMultiBranch(ids);
         }).catch(() => {
         });
       },
-      doDeleteMultiOrganization(ids){
+      doDeleteMultiBranch(ids){
         this.tableLoading = true;
         var _this = this;
         var datas = {
-          deleteList:ids
+          ids:ids
         }
-        this.postRequest("/employee/prize/deleteBatchPrize",datas).then(resp=> {
+        this.deleteRequest("/branch/",datas).then(resp=> {
           _this.tableLoading = false;
           console.log("==============",datas);
           if (resp && resp.status == 200) {
             var data = resp.data;
             this.$message({type: 'success', message: "删除成功！"});
-            _this.loadOrganizations();
+            _this.loadBranchs();
           }
         })
       },
-       loadOrganizations(){
+       loadBranchs(){
         var _this = this;
         var datas = {
           "branchName":'',
-          "branchId": "",
+          "branchId":'',
           "size": "10",
           "start": (this.currentPage-1)*10          
         };
         this.tableLoading = true;
-        this.postRequest("/user/branch/list",datas).then(resp=> {
+        this.postRequest("/branch/list",datas).then(resp=> {
           this.tableLoading = false;
           console.log("界面显示",resp);
           if (resp.data && resp.status == 200) {
-            var data = resp.data.obj.branchVos;
+            var data = resp.data.obj.vos;
             _this.branchs = data;
             _this.totalCount = resp.data.obj.listCount;
           }
         })
       },
-      showOrganizationView(row){
+      showBranchView(row){
         console.log(row);
         this.isDisabled = 1;
-        this.branch = row;
+        this.branch.branchId=row.branchId;
         this.branch.branchName = row.branchName;
         this.branch.branchShortName = row.branchShortName;
       },
-      deleteOrganization(row){
+      deleteBranch(row){
           this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.doDeleteOrganization(row.id);
+          this.doDeleteBranch(row.branchId);
         }).catch(() => {
         });
       },
-      doDeleteOrganization(ids){
+      doDeleteBranch(ids){
+        var m = [];
+        m.push(ids);
         this.tableLoading = true;
         var _this = this;
         var datas = {
-          id:ids,
+          ids:m,
         }
-        this.postRequest("/user/branch/delete/{id}",datas).then(resp=> {
+        this.deleteRequest("/branch/",datas).then(resp=> {
           _this.tableLoading = false;
           console.log(datas);
           if (resp && resp.status == 200) {
             var data = resp.data;
             this.$message({type: 'success', message: "删除成功！"});
-            _this.loadOrganizations();
+            _this.loadBranchs();
           }
         })
       },
-      emptyOrganizationData(){
+      emptyBranchData(){
         this.branch = {
-         id: '',
-         branchId: '',
+         branchId:'',
          branchName:'',
          branchShortName:'',
         }
