@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capgemini.cn.deemo.mapper.PreContractMapper">
+
+    <!--    根据preContractId获取preContract表详细信息-->
+    <select id="listPreContract" parameterType="Long" resultType="com.capgemini.cn.deemo.data.domain.PreContract">
+        select * from preContract where preContractId = #{preContractId}
+    </select>
+
+    <!--    查询preContract表信息-->
+    <select id="listPreContracts" resultType="com.capgemini.cn.deemo.data.domain.PreContract">
+        select * from preContract
+    </select>
+
+    <!--    插入一条preContract信息-->
+    <insert id="insertPreContract" parameterType="com.capgemini.cn.deemo.vo.request.PreContractEditVo">
+    insert into preContract
+    (
+        preContractId,
+        scheduleId,
+        userId
+    )
+    values
+    (
+        #{preContractEditVo.preContractId},
+        #{preContractEditVo.scheduleId} ,
+        #{preContractEditVo.userId}
+    )
+</insert>
+
+    <!--    更新preContract表信息-->
+    <update id="updatePreContract" parameterType="com.capgemini.cn.deemo.vo.request.PreContractEditVo">
+        update preContract
+        <set>
+            <if test="preContract.scheduleId != null">scheduleId = #{preContractEditVo.scheduleId} , </if>
+            <if test="preContract.userId != null">userId = #{preContractEditVo.userId}, </if>
+        </set>
+        where preContractId = #{preContractEditVo.preContractId}
+    </update>
+
+    <!--    删除一条信息-->
+    <delete id="deletePreContract" parameterType="Long">
+    delete from preContract where userId = #{userId}
+</delete>
+
+</mapper>
