@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public interface MessageTransMapper {
 
-    Integer sendMessages(@Param("messageTranses") List<MessageTrans> messageTranses);
+    Integer insertMessageTranses(@Param("messageTranses") List<MessageTrans> messageTranses);
 
     Integer readMessages(@Param("messageReadVo") MessageReadVo messageReadVo);
 

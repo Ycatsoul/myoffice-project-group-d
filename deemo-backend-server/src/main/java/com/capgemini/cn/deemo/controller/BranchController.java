@@ -74,9 +74,9 @@ public class BranchController extends BaseController {
     }
 
     @ApiOperation("删除Branch信息")
-    @DeleteMapping("/")
+    @PostMapping("/delete")
     public RespBean deleteBranches(@RequestBody DeleteVo deleteVo){
 
-        return branchService.deleteBranches(deleteVo.getIds()) > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
+        return branchService.deleteBranches(deleteVo) > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
 }

@@ -7,6 +7,7 @@ import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.ManualSignService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.ManualSignEditVo;
 import com.capgemini.cn.deemo.vo.request.ManualSignSearchVo;
 import com.capgemini.cn.deemo.vo.response.ManualSignVo;
@@ -78,8 +79,8 @@ public class ManualSignServiceImpl implements ManualSignService {
     }
 
     @Override
-    public Integer deleteManualSigns(List<Long> manualSignIds) {
-        return manualSignMapper.deleteManualSigns(manualSignIds);
+    public Integer deleteManualSigns(DeleteVo deleteVo) {
+        return manualSignMapper.deleteManualSigns(deleteVo.getIds());
     }
 
     private ManualSignVo convertToVo(ManualSign manualSign) {

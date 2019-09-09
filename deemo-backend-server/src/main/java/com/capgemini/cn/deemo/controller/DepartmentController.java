@@ -70,9 +70,9 @@ public class DepartmentController extends BaseController {
     }
 
     @ApiOperation("删除部门")
-    @DeleteMapping("/")
+    @PostMapping("/delete")
     public RespBean deleteDepartments(@RequestBody DeleteVo deleteVo) {
-        Integer res = departmentService.deleteDepartments(deleteVo.getIds());
+        Integer res = departmentService.deleteDepartments(deleteVo);
 
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }

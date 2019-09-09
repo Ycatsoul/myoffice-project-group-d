@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capgemini.cn.deemo.mapper.MenuRoleMapper">
+  
+  <!-- 根据userId获取Role -->
+  <select id="getRolesByMenuId" resultType="com.capgemini.cn.deemo.data.domain.Role">
+    SELECT * FROM Role WHERE roleId IN (SELECT roleId FROM MenuRole WHERE menuId = #{menuId})
+  </select>
+
+</mapper>

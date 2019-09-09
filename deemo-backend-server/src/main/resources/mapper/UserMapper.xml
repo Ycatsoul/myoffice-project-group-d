@@ -24,7 +24,12 @@
     <select id="getUser" resultType="com.capgemini.cn.deemo.data.domain.User">
         SELECT * FROM User WHERE userId = #{userId};
     </select>
-
+    
+    <!-- 根据username查询User -->
+    <select id="getUserByUsername" resultType="com.capgemini.cn.deemo.data.domain.User">
+        SELECT * FROM User WHERE username = #{username};
+    </select>
+    
     <!-- 获取User列表 -->
     <select id="listUsers"
             parameterType="com.capgemini.cn.deemo.vo.request.UserSearchVo"

@@ -1,7 +1,7 @@
 package com.capgemini.cn.deemo.mapper;
 
-import com.capgemini.cn.deemo.data.domain.Role;
 import com.capgemini.cn.deemo.utils.IdWorker;
+import com.capgemini.cn.deemo.vo.request.RoleEditVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -29,12 +29,12 @@ public class RoleMapperTest {
         String[] roleDescs = new String[]{"超级管理员", "管理员(运维/HR)", "用户/员工"};
 
         for (int i = 0; i < roleDescs.length; i++) {
-            Role role = new Role();
-            role.setRoleId(IdWorker.get().nextId());
-            role.setRoleName(roleNames[i]);
-            role.setRoleDesc(roleDescs[i]);
+            RoleEditVo roleEditVo = new RoleEditVo();
+            roleEditVo.setRoleId(IdWorker.get().nextId());
+            roleEditVo.setRoleName(roleNames[i]);
+            roleEditVo.setRoleDesc(roleDescs[i]);
 
-            assert roleMapper.addRole(role) == 1;
+            assert roleMapper.addRole(roleEditVo) == 1;
         }
     }
 }

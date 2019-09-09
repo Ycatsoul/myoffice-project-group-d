@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.data.domain;
 
 
+import com.sun.tools.javac.util.List;
 import lombok.Data;
 
 import java.sql.Date;
@@ -49,19 +50,9 @@ public class Message {
     private Long createUserId;
 
     /**
-     * 接收机构ID
-     */
-    private Long branchId;
-
-    /**
-     * 接收部门ID
-     */
-    private Long departmentId;
-
-    /**
      * 接收用户ID
      */
-    private Long recipientId;
+    private List<Long> recipientIds;
 
     /**
      * 发布状态

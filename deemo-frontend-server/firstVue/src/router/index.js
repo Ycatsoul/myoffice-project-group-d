@@ -8,9 +8,6 @@ import employee from '@/components/personal/employee'
 import mySchedule from '@/components/schedule/mySchedule'
 import departmentSchedule from '@/components/schedule/departmentSchedule'
 import myNotes from '@/components/schedule/myNotes'
-import docManage from '@/components/document/docManage'
-import fileSearch from '@/components/document/fileSearch'
-import recycle from '@/components/document/recycle'
 import mailBox from '@/components/message/mailBox'
 import msgManage from '@/components/message/msgManage'
 import loginRecord from '@/components/system/loginRecord'
@@ -20,6 +17,8 @@ import roleManage from '@/components/system/roleManage'
 import checkCount from '@/components/check/checkCount'
 import checkInquiry from '@/components/check/checkInquiry'
 import employeeCheck from '@/components/check/employeeCheck'
+import FileManager from '@/components/file/FileManager'
+import FileTrash from '@/components/file/FileTrash'
 
 Vue.use(Router)
 
@@ -102,9 +101,9 @@ export default new Router({
           }
         },
         {
-          path: '/document/docManage',
+          path: '/file/manager',
           name: '文档管理',
-          component: docManage,
+          component: FileManager,
           hidden: true,
           meta: {
             keepAlive: false,
@@ -112,19 +111,9 @@ export default new Router({
           }
         },
         {
-          path: '/document/fileSearch',
-          name: '文件搜索',
-          component: fileSearch,
-          hidden: true,
-          meta: {
-            keepAlive: false,
-            requireAuth: true
-          }
-        },
-        {
-          path: '/document/recycle',
+          path: '/file/trash',
           name: '回收站',
-          component: recycle,
+          component: FileTrash,
           hidden: true,
           meta: {
             keepAlive: false,

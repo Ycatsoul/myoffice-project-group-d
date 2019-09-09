@@ -9,6 +9,7 @@ import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoSearchVo;
 import com.capgemini.cn.deemo.vo.response.FileInfoVo;
@@ -168,10 +169,10 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return 受影响的行数
      */
     @Override
-    public Integer putFilesToTrash(List<Long> fileIds) {
-        int a = fileInfoMapper.putFilesToTrash(fileIds);
+    public Integer putFilesToTrash(DeleteVo deleteVo) {
+        int a = fileInfoMapper.putFilesToTrash(deleteVo.getIds());
         int b = 0;
-        List<Long> childIds = getChildIds(fileIds);
+        List<Long> childIds = getChildIds(deleteVo.getIds());
 
         if (childIds.size() > 0) {
             b = fileInfoMapper.putChildrenToTrash(childIds);
@@ -185,12 +186,12 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹从回收站中取回
      */
     @Override
-    public Integer restoreFilesFromTrash(List<Long> fileIds) {
-        List<Long> childIds = getChildIds(fileIds);
+    public Integer restoreFilesFromTrash(DeleteVo deleteVo) {
+        List<Long> childIds = getChildIds(deleteVo.getIds());
         int a = 0;
         int b = 0;
 
-        for (Long fileId : fileIds) {
+        for (Long fileId : deleteVo.getIds()) {
             a += fileInfoMapper.restoreFileFromTrash(fileId);
         }
 
@@ -206,7 +207,8 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 如果参数是一个文件夹, 将当前文件夹及其子文件和文件夹彻底删除
      */
     @Override
-    public Integer deleteFilesFromTrash(List<Long> fileIds) {
+    public Integer deleteFilesFromTrash(DeleteVo deleteVo) {
+        List<Long> fileIds = deleteVo.getIds();
         fileIds.addAll(getChildIds(fileIds));
 
         return fileInfoMapper.deleteFilesFromTrash(fileIds);

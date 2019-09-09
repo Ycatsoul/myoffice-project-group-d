@@ -1,11 +1,20 @@
 package com.capgemini.cn.deemo.service.impl;
 
-import com.capgemini.cn.deemo.data.domain.*;
-import com.capgemini.cn.deemo.mapper.*;
+import com.capgemini.cn.deemo.data.domain.Message;
+import com.capgemini.cn.deemo.data.domain.MessageTrans;
+import com.capgemini.cn.deemo.data.domain.MessageType;
+import com.capgemini.cn.deemo.data.domain.User;
+import com.capgemini.cn.deemo.mapper.MessageMapper;
+import com.capgemini.cn.deemo.mapper.MessageTransMapper;
+import com.capgemini.cn.deemo.mapper.MessageTypeMapper;
+import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.MessageService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
-import com.capgemini.cn.deemo.vo.request.*;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
+import com.capgemini.cn.deemo.vo.request.MessageEditVo;
+import com.capgemini.cn.deemo.vo.request.MessageReadVo;
+import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
 import com.capgemini.cn.deemo.vo.response.MessageVo;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +34,16 @@ public class MessageServiceImpl implements MessageService {
     private final MessageTransMapper messageTransMapper;
     private final MessageTypeMapper messageTypeMapper;
     private final UserMapper userMapper;
-    private final DepartmentMapper departmentMapper;
 
 
     public MessageServiceImpl(MessageMapper messageMapper,
                               MessageTransMapper messageTransMapper,
                               MessageTypeMapper messageTypeMapper,
-                              UserMapper userMapper,
-                              DepartmentMapper departmentMapper) {
+                              UserMapper userMapper) {
         this.messageMapper = messageMapper;
         this.messageTransMapper = messageTransMapper;
         this.messageTypeMapper = messageTypeMapper;
         this.userMapper = userMapper;
-        this.departmentMapper = departmentMapper;
     }
 
     @Override
@@ -73,9 +79,22 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Integer addMessage(MessageEditVo messageEditVo) {
-        messageEditVo.setMessageId(IdWorker.get().nextId());
+        Long messageId = IdWorker.get().nextId();
+        List<MessageTrans> messageTranses = new ArrayList<>();
 
-        return messageMapper.insertMessage(messageEditVo);
+        messageEditVo.setMessageId(messageId);
+        for (Long recipientId : messageEditVo.getRecipientIds()) {
+            messageTranses.add(new MessageTrans(){{
+                setMessageTransId(IdWorker.get().nextId());
+                setMessageId(messageId);
+                setRecipientId(recipientId);
+            }});
+        }
+
+        Integer res1 = messageMapper.insertMessage(messageEditVo);
+        Integer res2 = messageTransMapper.insertMessageTranses(messageTranses);
+
+        return res1 + res2;
     }
 
     @Override
@@ -91,82 +110,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Integer sendMessage(Long messageId) {
-        Message message = messageMapper.getMessage(messageId);
-        Long branchId = message.getBranchId();
-        Long departmentId = message.getDepartmentId();
-        Long recipientId = message.getRecipientId();
-        List<MessageTrans> messageTranses = new ArrayList<>();
-        MessageTrans messageTrans;
-
-        messageMapper.publishMessage(messageId);
-
-        if (recipientId != null) {
-            // 如果选择了用户, 发送给选中的用户
-            messageTrans = new MessageTrans();
-            messageTrans.setMessageTransId(IdWorker.get().nextId());
-            messageTrans.setMessageId(messageId);
-            messageTrans.setRecipientId(recipientId);
-
-            messageTranses.add(messageTrans);
-        } else if (departmentId != null) {
-            // 如果没有选中用户, 选中了部门, 发送给该部门下所有用户
-            List<User> users = userMapper.listUsers(new UserSearchVo(){{
-                setStart(0);
-                setSize(1000);
-                setDepartmentId(departmentId);
-            }});
-
-            for (User user : users) {
-                messageTrans = new MessageTrans();
-                messageTrans.setMessageTransId(IdWorker.get().nextId());
-                messageTrans.setMessageId(messageId);
-                messageTrans.setRecipientId(user.getUserId());
-
-                messageTranses.add(messageTrans);
-            }
-        } else if (branchId != null) {
-            // 如果没有选中部门和用户, 选中了机构, 发送给该机构下的所有用户
-            List<Department> departments = departmentMapper.listDepartments(new DepartmentSearchVo(){{
-                setStart(0);
-                setSize(100);
-                setBranchId(branchId);
-            }});
-            for (Department department : departments) {
-                List<User> users = userMapper.listUsers(new UserSearchVo(){{
-                    setStart(0);
-                    setSize(1000);
-                    setDepartmentId(department.getDepartmentId());
-                }});
-
-                for (User user : users) {
-                    messageTrans = new MessageTrans();
-                    messageTrans.setMessageTransId(IdWorker.get().nextId());
-                    messageTrans.setMessageId(messageId);
-                    messageTrans.setRecipientId(user.getUserId());
-
-                    messageTranses.add(messageTrans);
-                }
-            }
-        } else {
-            // 如果都没选中, 发送给所有用户
-            List<User> users = userMapper.listUsers(new UserSearchVo(){{
-                setStart(0);
-                setSize(1000);
-            }});
-
-            for (User user : users) {
-                messageTrans = new MessageTrans();
-                messageTrans.setMessageTransId(IdWorker.get().nextId());
-                messageTrans.setMessageId(messageId);
-                messageTrans.setRecipientId(user.getUserId());
-
-                messageTranses.add(messageTrans);
-            }
-        }
-
-
-        return messageTranses.size() > 0 ? messageTransMapper.sendMessages(messageTranses) : 0;
+    public Integer publishMessage(Long messageId) {
+        return messageMapper.publishMessage(messageId);
     }
 
     @Override
@@ -175,12 +120,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Integer deleteMessageTranses(List<Long> messageTransIds) {
-        return messageTransMapper.deleteMessageTranses(messageTransIds);
+    public Integer deleteMessageTranses(DeleteVo deleteVo) {
+        return messageTransMapper.deleteMessageTranses(deleteVo.getIds());
     }
 
-    @Override
-    public Integer deleteMessageTransesByMessageId(List<Long> messageIds) {
+    private Integer deleteMessageTransesByMessageId(List<Long> messageIds) {
         return messageTransMapper.deleteMessageTransesByMessageId(messageIds);
     }
 
@@ -199,9 +143,6 @@ public class MessageServiceImpl implements MessageService {
         messageVo.setEndTime(message.getEndTime());
         messageVo.setCreateUserId(message.getCreateUserId());
         messageVo.setCreateUserName(createUser == null ? null : createUser.getName());
-        messageVo.setBranchId(message.getBranchId());
-        messageVo.setDepartmentId(message.getDepartmentId());
-        messageVo.setRecipientId(message.getRecipientId());
         messageVo.setIsPublished(message.getIsPublished());
         messageVo.setPublishTime(message.getPublishTime());
 

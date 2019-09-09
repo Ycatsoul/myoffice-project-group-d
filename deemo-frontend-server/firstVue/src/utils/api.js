@@ -105,6 +105,5 @@ export const getRequest = (url) => {
   return axios({
     method: 'get',
     url: `${base}${url}`,
-
   });
 }

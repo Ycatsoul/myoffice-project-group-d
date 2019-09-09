@@ -67,9 +67,9 @@ public class ManualSignController {
     }
 
     @ApiOperation("删除签到")
-    @DeleteMapping("/")
+    @PostMapping("/delete")
     public RespBean deleteManualSigns(@RequestBody DeleteVo deleteVo) {
-        Integer res = manualSignService.deleteManualSigns(deleteVo.getIds());
+        Integer res = manualSignService.deleteManualSigns(deleteVo);
 
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败! 未找到相关信息!");
     }

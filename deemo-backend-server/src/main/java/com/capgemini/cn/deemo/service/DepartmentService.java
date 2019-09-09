@@ -1,11 +1,10 @@
 package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
 import com.capgemini.cn.deemo.vo.response.DepartmentVo;
-
-import java.util.List;
 
 /**
  * @Description:
@@ -23,6 +22,6 @@ public interface DepartmentService {
 
     Integer updateDepartment(DepartmentEditVo departmentEditVo);
 
-    Integer deleteDepartments(List<Long> departmentIds);
+    Integer deleteDepartments(DeleteVo deleteVo);
 
 }

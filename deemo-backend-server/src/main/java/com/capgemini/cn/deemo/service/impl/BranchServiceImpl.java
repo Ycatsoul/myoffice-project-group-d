@@ -7,6 +7,7 @@ import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.BranchEditVo;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.response.BranchVo;
 import org.springframework.stereotype.Service;
 
@@ -74,8 +75,8 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public Integer deleteBranches(List<Long> branchIds) {
-        return branchMapper.deleteBranches(branchIds);
+    public Integer deleteBranches(DeleteVo deleteVo) {
+        return branchMapper.deleteBranches(deleteVo.getIds());
     }
 
     private BranchVo convertToVo(Branch branch) {

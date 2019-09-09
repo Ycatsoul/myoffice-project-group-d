@@ -1,10 +1,9 @@
 package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.MessageTypeEditVo;
 import com.capgemini.cn.deemo.vo.response.MessageTypeVo;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -18,5 +17,5 @@ public interface MessageTypeService {
 
     Integer updateMessageType(MessageTypeEditVo messageTypeEditVo);
 
-    Integer deleteMessageTypes(List<Long> messageTypeIds);
+    Integer deleteMessageTypes(DeleteVo deleteVo);
 }

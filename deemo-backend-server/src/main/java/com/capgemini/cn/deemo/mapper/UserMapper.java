@@ -19,6 +19,8 @@ public interface UserMapper {
 
     User getUser(@Param("userId") Long userId);
 
+    User getUserByUsername(@Param("username") String username);
+
     List<User> listUsers(@Param("userSearchVo") UserSearchVo userSearchVo);
 
     Integer countUsers(@Param("userSearchVo") UserSearchVo userSearchVo);

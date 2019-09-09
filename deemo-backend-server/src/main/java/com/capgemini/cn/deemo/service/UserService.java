@@ -1,12 +1,13 @@
 package com.capgemini.cn.deemo.service;
 
+import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import com.capgemini.cn.deemo.vo.request.UserSearchVo;
 import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
 import com.capgemini.cn.deemo.vo.response.UserVo;
-
-import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @Description:
@@ -14,9 +15,11 @@ import java.util.List;
  * @author: GuoBingjun
  * @date:
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     RespVos<UserVo> getUser(Long userId);
+
+    User getUserByUsername(String username);
 
     RespVos<UserVo> listUsers(UserSearchVo userSearchVo);
 
@@ -26,7 +29,7 @@ public interface UserService {
 
     Integer updateUser(UserEditVo userEditVo);
 
-    Integer blockUsers(List<Long> userIds);
+    Integer blockUsers(DeleteVo deleteVo);
 
-    Integer deleteUsers(List<Long> userIds);
+    Integer deleteUsers(DeleteVo deleteVo);
 }

@@ -98,7 +98,7 @@
               layout="prev, pager, next"
               :total="totalCount">
             </el-pagination>
-          </div> 
+          </div>
      </div>
    </div>
 </el-container>
@@ -185,8 +185,7 @@
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
-                    <img v-if="employee.imageUrl" :src="employee.imageUrl" class="avatar" v-model="employee.imageUrl">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    <i class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </el-form-item>
              </el-col>
@@ -261,6 +260,7 @@
                 </el-form-item>
             </el-col>
            </el-row>
+           <el-row>
              <el-col :span="12">
                 <el-form-item label="当前状态" prop="idBlocked">
                   <span v-if="employee.idBlocked==1">正常</span>
@@ -273,8 +273,9 @@
           </span>
        <div style="width:200px;height:200px;position:relative;bottom:400px;left:500px;">
         <el-col :span="24">
-                 <img :src="employee.imageUrl" class="avatar">
-                </el-form-item>
+          <el-form-item>
+            <img :src="employee.imageUrl" class="avatar">
+          </el-form-item>
         </el-col>
       </div>
         </el-dialog>

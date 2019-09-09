@@ -2,13 +2,15 @@ package com.capgemini.cn.deemo.data.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author hasaker
  * @since 2019/8/29 10:38
  * 角色类
  */
 @Data
-public class Role {
+public class Role implements Serializable {
 
     /**
      * Id

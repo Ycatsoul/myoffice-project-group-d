@@ -38,9 +38,9 @@ public class OperationLogController {
     }
 
     @ApiOperation("删除OperationLog")
-    @DeleteMapping("/")
+    @PostMapping("/delete")
     public RespBean deleteOperationLogs(@RequestBody DeleteVo deleteVo) {
-        Integer res = operationLogService.deleteOperationLogs(deleteVo.getIds());
+        Integer res = operationLogService.deleteOperationLogs(deleteVo);
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条操作日志!") : RespBean.error("删除失败!");
     }
