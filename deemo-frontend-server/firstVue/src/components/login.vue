@@ -4,13 +4,12 @@
     <h2>Essential Links</h2>
   </div>
 </template>
+
 <script>
-import test from'../../testData.js'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-     "test":test,
       msg: 'Welcome to Your Vue.js App'
     }
   }

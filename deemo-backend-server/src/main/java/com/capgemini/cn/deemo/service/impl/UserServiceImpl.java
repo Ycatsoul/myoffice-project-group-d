@@ -2,19 +2,18 @@ package com.capgemini.cn.deemo.service.impl;
 
 import com.capgemini.cn.deemo.data.domain.Branch;
 import com.capgemini.cn.deemo.data.domain.Department;
+import com.capgemini.cn.deemo.data.domain.Role;
 import com.capgemini.cn.deemo.data.domain.User;
-import com.capgemini.cn.deemo.mapper.BranchMapper;
-import com.capgemini.cn.deemo.mapper.DepartmentMapper;
-import com.capgemini.cn.deemo.mapper.UserMapper;
+import com.capgemini.cn.deemo.mapper.*;
 import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
-import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
-import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
-import com.capgemini.cn.deemo.vo.request.UserEditVo;
-import com.capgemini.cn.deemo.vo.request.UserSearchVo;
+import com.capgemini.cn.deemo.vo.request.*;
 import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
 import com.capgemini.cn.deemo.vo.response.UserVo;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,13 +30,35 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
+    private final UserRoleMapper userRoleMapper;
     private final DepartmentMapper departmentMapper;
     private final BranchMapper branchMapper;
 
-    public UserServiceImpl(UserMapper userMapper, DepartmentMapper departmentMapper, BranchMapper branchMapper) {
+    public UserServiceImpl(UserMapper userMapper,
+                           RoleMapper roleMapper,
+                           UserRoleMapper userRoleMapper,
+                           DepartmentMapper departmentMapper,
+                           BranchMapper branchMapper) {
         this.userMapper = userMapper;
+        this.roleMapper = roleMapper;
+        this.userRoleMapper = userRoleMapper;
         this.departmentMapper = departmentMapper;
         this.branchMapper = branchMapper;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userMapper.getUserByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("用户名不存在!");
+        }
+
+        List<Role> roles = userRoleMapper.getRolesByUserId(user.getUserId());
+        user.setRoles(roles);
+
+        return user;
     }
 
     @Override
@@ -58,6 +79,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userMapper.getUserByUsername(username);
+    }
+
+    @Override
     public RespVos<UserVo> listUsers(UserSearchVo userSearchVo) {
         List<User> users = userMapper.listUsers(userSearchVo);
 
@@ -71,66 +97,6 @@ public class UserServiceImpl implements UserService {
 
         return null;
     }
-
-//    @Override
-//    public RespVos<BraDepUserVo> getBraDepUserTree() {
-//        List<Branch> branches = branchMapper.listBranches(new BranchSearchVo(){{
-//            setStart(0);
-//            setSize(100);
-//        }});
-//        List<BraDepUserVo> braDepUserVos = new ArrayList<>(branches.size());
-//        RespVos<BraDepUserVo> respVos = new RespVos<BraDepUserVo>(){{
-//            setSize(branches.size());
-//        }};
-//
-//        for (Branch branch : branches) {
-//            List<Department> departments = departmentMapper.listDepartments(
-//                    new DepartmentSearchVo(){{
-//                        setStart(0);
-//                        setSize(100);
-//                        setBranchId(branch.getBranchId());
-//                    }}
-//            );
-//            List<BraDepUserVo.Department> braDeps = new ArrayList<>(departments.size());
-//
-//            for (Department department : departments) {
-//                List<User> users = userMapper.listUsers(
-//                        new UserSearchVo(){{
-//                            setStart(0);
-//                            setSize(1000);
-//                            setDepartmentId(department.getDepartmentId());
-//                        }}
-//                );
-//                List<BraDepUserVo.Department.User> depUsers = new ArrayList<>(users.size());
-//
-//                for (User user : users) {
-//                    depUsers.add(new BraDepUserVo.Department.User(){{
-//                        setUserId(user.getUserId());
-//                        setName(user.getName());
-//                    }});
-//                }
-//
-//                BraDepUserVo.Department braDep = new BraDepUserVo.Department(){{
-//                   setDepartmentId(department.getDepartmentId());
-//                   setDepartmentName(department.getDepartmentName());
-//                   setUsers(depUsers);
-//                }};
-//
-//                braDeps.add(braDep);
-//            }
-//
-//            BraDepUserVo braDepUserVo = new BraDepUserVo();
-//            braDepUserVo.setBranchId(branch.getBranchId());
-//            braDepUserVo.setBranchShortName(branch.getBranchShortName());
-//            braDepUserVo.setDepartments(braDeps);
-//
-//            braDepUserVos.add(braDepUserVo);
-//        }
-//
-//        respVos.setVos(braDepUserVos);
-//
-//        return respVos;
-//    }
 
     @Override
     public RespVos<BraDepUserVo> getBraDepUserTree() {
@@ -175,9 +141,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer addUser(UserEditVo userEditVo) {
-        userEditVo.setUserId(IdWorker.get().nextId());
+        // 用户名已存在, 返回-1
+        if (userMapper.getUserByUsername(userEditVo.getUsername()) != null) {
+            return -1;
+        }
 
-        return userMapper.insertUser(userEditVo);
+        userEditVo.setUserId(IdWorker.get().nextId());
+        userEditVo.setPassword(new BCryptPasswordEncoder().encode(userEditVo.getPassword()));
+
+        // 新注册用户默认为ROLE_USER
+        Role role = roleMapper.getRoleByRoleName("ROLE_USER");
+
+        Integer res = userMapper.insertUser(userEditVo);
+
+        if (res == 1 && role != null) {
+            userRoleMapper.addUserRole(IdWorker.get().nextId(), userEditVo.getUserId(), role.getRoleId());
+        }
+
+        return res;
     }
 
     @Override
@@ -186,13 +167,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer blockUsers(List<Long> userIds) {
-        return userMapper.blockUsers(userIds);
+    public Integer blockUsers(DeleteVo deleteVo) {
+        return userMapper.blockUsers(deleteVo.getIds());
     }
 
     @Override
-    public Integer deleteUsers(List<Long> userIds) {
-        return userMapper.deleteUsers(userIds);
+    public Integer deleteUsers(DeleteVo deleteVo) {
+        return userMapper.deleteUsers(deleteVo.getIds());
     }
 
     /**

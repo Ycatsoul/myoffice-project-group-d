@@ -64,7 +64,7 @@ public class MessageController {
     }
 
     @ApiOperation("删除消息")
-    @DeleteMapping("/deleteMessages")
+    @PostMapping("/deleteMessages")
     RespBean deleteMessages(@RequestBody DeleteVo deleteVo) {
         Integer res = messageService.deleteMessages(deleteVo.getIds());
 
@@ -72,9 +72,9 @@ public class MessageController {
     }
 
     @ApiOperation("发送消息")
-    @PutMapping("/send")
+    @PutMapping("/publish")
     RespBean sendMessage(@RequestBody Long messageId) {
-        Integer res = messageService.sendMessage(messageId);
+        Integer res = messageService.publishMessage(messageId);
 
         return res > 0 ? RespBean.ok("成功将消息发送给" + res + "个用户!") : RespBean.error("发送失败!");
     }
@@ -89,9 +89,9 @@ public class MessageController {
     }
 
     @ApiOperation("删除收件箱里的消息")
-    @DeleteMapping("/deleteMessageTrans")
+    @PostMapping("/deleteMessageTranses")
     RespBean deleteMessageTranses(@RequestBody DeleteVo deleteVo) {
-        Integer res = messageService.deleteMessageTranses(deleteVo.getIds());
+        Integer res = messageService.deleteMessageTranses(deleteVo);
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
     }

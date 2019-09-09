@@ -47,10 +47,7 @@
              messageContent,
              beginTime,
              endTime,
-             createUserId,
-             branchId,
-             departmentId,
-             recipientId
+             createUserId
             )
         VALUES
             (
@@ -60,10 +57,7 @@
             #{messageEditVo.messageContent},
             #{messageEditVo.beginTime},
             #{messageEditVo.endTime},
-            #{messageEditVo.createUserId},
-            #{messageEditVo.branchId},
-            #{messageEditVo.departmentId},
-            #{messageEditVo.recipientId}
+            #{messageEditVo.createUserId}
             )
     </insert>
     
@@ -74,10 +68,7 @@
             messageTitle = #{messageEditVo.messageTitle},
             messageContent = #{messageEditVo.messageContent},
             beginTime = #{messageEditVo.beginTime},
-            endTime = #{messageEditVo.endTime},
-            branchId = #{messageEditVo.branchId},
-            departmentId = #{messageEditVo.departmentId},
-            recipientId = #{messageEditVo.recipientId}
+            endTime = #{messageEditVo.endTime}
         WHERE messageId = #{messageEditVo.messageId}
     </update>
     

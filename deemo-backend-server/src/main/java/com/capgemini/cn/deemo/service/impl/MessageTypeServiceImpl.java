@@ -5,6 +5,7 @@ import com.capgemini.cn.deemo.mapper.MessageTypeMapper;
 import com.capgemini.cn.deemo.service.MessageTypeService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.MessageTypeEditVo;
 import com.capgemini.cn.deemo.vo.response.MessageTypeVo;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,8 @@ public class MessageTypeServiceImpl implements MessageTypeService {
     }
 
     @Override
-    public Integer deleteMessageTypes(List<Long> messageTypeIds) {
-        return messageTypeMapper.deleteMessageTypes(messageTypeIds);
+    public Integer deleteMessageTypes(DeleteVo deleteVo) {
+        return messageTypeMapper.deleteMessageTypes(deleteVo.getIds());
     }
 
     private MessageTypeVo convertToVo(MessageType messageType) {

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api
 @RestController
-@RequestMapping("/message_type")
+@RequestMapping("/messageType")
 public class MessageTypeController {
 
     private final MessageTypeService messageTypeService;
@@ -51,9 +51,9 @@ public class MessageTypeController {
     }
 
     @ApiOperation("删除消息类型")
-    @DeleteMapping("/")
+    @PostMapping("/delete")
     RespBean deleteMessageTypes(@RequestBody DeleteVo deleteVo) {
-        Integer res = messageTypeService.deleteMessageTypes(deleteVo.getIds());
+        Integer res = messageTypeService.deleteMessageTypes(deleteVo);
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
     }

@@ -13,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 /**
  * @author hasaker
  * @since 2019-08-22 15:43
@@ -92,25 +90,25 @@ public class FileInfoController {
     }
 
     @ApiOperation(value = "将文件放入回收站")
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public RespBean putFileToTrash(@RequestBody DeleteVo deleteVo) {
-        int res = fileInfoService.putFilesToTrash(deleteVo.getIds());
+        int res = fileInfoService.putFilesToTrash(deleteVo);
 
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
 
     @ApiOperation(value = "从回收站取回文件")
     @PutMapping("/restore")
-    public RespBean restoreFileFromTrash(@RequestBody List<Long> fileIds) {
-        int res = fileInfoService.restoreFilesFromTrash(fileIds);
+    public RespBean restoreFileFromTrash(@RequestBody DeleteVo deleteVo) {
+        int res = fileInfoService.restoreFilesFromTrash(deleteVo);
 
         return res > 0 ? RespBean.ok("还原成功!") : RespBean.error("还原失败!");
     }
 
     @ApiOperation(value = "将文件从回收站中彻底删除")
-    @DeleteMapping("/destroy")
+    @PostMapping("/destroy")
     public RespBean deleteFilesInTrash(@RequestBody DeleteVo deleteVo) {
-        int res = fileInfoService.deleteFilesFromTrash(deleteVo.getIds());
+        int res = fileInfoService.deleteFilesFromTrash(deleteVo);
 
         return res > 0 ? RespBean.ok("彻底删除成功!") : RespBean.error("彻底删除失败!");
     }

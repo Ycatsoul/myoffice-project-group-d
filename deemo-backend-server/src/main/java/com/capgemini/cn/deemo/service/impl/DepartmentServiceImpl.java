@@ -9,6 +9,7 @@ import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentSearchVo;
 import com.capgemini.cn.deemo.vo.response.DepartmentVo;
@@ -82,8 +83,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Integer deleteDepartments(List<Long> departmentIds) {
-        return departmentMapper.deleteDepartments(departmentIds);
+    public Integer deleteDepartments(DeleteVo deleteVo) {
+        return departmentMapper.deleteDepartments(deleteVo.getIds());
     }
 
     /**

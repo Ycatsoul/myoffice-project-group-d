@@ -1,5 +1,6 @@
 package com.capgemini.cn.deemo.vo.request;
 
+import com.sun.tools.javac.util.List;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -27,9 +28,5 @@ public class MessageEditVo {
 
     private Long createUserId;
 
-    private Long branchId;
-
-    private Long departmentId;
-
-    private Long recipientId;
+    private List<Long> recipientIds;
 }

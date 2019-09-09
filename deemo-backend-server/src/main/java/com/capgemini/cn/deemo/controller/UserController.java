@@ -14,8 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author hasaker
  * @create_date 2019-08-19 22:32
@@ -87,16 +85,16 @@ public class UserController extends BaseController {
 
     @ApiOperation("屏蔽User")
     @PutMapping("/block")
-    public RespBean blockUsers(@RequestBody List<Long> userIds) {
-        Integer res = userService.blockUsers(userIds);
+    public RespBean blockUsers(@RequestBody DeleteVo deleteVo) {
+        Integer res = userService.blockUsers(deleteVo);
 
         return res > 0 ? RespBean.ok("成功屏蔽" + res + "个用户!") : RespBean.error("屏蔽失败!");
     }
 
     @ApiOperation("删除User")
-    @DeleteMapping("/")
+    @PostMapping("/delete")
     public RespBean deleteUsers(@RequestBody DeleteVo deleteVo) {
-        Integer res = userService.deleteUsers(deleteVo.getIds());
+        Integer res = userService.deleteUsers(deleteVo);
 
         return res > 0 ? RespBean.ok("成功删除" + res + "个用户!") : RespBean.error("删除失败!");
     }

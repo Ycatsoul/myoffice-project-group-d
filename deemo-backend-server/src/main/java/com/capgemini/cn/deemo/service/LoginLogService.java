@@ -2,10 +2,9 @@ package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.data.domain.LoginLog;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.LoginLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.LoginLogVo;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -17,5 +16,5 @@ public interface LoginLogService {
 
     Integer insertLoginLog(LoginLog loginLog);
 
-    Integer deleteLoginLogs(List<Long> loginIds);
+    Integer deleteLoginLogs(DeleteVo deleteVo);
 }

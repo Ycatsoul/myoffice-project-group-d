@@ -2,6 +2,8 @@ package com.capgemini.cn.deemo.data.domain;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author hasaker
  * @since 2019/9/4 17:02
@@ -25,7 +27,11 @@ public class Menu {
 
     private Long parentMenuId;
 
+    private List<Menu> children;
+
     private Boolean requireAuth;
+
+    private List<Role> roles;
 
     private Boolean disabled;
 }

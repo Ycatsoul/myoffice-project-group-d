@@ -6,6 +6,7 @@ import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.OperationLogService;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.OperationLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.OperationLogVo;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,8 @@ public class OperationLogServiceImpl implements OperationLogService {
     }
 
     @Override
-    public Integer deleteOperationLogs(List<Long> operationIds) {
-        return operationLogMapper.deleteOperationLogs(operationIds);
+    public Integer deleteOperationLogs(DeleteVo deleteVo) {
+        return operationLogMapper.deleteOperationLogs(deleteVo.getIds());
     }
 
     private OperationLogVo convertToVo(OperationLog operationLog) {

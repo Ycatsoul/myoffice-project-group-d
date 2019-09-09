@@ -2,10 +2,9 @@ package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.data.domain.OperationLog;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.OperationLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.OperationLogVo;
-
-import java.util.List;
 
 /**
  * @author hasaker
@@ -17,5 +16,5 @@ public interface OperationLogService {
 
     Integer insertOperationLog(OperationLog operationLog);
 
-    Integer deleteOperationLogs(List<Long> loginIds);
+    Integer deleteOperationLogs(DeleteVo deleteVo);
 }

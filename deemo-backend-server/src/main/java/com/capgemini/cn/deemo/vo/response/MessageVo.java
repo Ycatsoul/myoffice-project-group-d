@@ -29,12 +29,6 @@ public class MessageVo {
 
     private String createUserName;
 
-    private Long branchId;
-
-    private Long departmentId;
-
-    private Long recipientId;
-
     private Boolean isPublished;
 
     private Date publishTime;

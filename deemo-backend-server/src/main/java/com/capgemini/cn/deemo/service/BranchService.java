@@ -3,9 +3,8 @@ package com.capgemini.cn.deemo.service;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.BranchEditVo;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.response.BranchVo;
-
-import java.util.List;
 
 /**
  * @Description:
@@ -44,8 +43,8 @@ public interface BranchService {
 
     /**
      * 删除Branch
-     * @param branchIds branchId链表
+     * @param deleteVo branchId链表
      * @return 被删除的branch行数
      */
-    Integer deleteBranches(List<Long> branchIds);
+    Integer deleteBranches(DeleteVo deleteVo);
 }

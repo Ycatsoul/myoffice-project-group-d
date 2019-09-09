@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.capgemini.cn.deemo.mapper.MessageTransMapper">
   
-  <!-- 发送信息 -->
-  <insert id="sendMessages" parameterType="java.util.List">
+  <!-- 插入信息发送记录 -->
+  <insert id="insertMessageTranses" parameterType="java.util.List">
     INSERT INTO MessageTrans (messageTransId, messageId, recipientId)
     VALUES
       <foreach collection="messageTranses" item="messageTrans" separator=",">

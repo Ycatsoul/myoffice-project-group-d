@@ -6,6 +6,7 @@ import com.capgemini.cn.deemo.mapper.LoginLogMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.LoginLogService;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.LoginLogSearchVo;
 import com.capgemini.cn.deemo.vo.response.LoginLogVo;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,8 @@ public class LoginLogServiceImpl implements LoginLogService {
     }
 
     @Override
-    public Integer deleteLoginLogs(List<Long> loginIds) {
-        return loginLogMapper.deleteLoginLogs(loginIds);
+    public Integer deleteLoginLogs(DeleteVo deleteVo) {
+        return loginLogMapper.deleteLoginLogs(deleteVo.getIds());
     }
 
     private LoginLogVo convertToVo(LoginLog loginLog) {
