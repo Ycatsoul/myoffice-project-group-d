@@ -168,9 +168,9 @@
               { path: '/schedule/departmentSchedule', name: '部门日程', },
               {path: '/schedule/myNotes', name: '我的便签',}
         ],
-        menu3:[{path:"/document/docManage",name: '文档管理',},
-          {path:"/document/recycle",name:"回收站" },
-          {path:"/document/fileSearch",name:"文件搜索" }
+        menu3:[
+          {path:"/file/manager",name: '文档管理',},
+          {path:"/file/trash",name: '回收站' }
         ],
         menu4:[{path:"/message/msgManage",name: '信息管理',},
           {path:"/message/mailBox",name:"信箱" },
@@ -190,9 +190,11 @@
       user(){
         return this.$store.state.user;
       },
+      
       routes(){
         return this.$store.state.routes;
       },
+
       today () {
       var date = new Date()
       var seperator1 = '-'

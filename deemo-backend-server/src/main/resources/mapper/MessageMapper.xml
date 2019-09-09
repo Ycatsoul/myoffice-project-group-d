@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.cn.deemo.mapper.MessageMapper">
+    
+    <!--搜索字段 -->
+    <sql id="search">
+        <if test="messageSearchVo.messageTypeId != null">
+            AND messageTypeId = #{messageSearchVo.messageTypeId}
+        </if>
+        <if test="messageSearchVo.query != null">
+            AND messageTitle LIKE concat(concat('%', #{messageSearchVo.query}), '%')
+        </if>
+    </sql>
+    
+    <!-- 获取信息列表 -->
+    <select id="listMessages"
+            resultType="com.capgemini.cn.deemo.data.domain.Message"
+            parameterType="com.capgemini.cn.deemo.vo.request.MessageEditVo">
+        SELECT *
+        FROM Message
+        <where><include refid="search"/></where>
+        LIMIT #{messageSearchVo.start}, #{messageSearchVo.size}
+    </select>
+    
+    <!-- 统计信息列表长度 -->
+    <select id="countMessages"
+            resultType="Integer"
+            parameterType="com.capgemini.cn.deemo.vo.request.MessageEditVo">
+        SELECT count(1)
+        FROM Message
+        <where><include refid="search"/></where>
+    </select>
+    
+    <!-- 获取一条信息 -->
+    <select id="getMessage" parameterType="Long"
+            resultType="com.capgemini.cn.deemo.data.domain.Message">
+        SELECT * FROM Message WHERE messageId = #{messageId}
+    </select>
+    
+    <!-- 新建一条信息 -->
+    <insert id="insertMessage" parameterType="com.capgemini.cn.deemo.vo.request.MessageEditVo">
+        INSERT INTO Message
+            (
+             messageId,
+             messageTypeId,
+             messageTitle,
+             messageContent,
+             beginTime,
+             endTime,
+             createUserId
+            )
+        VALUES
+            (
+            #{messageEditVo.messageId},
+            #{messageEditVo.messageTypeId},
+            #{messageEditVo.messageTitle},
+            #{messageEditVo.messageContent},
+            #{messageEditVo.beginTime},
+            #{messageEditVo.endTime},
+            #{messageEditVo.createUserId}
+            )
+    </insert>
+    
+    <!-- 更新一条信息 -->
+    <update id="updateMessage" parameterType="com.capgemini.cn.deemo.vo.request.MessageEditVo">
+        UPDATE Message
+        SET messageTypeId = #{messageEditVo.messageTypeId},
+            messageTitle = #{messageEditVo.messageTitle},
+            messageContent = #{messageEditVo.messageContent},
+            beginTime = #{messageEditVo.beginTime},
+            endTime = #{messageEditVo.endTime}
+        WHERE messageId = #{messageEditVo.messageId}
+    </update>
+    
+    <!-- 发布一条信息 -->
+    <update id="publishMessage" parameterType="Long">
+        UPDATE Message
+        SET isPublished = 1, publishTime = now()
+        WHERE messageId = #{messageId}
+    </update>
+    
+    <!-- 删除信息 -->
+    <delete id="deleteMessages" parameterType="java.util.List">
+        DELETE FROM Message WHERE messageId IN
+            <foreach collection="messageIds" item="messageId" separator="," open="(" close=")">
+                #{messageId}
+            </foreach>
+    </delete>
+</mapper>

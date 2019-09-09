@@ -1,5 +1,7 @@
 package com.capgemini.cn.deemo.vo.base;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -9,14 +11,12 @@ import java.util.List;
  * @since 2019-08-25 23:44
  */
 @Data
+@ApiModel(description = "返回数据")
 public class RespVos<T> {
-    /**
-     * 返回数据长度
-     */
+
+    @ApiModelProperty(value = "数据总长度")
     private Integer size;
 
-    /**
-     * 返回数据数组
-     */
+    @ApiModelProperty(value = "返回数据数组")
     private List<T> vos;
 }

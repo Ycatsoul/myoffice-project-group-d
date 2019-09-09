@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.cn.deemo.mapper.MessageTransMapper">
+  
+  <!-- 插入信息发送记录 -->
+  <insert id="insertMessageTranses" parameterType="java.util.List">
+    INSERT INTO MessageTrans (messageTransId, messageId, recipientId)
+    VALUES
+      <foreach collection="messageTranses" item="messageTrans" separator=",">
+        (#{messageTrans.messageTransId}, #{messageTrans.messageId}, #{messageTrans.recipientId})
+      </foreach>
+  </insert>
+  
+  <!-- 标记信息为已读状态 -->
+  <update id="readMessages">
+    UPDATE MessageTrans SET isRead = 1
+    WHERE recipientId = #{messageReadVo.currentUserId} AND messageId IN
+      <foreach collection="messageReadVo.messageIds" item="messageId" separator="," open="(" close=")">
+        #{messageId}
+      </foreach>
+  </update>
+  
+  <!-- 删除收件箱里的消息 -->
+  <delete id="deleteMessageTranses" parameterType="java.util.List">
+    DELETE FROM MessageTrans WHERE messageTransId IN
+      <foreach collection="messageTransIds" item="messageTransId" separator="," open="(" close=")">
+        #{messageTransId}
+      </foreach>
+  </delete>
+  
+  <!-- 如果信息被删除, 那么将用户收件箱里的信息也删除掉 -->
+  <delete id="deleteMessageTransesByMessageId" parameterType="java.util.List">
+    DELETE FROM MessageTrans WHERE messageId IN
+      <foreach collection="messageIds" item="messageId" separator="," open="(" close=")">
+        #{messageId}
+      </foreach>
+  </delete>
+  
+</mapper>

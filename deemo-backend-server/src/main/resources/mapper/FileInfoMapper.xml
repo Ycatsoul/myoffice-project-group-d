@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capgemini.cn.deemo.mapper.FileInfoMapper">
+  
+  <!-- 搜索字段 -->
+  <sql id="searchFields">
+    <if test="fileInfoSearchVo.fileName != null">
+      AND fileName LIKE concat(concat('%', #{fileInfoSearchVo.fileName}), '%')
+    </if>
+    <if test="fileInfoSearchVo.createUserName != null">
+      AND fileOwnerId IN (
+        SELECT userId
+        FROM User
+        WHERE userName LIKE concat(concat('%', #{fileInfoSearchVo.createUserName}), '%')
+      )
+    </if>
+    <if test="fileInfoSearchVo.parentId != null">
+      AND parentId = #{fileInfoSearchVo.parentId}
+    </if>
+    <if test="fileInfoSearchVo.startTime != null and fileInfoSearchVo.endTime != null">
+      AND uploadTime BETWEEN #{fileInfoSearchVo.startTime} AND #{fileInfoSearchVo.endTime}
+    </if>
+  </sql>
+  <!-- 回收站搜索字段 -->
+  <sql id="searchFieldsInTrash">
+    <if test="fileInfoSearchVo.parentId != null">
+      AND parentId = #{fileInfoSearchVo.parentId}
+    </if>
+    <if test="fileInfoSearchVo.startTime != null and fileInfoSearchVo.endTime != null">
+      AND deleteTime BETWEEN #{fileInfoSearchVo.startTime} AND #{fileInfoSearchVo.endTime}
+    </if>
+  </sql>
+
+  <!-- 根据fileId获取文件详尽信息 -->
+  <select id="getFile" resultType="com.capgemini.cn.deemo.data.domain.FileInfo">
+    SELECT * FROM FileInfo WHERE fileId = #{fileId}
+  </select>
+
+  <!-- 获取文件列表 -->
+  <select id="listFiles"
+          parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo"
+          resultType="com.capgemini.cn.deemo.data.domain.FileInfo">
+    SELECT *
+    FROM FileInfo
+    WHERE isDeleted = 0 <include refid="searchFields" />
+    ORDER BY uploadTime
+    LIMIT #{fileInfoSearchVo.start}, #{fileInfoSearchVo.size}
+  </select>
+  
+  <!-- 统计文档数量 -->
+  <select id="countFiles"
+          resultType="Integer"
+          parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo">
+    SELECT count(1)
+    FROM FileInfo
+    WHERE isDeleted = 0 <include refid="searchFields" />
+  </select>
+  
+  <!-- 获取当前目录下的所有文件ID -->
+  <select id="getChildIds" parameterType="Long" resultType="Long">
+    SELECT fileId FROM FileInfo WHERE parentId = #{parentId}
+  </select>
+
+  <!-- 获取回收站文件列表 -->
+  <select id="listFilesInTrash"
+          parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo"
+          resultType="com.capgemini.cn.deemo.data.domain.FileInfo">
+    SELECT *
+    FROM FileInfo
+    WHERE isDeleted = 1 <include refid="searchFieldsInTrash" />
+    ORDER BY deleteTime
+    LIMIT #{fileInfoSearchVo.start}, #{fileInfoSearchVo.size}
+  </select>
+  
+  <!-- 统计回收站文件数量 -->
+  <select id="countFilesInTrash"
+          resultType="Integer"
+          parameterType="com.capgemini.cn.deemo.vo.request.FileInfoSearchVo">
+    SELECT count(1) FROM FileInfo WHERE isDeleted = 1 <include refid="searchFieldsInTrash" />
+  </select>
+
+  <!-- 插入一条文件记录 -->
+  <insert id="insertFile" parameterType="com.capgemini.cn.deemo.data.domain.FileInfo">
+    INSERT INTO FileInfo (
+      fileId,
+      fileName,
+      filePath,
+      fileTypeId,
+      fileOwnerId,
+      parentId,
+      remark,
+      parentIdInTrash
+    ) VALUES (
+      #{fileInfo.fileId},
+      #{fileInfo.fileName},
+      #{fileInfo.filePath},
+      #{fileInfo.fileTypeId},
+      #{fileInfo.fileOwnerId},
+      #{fileInfo.parentId},
+      #{fileInfo.remark},
+      #{fileInfo.parentIdInTrash}
+    )
+  </insert>
+
+  <!-- 更新文件信息 可更新字段: 文件名 备注信息 -->
+  <update id="updateFile" parameterType="com.capgemini.cn.deemo.vo.request.FileInfoEditVo">
+    UPDATE FileInfo
+    SET fileName = #{fileInfoEditVo.fileName},
+        fileTypeId = #{fileInfoEditVo.
+        remark = #{fileInfoEditVo.remark}
+    WHERE fileId = #{fileInfoEditVo.fileId}
+  </update>
+
+  <!-- 根据fileId将文件放入回收站并设置父文件夹ID为回收站(273734225100889) -->
+  <update id="putFilesToTrash" parameterType="java.util.List">
+    UPDATE FileInfo
+    SET isDeleted = 1, deleteTime = now(), parentIdInTrash = 273734225100889
+    WHERE fileId IN
+      <foreach collection="fileIds" item="fileId" separator="," open="(" close=")">
+        #{fileId}
+      </foreach>
+  </update>
+  
+  <!-- 根据fileId将文件放入回收站 -->
+  <update id="putChildrenToTrash" parameterType="java.util.List">
+    UPDATE FileInfo
+    SET isDeleted = 1, deleteTime = now()
+    WHERE fileId IN
+      <foreach collection="childIds" item="childId" separator="," open="(" close=")">
+        #{childId}
+      </foreach>
+  </update>
+
+  <!-- 根据fileId从回收站中恢复文件 -->
+  <update id="restoreFileFromTrash" parameterType="Long">
+    UPDATE FileInfo
+    SET isDeleted = 0, deleteTime = NULL, parentIdInTrash = #{fileId}
+    WHERE fileId = #{fileId}
+  </update>
+  
+  <!-- 根据fileId从回收站中恢复文件夹中的子文件 -->
+  <update id="restoreChildrenFromTrash" parameterType="java.util.List">
+    UPDATE FileInfo SET isDeleted = 0, deleteTime = NULL WHERE fileId IN
+      <foreach collection="childIds" item="childId" separator="," open="(" close=")">
+        #{childId}
+      </foreach>
+  </update>
+
+  <!-- 根据fileId从回收站中永久删除文件 -->
+  <delete id="deleteFilesFromTrash" parameterType="java.util.List">
+    DELETE FROM FileInfo WHERE fileId IN
+      <foreach collection="fileIds" item="fileId" separator="," open="(" close=")">
+        #{fileId}
+      </foreach>
+  </delete>
+</mapper>

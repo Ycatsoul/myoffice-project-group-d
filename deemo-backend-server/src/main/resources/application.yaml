@@ -1,6 +1,3 @@
-# ----------------------------------------
-# CORE PROPERTIES
-# ----------------------------------------
 spring:
   application:
     name: Deemo
@@ -25,8 +22,8 @@ spring:
     active: dev
 
 mybatis:
-  mapper-locations: classpath:/mapping/*.xml
-  type-aliases-package: com.capgemini.cn.deemo.data.domain
+  typeAliasesPackage: com.capgemin.cn.deemo.data.domain
+  mapperLocations: classpath:mapper/*.xml
   config-location: classpath:/mybatis-config.xml
 
 logging:
@@ -62,6 +59,10 @@ management:
 # ----------------------------------------
 # CAPGEMINI CHINA PROPERTIES
 # ----------------------------------------
+---
+spring:
+  profiles: dev
+
 cgc:
   api-docs:
     enabled: true
@@ -108,3 +109,4 @@ cgc:
     contactUrl: https://www.capgemini.com/cn-zh/
     contactEmail: yaxiang.huang@capgemini.com
     version: 1.0.0-SNAPSHOT
+
