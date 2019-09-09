@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capgemini.cn.deemo.mapper.ScheduleMapper">
+
+    <!--    根据beginTime,userName查询schedule表详细信息-->
+    <select id="listSchedules"
+            parameterType="com.capgemini.cn.deemo.vo.request.ScheduleSearchVo"
+            resultType="com.capgemini.cn.deemo.data.domain.Schedule">
+        SELECT * FROM schedule WHERE createUserId IN (
+            SELECT userId FROM User WHERE departmentId = #{scheduleSearchVo.departmentId}
+            )
+    </select>
+
+    <!--    根据userId和beginTime遍历schedule表信息相应的日历上-->
+    <select id="listSchedule"
+            parameterType="com.capgemini.cn.deemo.vo.request.ScheduleListVo"
+            resultType="com.capgemini.cn.deemo.data.domain.Schedule">
+        select * from schedule where beginTime = #{schedule.beginTime,jdbcType=TIMESTAMP} and createUserId = #{schedule.createUserId}
+    </select>
+
+    <!--    插入一条schedule信息-->
+    <insert id="insertSchedule" parameterType="com.capgemini.cn.deemo.vo.request.ScheduleEditVo">
+    insert into schedule
+    (
+        scheduleId,
+        scheduleTitle,
+        scheduleAddress,
+        scheduleContent,
+        beginTime,
+        endTime,
+        meetingTypeId,
+        createUserId,
+        isPrivate
+    )
+    values
+    (
+        #{scheduleEditVo.scheduleId},
+        #{scheduleEditVo.scheduleTitle} ,
+        #{scheduleEditVo.scheduleAddress},
+        #{scheduleEditVo.scheduleContent},
+        #{scheduleEditVo.beginTime},
+        #{scheduleEditVo.endTime},
+        #{scheduleEditVo.meetingTypeId},
+        #{scheduleEditVo.createUserId},
+        #{scheduleEditVo.isPrivate}
+    )
+</insert>
+
+    <!--    更新schedule表信息-->
+    <update id="updateSchedule" parameterType="com.capgemini.cn.deemo.vo.request.ScheduleEditVo">
+        update schedule
+        <set>
+            <if test="schedule.scheduleId != null">scheduleId = #{scheduleEditVo.scheduleId} , </if>
+            <if test="schedule.scheduleTitle != null">scheduleTitle = #{scheduleEditVo.scheduleTitle} , </if>
+            <if test="schedule.scheduleAddress != null">scheduleAddress = #{scheduleEditVo.scheduleAddress}, </if>
+            <if test="schedule.scheduleContent != null">scheduleContent = #{scheduleEditVo.scheduleContent}, </if>
+            <if test="schedule.beginTime != null">beginTime = #{scheduleEditVo.beginTime}, </if>
+            <if test="schedule.endTime != null">endTime = #{scheduleEditVo.endTime}, </if>
+            <if test="schedule.isPrivate != null">isPrivate = #{scheduleEditVo.isPrivate}, </if>
+        </set>
+        where scheduleId = #{scheduleEditVo.scheduleId}
+    </update>
+
+    <!--    删除一条信息-->
+    <delete id="deleteSchedule" parameterType="Long">
+    delete from schedule where scheduleId = #{scheduleId}
+</delete>
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capgemini.cn.deemo.mapper.MeetingTypeMapper">
+
+    <!--    根据meetingTypeId获取meetingType表详细信息-->
+    <select id="listMeetingType" resultType="com.capgemini.cn.deemo.data.domain.MeetingType">
+        select * from meetingType where meetingTypeId = #{meetingTypeId}
+    </select>
+
+    <!-- 查询meetingType表信息 -->
+    <select id="listMeetingTypes" resultType="com.capgemini.cn.deemo.data.domain.MeetingType">
+        select * from meetingType
+    </select>
+
+<!--        插入一条meetingType信息-->
+    <insert id="insertMeetingType" parameterType="com.capgemini.cn.deemo.vo.request.MeetingTypeEditVo">
+    insert into meetingType
+    (
+        meetingTypeId,
+        meetingTypeName
+    )
+    values
+    (
+        #{meetingTypeEditVo.meetingTypeId},
+        #{meetingTypeEditVo.meetingTypeName}
+    )
+</insert>
+
+    <!--    更新meetingType表信息-->
+    <update id="updateMeetingType" parameterType="com.capgemini.cn.deemo.vo.request.MeetingTypeEditVo">
+        update meetingType
+        <set>
+            <if test="meetingType.meetingTypeName != null">meetingTypeName = #{meetingTypeEditVo.meetingTypeName} , </if>
+        </set>
+        where meetingTypeId = #{meetingTypeEditVo.meetingTypeId}
+    </update>
+
+    <!--    删除一条信息-->
+    <delete id="deleteMeetingType" parameterType="com.capgemini.cn.deemo.data.domain.MeetingType">
+    delete from meetingType where meetingTypeId = #{meetingTypeId}
+</delete>
+
+</mapper>

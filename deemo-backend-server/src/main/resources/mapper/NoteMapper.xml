@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capgemini.cn.deemo.mapper.NoteMapper">
+
+<!--    根据noteId,createUserId获取note表详细信息-->
+    <select id="listNote"
+            parameterType="com.capgemini.cn.deemo.vo.request.NoteSearchVo"
+            resultType="com.capgemini.cn.deemo.data.domain.Note">
+        select * from note where noteId = #{note.noteId} and createUserId = #{note.createUserId}
+    </select>
+
+<!--    查询note表信息-->
+    <select id="listNotes" resultType="com.capgemini.cn.deemo.data.domain.Note">
+        select * from note
+    </select>
+
+<!--    插入一条note信息-->
+    <insert id="insertNote" parameterType="com.capgemini.cn.deemo.data.domain.Note">
+    insert into note
+    (
+        noteId,
+        noteTitle,
+        noteContent,
+        createUserId
+    )
+    values
+    (
+        #{noteEditVo.noteId},
+        #{noteEditVo.noteTitle},
+        #{noteEditVo.noteContent},
+        #{noteEditVo.createUserId}
+    )
+</insert>
+
+<!--    更新note表信息-->
+    <update id="updateNote" parameterType="com.capgemini.cn.deemo.data.domain.Note">
+        update note
+        <set>
+            <if test="note.noteTitle != null">noteTitle = #{noteEditVo.noteTitle} , </if>
+            <if test="note.noteContent != null">noteContent = #{noteEditVo.noteContent}, </if>
+        </set>
+        where noteId = #{noteEditVo.noteId}
+    </update>
+
+<!--    删除一条信息-->
+    <delete id="deleteNote" parameterType="com.capgemini.cn.deemo.data.domain.Note">
+    delete from note where noteId = #{noteId}
+</delete>
+
+</mapper>
