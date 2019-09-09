@@ -49,8 +49,8 @@
       </div>     
         <div class="home-header">   
         <i class="el-icon-document size">主页</i>
-        <i class="el-icon-user-solid size">重新登录</i>
-        <i class="el-icon-edit size">修改密码</i>
+        <i class="el-icon-user-solid size" @click="reLogin">重新登录</i>
+        <i class="el-icon-edit size" @click="showPassword">修改密码</i>
         <i class="el-icon-news size">显示/隐藏通知栏</i>
         <i class="el-icon-help size">帮助</i>
         <i class="el-icon-date " align="right">今天是: {{today}}</i>
@@ -65,7 +65,41 @@
               <router-view v-if="this.$route.meta.keepAlive"></router-view>
             </keep-alive>
             <router-view v-if="!this.$route.meta.keepAlive"></router-view>
-          </el-main> 
+          </el-main>
+          <div>
+            <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" width="60%">
+              <el-form :model="loginForm" ref="changePassword">
+                <el-row>
+                 <el-col :span="24">
+                   <el-form-item label="账号:" prop="username">
+                      <el-input prefix-icon="el-icon-edit" v-model="loginForm.username" size="mini" style="width: 300px"
+                          ></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+               <el-row>
+                 <el-col :span="24">
+                   <el-form-item label="初始密码:" prop="password">
+                      <el-input prefix-icon="el-icon-edit" v-model="loginForm.password" size="mini" style="width: 300px"
+                          ></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+               <el-row>
+                 <el-col :span="24">
+                   <el-form-item label="修改密码:" prop="newPassword">
+                      <el-input prefix-icon="el-icon-edit" v-model="loginForm.newPassword" size="mini" style="width: 300px"
+                          ></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              </el-form>
+             <div slot="footer" class="dialog-footer" align="center">
+            <el-button @click="dialogToUserVisible = false">退 出</el-button>
+             <el-button size="mini" type="primary" @click="changePassword('changePassword')">确 定</el-button>
+            </div>
+            </el-dialog>
+          </div>
       </div>
      </el-container>
   </el-container> 
@@ -73,37 +107,58 @@
 <script>
   export default{
     mounted: function () {
+
     },
     methods: {
-      
+      showPassword(){
+        this.dialogPasswordVisible = true
+      },
+      changePassword(){
+         this.$refs[formName].validate((valid) => {
+          if (valid) {
+              this.postRequest("/employee/prize/updateEmpById", this.emp).then(resp=> {
+                if (resp && resp.status == 200) {
+                  var data = resp.data;
+                  _this.loadMessages();
+                  _this.dialogPasswordVisible = false;
+                }
+              })
+          } 
+        });
+      },
+      reLogin(){
+        this.$confirm('注销登录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '返回成功!'
+          });
+          this.$router.replace({path: '/'});
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消返回'
+          });          
+        });
+      },
         handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
-       handleCommand(cmd){
-        var _this = this;
-        if (cmd == 'logout') {
-          this.$confirm('注销登录, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            _this.getRequest("/logout");
-            _this.$store.commit('logout');
-            _this.$router.replace({path: '/'});
-          }).catch(() => {
-            _this.$message({
-              type: 'info',
-              message: '取消'
-            });
-          });
-        }
-      }
     },
     data(){
       return {
+        loginForm: {
+          username: '',
+          password: '',
+          newPassword:'',
+        },
+        dialogPasswordVisible:false,
         isDot: false,
         menu:[{path:"/personal/organization",name: '机构管理',},
               {path:"/personal/department",name:"部门管理" },

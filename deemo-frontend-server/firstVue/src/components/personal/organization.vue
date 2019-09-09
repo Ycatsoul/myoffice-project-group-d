@@ -49,7 +49,7 @@
               type="selection"
               align="left"
               width="30">
-            </el-table-column>
+            </el-table-column>+
             <el-table-column
               prop="branchName"
               align="center"    
@@ -101,8 +101,6 @@
      </div>
    </div>
 </el-container>
-  
-  
 </template>
 <script>
 export default {
@@ -160,7 +158,8 @@ export default {
               this.tableLoading = true;
               this.putRequest("/branch/", this.branch).then(resp=> {
                 _this.tableLoading = false;
-                console.log("修改",this.branch);
+                console.log("修改传过去",this.branch);
+                console.log("修改",resp);
                 if (resp && resp.status == 200) {
                   var data = resp.data;
                   _this.dialogVisible = false;
@@ -232,8 +231,7 @@ export default {
         var _this = this;
         var datas = {
           "branchName":'',
-          "branchId":'',
-          "size": "10",
+          "size": 10,
           "start": (this.currentPage-1)*10          
         };
         this.tableLoading = true;
@@ -274,6 +272,7 @@ export default {
         }
         this.deleteRequest("/branch/",datas).then(resp=> {
           _this.tableLoading = false;
+          console.log("单个删除",resp);
           console.log(datas);
           if (resp && resp.status == 200) {
             var data = resp.data;
@@ -284,9 +283,9 @@ export default {
       },
       emptyBranchData(){
         this.branch = {
-         branchId:'',
-         branchName:'',
-         branchShortName:'',
+         "branchId":null,
+         "branchName":null,
+         "branchShortName":null,
         }
       }
   }
