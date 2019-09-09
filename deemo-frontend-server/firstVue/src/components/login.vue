@@ -80,7 +80,7 @@
           nodeId= i.nodeId,
           children=i.subSysFunList
         }
-      }
+      },
     }
   }
 </script>
