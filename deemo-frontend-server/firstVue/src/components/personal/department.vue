@@ -203,7 +203,7 @@ export default {
       // this.getAllBranchsInfo();
       this.display();
     },
-  methods:{
+    methods:{
         // getAllBranchsInfo(){
         //   this.postRequest("/branch").then(resp=> {
         //   if (resp.data && resp.data.status == 200) {
