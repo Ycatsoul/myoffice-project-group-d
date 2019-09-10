@@ -1,10 +1,9 @@
 package com.capgemini.cn.deemo.data.domain;
 
-
-import com.sun.tools.javac.util.List;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.List;
 
 
 /**

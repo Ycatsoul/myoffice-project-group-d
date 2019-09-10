@@ -10,7 +10,6 @@ import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.response.BranchVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,11 +32,6 @@ public class BranchController extends BaseController {
     @ApiOperation("根据id查询机构信息")
     @GetMapping("/{branchId}")
     public RespBean getBranch(@PathVariable("branchId") Long branchId){
-
-        if(StringUtils.isBlank(branchId.toString())){
-            return RespBean.error("id不能为空");
-        }
-
         RespVos<BranchVo> respVos = branchService.getBranch(branchId);
 
         if (respVos != null) {

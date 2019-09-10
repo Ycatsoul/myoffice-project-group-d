@@ -5,9 +5,11 @@ import com.capgemini.cn.deemo.data.domain.Department;
 import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.mapper.BranchMapper;
 import com.capgemini.cn.deemo.mapper.DepartmentMapper;
+import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.utils.IdWorker;
+import com.capgemini.cn.deemo.utils.OperationLogUtils;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.DepartmentEditVo;
@@ -31,11 +33,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentMapper departmentMapper;
     private final BranchMapper branchMapper;
     private final UserMapper userMapper;
+    private final OperationLogMapper operationLogMapper;
 
-    public DepartmentServiceImpl(DepartmentMapper departmentMapper, BranchMapper branchMapper, UserMapper userMapper) {
+    public DepartmentServiceImpl(DepartmentMapper departmentMapper,
+                                 BranchMapper branchMapper,
+                                 UserMapper userMapper,
+                                 OperationLogMapper operationLogMapper) {
         this.departmentMapper = departmentMapper;
         this.branchMapper = branchMapper;
         this.userMapper = userMapper;
+        this.operationLogMapper = operationLogMapper;
     }
 
     @Override
@@ -73,17 +80,31 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Integer addDepartment(DepartmentEditVo departmentEditVo) {
         departmentEditVo.setDepartmentId(IdWorker.get().nextId());
+        operationLogMapper.insertOperationLog(
+                OperationLogUtils.createOperationLog("添加部门 - " + departmentEditVo.getDepartmentName())
+        );
 
         return departmentMapper.insertDepartment(departmentEditVo);
     }
 
     @Override
     public Integer updateDepartment(DepartmentEditVo departmentEditVo) {
+        operationLogMapper.insertOperationLog(
+                OperationLogUtils.createOperationLog("修改部门 - " + departmentEditVo.getDepartmentName())
+        );
+
         return departmentMapper.updateDepartment(departmentEditVo);
     }
 
     @Override
     public Integer deleteDepartments(DeleteVo deleteVo) {
+        for (Long id : deleteVo.getIds()) {
+            operationLogMapper.insertOperationLog(
+                    OperationLogUtils.createOperationLog(
+                            "删除部门 - " + departmentMapper.getDepartment(id).getDepartmentName())
+            );
+        }
+
         return departmentMapper.deleteDepartments(deleteVo.getIds());
     }
 

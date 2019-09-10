@@ -16,8 +16,7 @@
               <el-col :span="10">
               <div>
                 <el-form-item label="机构简称:" prop="branchShortName">
-                  <el-input prefix-icon="el-icon-edit" v-model="branch.branchShortName" size="mini" style="width: 300px"
-                           ></el-input>
+                  <el-input prefix-icon="el-icon-edit" v-model="branch.branchShortName" size="mini" style="width: 300px"></el-input>
                 </el-form-item>
               </div>
             </el-col>
