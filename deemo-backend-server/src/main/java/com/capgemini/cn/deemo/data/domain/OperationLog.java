@@ -2,7 +2,7 @@ package com.capgemini.cn.deemo.data.domain;
 
 import lombok.Data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author hasaker
@@ -19,5 +19,5 @@ public class OperationLog {
 
     private String operationDesc;
 
-    private Date operationTime;
+    private Timestamp operationTime;
 }

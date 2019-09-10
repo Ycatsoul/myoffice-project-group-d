@@ -2,7 +2,7 @@ package com.capgemini.cn.deemo.data.domain;
 
 import lombok.Data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author hasaker
@@ -17,9 +17,9 @@ public class LoginLog {
 
     private Long loginUserId;
 
-    private Date loginTime;
-
     private String loginIp;
 
     private String loginDesc;
+
+    private Timestamp loginTime;
 }

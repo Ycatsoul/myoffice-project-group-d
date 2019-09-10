@@ -13,6 +13,12 @@
     SELECT * FROM Menu WHERE menuName = #{menuName}
   </select>
   
+  <!-- 添加Menu -->
+  <insert id="addMenu" parameterType="com.capgemini.cn.deemo.data.domain.Menu">
+    INSERT INTO Menu (menuId, menuUrl, menuPath, menuComponent, menuName, parentMenuId)
+    VALUES (#{menu.menuId}, #{menu.menuUrl}, #{menu.menuPath}, #{menu.menuComponent}, #{menu.menuName}, #{menu.parentMenuId})
+  </insert>
+  
   <!-- 获取所有Menu -->
   <select id="getAllMenus" resultType="com.capgemini.cn.deemo.data.domain.Menu">
     SELECT * FROM Menu

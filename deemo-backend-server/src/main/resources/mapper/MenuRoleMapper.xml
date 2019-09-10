@@ -3,9 +3,15 @@
 
 <mapper namespace="com.capgemini.cn.deemo.mapper.MenuRoleMapper">
   
-  <!-- 根据userId获取Role -->
+  <!-- 根据menuId获取Role -->
   <select id="getRolesByMenuId" resultType="com.capgemini.cn.deemo.data.domain.Role">
     SELECT * FROM Role WHERE roleId IN (SELECT roleId FROM MenuRole WHERE menuId = #{menuId})
   </select>
+  
+  <!-- 添加MenuRole -->
+  <insert id="addMenuRole">
+    INSERT INTO MenuRole (menuRoleId, menuId, roleId)
+    VALUES (#{menuRoleId}, #{menuId}, #{roleId})
+  </insert>
 
 </mapper>

@@ -24,4 +24,9 @@ public class MenuRoleServiceImpl implements MenuRoleService {
     public List<Role> getRolesByMenuId(Long menuId) {
         return menuRoleMapper.getRolesByMenuId(menuId);
     }
+
+    @Override
+    public Integer addMenuRole(Long menuRoleId, Long menuId, Long roleId) {
+        return menuRoleMapper.addMenuRole(menuRoleId, menuId, roleId);
+    }
 }

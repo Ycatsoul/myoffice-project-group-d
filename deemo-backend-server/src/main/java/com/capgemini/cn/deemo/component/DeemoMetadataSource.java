@@ -32,10 +32,10 @@ public class DeemoMetadataSource implements FilterInvocationSecurityMetadataSour
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
         List<Menu> allMenus = menuService.getAllMenus();
 
-//        // 如果地址是/login_page，这个是登录页，不需要任何角色即可访问，直接返回null
-//        if ("login_page".equals(requestUrl)) {
-//            return null;
-//        }
+        // 如果地址是/login_page，这个是登录页，不需要任何角色即可访问，直接返回null
+        if ("login_page".equals(requestUrl)) {
+            return null;
+        }
 
         // 需要相应权限才能访问的路径
         for (Menu menu : allMenus) {

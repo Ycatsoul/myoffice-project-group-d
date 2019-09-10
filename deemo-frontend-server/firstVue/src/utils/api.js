@@ -46,8 +46,8 @@ export const postRequestLogin = (url, params) => {
       return ret
     }],
     headers: {
-      // 'Content-Type': 'application/x-www-form-urlencoded'
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/x-www-form-urlencoded'
+      // 'Content-Type': 'application/json;charset=utf-8'
     }
   });
 }

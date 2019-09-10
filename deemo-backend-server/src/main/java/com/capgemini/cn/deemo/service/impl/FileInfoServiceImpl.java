@@ -5,9 +5,11 @@ import com.capgemini.cn.deemo.data.domain.FileType;
 import com.capgemini.cn.deemo.data.domain.User;
 import com.capgemini.cn.deemo.mapper.FileInfoMapper;
 import com.capgemini.cn.deemo.mapper.FileTypeMapper;
+import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.utils.IdWorker;
+import com.capgemini.cn.deemo.utils.OperationLogUtils;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
@@ -31,14 +33,19 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
-    private FileInfoMapper fileInfoMapper;
-    private FileTypeMapper fileTypeMapper;
-    private UserMapper userMapper;
+    private final FileInfoMapper fileInfoMapper;
+    private final FileTypeMapper fileTypeMapper;
+    private final UserMapper userMapper;
+    private final OperationLogMapper operationLogMapper;
 
-    public FileInfoServiceImpl(FileInfoMapper fileInfoMapper, FileTypeMapper fileTypeMapper, UserMapper userMapper) {
+    public FileInfoServiceImpl(FileInfoMapper fileInfoMapper,
+                               FileTypeMapper fileTypeMapper,
+                               UserMapper userMapper,
+                               OperationLogMapper operationLogMapper) {
         this.fileInfoMapper = fileInfoMapper;
         this.fileTypeMapper = fileTypeMapper;
         this.userMapper = userMapper;
+        this.operationLogMapper = operationLogMapper;
     }
 
     /**
@@ -152,6 +159,10 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfo.setRemark(fileInfoEditVo.getRemark());
         fileInfo.setParentIdInTrash(fileInfoEditVo.getParentId());
 
+        operationLogMapper.insertOperationLog(
+                OperationLogUtils.createOperationLog("添加文件 - " + fileInfo.getFileName())
+        );
+
         return fileInfoMapper.insertFile(fileInfo);
     }
 
@@ -160,6 +171,9 @@ public class FileInfoServiceImpl implements FileInfoService {
      */
     @Override
     public Integer updateFile(FileInfoEditVo fileInfoEditVo) {
+        operationLogMapper.insertOperationLog(
+                OperationLogUtils.createOperationLog("更新文件 - " + fileInfoEditVo.getFileName())
+        );
         return fileInfoMapper.updateFile(fileInfoEditVo);
     }
 

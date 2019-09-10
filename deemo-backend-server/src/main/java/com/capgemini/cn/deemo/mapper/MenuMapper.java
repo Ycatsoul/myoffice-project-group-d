@@ -17,5 +17,7 @@ public interface MenuMapper {
 
     Menu getMenuByMenuName(@Param("menuName") String menuName);
 
+    Integer addMenu(@Param("menu") Menu menu);
+
     List<Menu> getAllMenus();
 }

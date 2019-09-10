@@ -2,7 +2,7 @@ package com.capgemini.cn.deemo.vo.response;
 
 import lombok.Data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author hasaker
@@ -19,9 +19,9 @@ public class LoginLogVo {
 
     private String loginUserName;
 
-    private Date loginTime;
-
     private String loginIp;
 
     private String loginDesc;
+
+    private Timestamp loginTime;
 }
