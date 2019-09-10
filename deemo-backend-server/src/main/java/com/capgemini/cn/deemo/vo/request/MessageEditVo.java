@@ -1,10 +1,10 @@
 package com.capgemini.cn.deemo.vo.request;
 
-import com.sun.tools.javac.util.List;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author hasaker

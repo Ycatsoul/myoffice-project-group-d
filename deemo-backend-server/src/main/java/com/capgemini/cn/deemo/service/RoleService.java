@@ -2,7 +2,8 @@ package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.data.domain.Role;
 import com.capgemini.cn.deemo.vo.request.RoleEditVo;
-import com.sun.tools.javac.util.List;
+
+import java.util.List;
 
 /**
  * @author hasaker
