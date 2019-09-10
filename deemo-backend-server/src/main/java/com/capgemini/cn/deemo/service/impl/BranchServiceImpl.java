@@ -5,7 +5,6 @@ import com.capgemini.cn.deemo.mapper.BranchMapper;
 import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.service.BranchService;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.OperationLogUtils;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.BranchEditVo;
 import com.capgemini.cn.deemo.vo.request.BranchSearchVo;
@@ -69,18 +68,18 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public Integer addBranch(BranchEditVo branchEditVo) {
         branchEditVo.setBranchId(IdWorker.get().nextId());
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog("添加机构 - " + branchEditVo.getBranchName())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog("添加机构 - " + branchEditVo.getBranchName())
+//        );
 
         return branchMapper.insertBranch(branchEditVo);
     }
 
     @Override
     public Integer updateBranch(BranchEditVo branchEditVo) {
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog("修改机构 - " + branchEditVo.getBranchName())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog("修改机构 - " + branchEditVo.getBranchName())
+//        );
 
         return branchMapper.updateBranch(branchEditVo);
     }
@@ -89,14 +88,14 @@ public class BranchServiceImpl implements BranchService {
     public Integer deleteBranches(DeleteVo deleteVo) {
         Integer res = branchMapper.deleteBranches(deleteVo.getIds());
 
-        if (res > 0) {
-            for (Long id : deleteVo.getIds()) {
-                operationLogMapper.insertOperationLog(
-                        OperationLogUtils.createOperationLog(
-                                "删除机构 - " + branchMapper.getBranch(id).getBranchName())
-                );
-            }
-        }
+//        if (res > 0) {
+//            for (Long id : deleteVo.getIds()) {
+//                operationLogMapper.insertOperationLog(
+//                        OperationLogUtils.createOperationLog(
+//                                "删除机构 - " + branchMapper.getBranch(id).getBranchName())
+//                );
+//            }
+//        }
 
         return res;
     }

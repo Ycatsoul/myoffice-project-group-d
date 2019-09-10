@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +31,8 @@ import java.io.PrintWriter;
  * @author hasaker
  * @since 2019/9/8 00:08
  */
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -70,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 配置不需要校验的url
      */
     @Override
-    public void configure(WebSecurity web) {
+    public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
             "/index.html",
             "/static/**",
@@ -78,10 +80,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/register",
             "/favicon.ico",
             "/swagger-ui.html",
-            "/swagger-ui.html#",
-            "/swagger-ui.html#/",
+            "/swagger-ui.html/**",
+            "/swagger-ui.html#/**",
             "/swagger-resources/**",
-            "/v2/**"
+            "/v2/**", "/**"
         );
     }
 
@@ -90,7 +92,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+        http.authorizeRequests().
+                withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
             /**
              * 在configure(HttpSecurity http)方法中，
              * 通过withObjectPostProcessor将刚刚创建的UrlFilterInvocationSecurityMetadataSource和UrlAccessDecisionManager注入进来
@@ -102,7 +105,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 o.setAccessDecisionManager(urlAccessDecisionManager);
                 return o;
             }
-        }).and().formLogin().loginPage("/login_page").loginProcessingUrl("/login").failureHandler((req, resp, e) -> {
+        }).and().formLogin().loginPage("/login_page").loginProcessingUrl("/login")
+                .usernameParameter("username").passwordParameter("password").failureHandler((req, resp, e) -> {
             // 登录失败
             resp.setContentType("application/json;charset=utf-8");
             resp.setStatus(401);

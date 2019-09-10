@@ -2,6 +2,7 @@ package com.capgemini.cn.deemo.component;
 
 import com.capgemini.cn.deemo.data.domain.Menu;
 import com.capgemini.cn.deemo.data.domain.Role;
+import com.capgemini.cn.deemo.service.MenuRoleService;
 import com.capgemini.cn.deemo.service.MenuService;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -21,10 +22,12 @@ import java.util.List;
 @Component
 public class DeemoMetadataSource implements FilterInvocationSecurityMetadataSource {
     private final MenuService menuService;
+    private final MenuRoleService menuRoleService;
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    public DeemoMetadataSource(MenuService menuService) {
+    public DeemoMetadataSource(MenuService menuService, MenuRoleService menuRoleService) {
         this.menuService = menuService;
+        this.menuRoleService = menuRoleService;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class DeemoMetadataSource implements FilterInvocationSecurityMetadataSour
 
         // 需要相应权限才能访问的路径
         for (Menu menu : allMenus) {
+            menu.setRoles(menuRoleService.getRolesByMenuId(menu.getMenuId()));
             if (antPathMatcher.match(menu.getMenuUrl(), requestUrl) && menu.getRoles().size() > 0) {
                 List<Role> roles = menu.getRoles();
                 int size = roles.size();

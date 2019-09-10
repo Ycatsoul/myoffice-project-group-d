@@ -5,10 +5,7 @@ import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.request.UserEditVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author hasaker
@@ -25,7 +22,7 @@ public class LoginRegController {
     }
 
     @ApiOperation("跳转登录页")
-    @RequestMapping("/login_page")
+    @GetMapping("/login_page")
     public RespBean login() {
         return RespBean.error("尚未登录, 请先登录!");
     }

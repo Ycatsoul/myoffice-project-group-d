@@ -7,7 +7,6 @@ import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.ManualSignService;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.OperationLogUtils;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.ManualSignEditVo;
@@ -76,32 +75,32 @@ public class ManualSignServiceImpl implements ManualSignService {
     public Integer addManualSign(ManualSignEditVo manualSignEditVo) {
         manualSignEditVo.setManualSignId(IdWorker.get().nextId());
 
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog(
-                        "打卡 - " + manualSignEditVo.getManualSignId())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog(
+//                        "打卡 - " + manualSignEditVo.getManualSignId())
+//        );
 
         return manualSignMapper.insertManualSign(manualSignEditVo);
     }
 
     @Override
     public Integer updateManualSign(ManualSignEditVo manualSignEditVo) {
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog(
-                        "更新打卡 - " + manualSignEditVo.getManualSignId())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog(
+//                        "更新打卡 - " + manualSignEditVo.getManualSignId())
+//        );
 
         return manualSignMapper.updateManualSign(manualSignEditVo);
     }
 
     @Override
     public Integer deleteManualSigns(DeleteVo deleteVo) {
-        for (Long id : deleteVo.getIds()) {
-            operationLogMapper.insertOperationLog(
-                    OperationLogUtils.createOperationLog(
-                            "删除打卡 - " + id)
-            );
-        }
+//        for (Long id : deleteVo.getIds()) {
+//            operationLogMapper.insertOperationLog(
+//                    OperationLogUtils.createOperationLog(
+//                            "删除打卡 - " + id)
+//            );
+//        }
 
         return manualSignMapper.deleteManualSigns(deleteVo.getIds());
     }
