@@ -5,7 +5,6 @@ import com.capgemini.cn.deemo.mapper.MeetingTypeMapper;
 import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.service.MeetingTypeService;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.OperationLogUtils;
 import com.capgemini.cn.deemo.vo.request.MeetingTypeEditVo;
 import org.springframework.stereotype.Service;
 
@@ -55,10 +54,10 @@ public class MeetingTypeServiceImpl implements MeetingTypeService {
     public Integer insertMeetingType(MeetingTypeEditVo meetingTypeEditVo) {
         meetingTypeEditVo.setMeetingTypeId(IdWorker.get().nextId());
 
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog(
-                        "添加会议类型 - " + meetingTypeEditVo.getMeetingTypeName())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog(
+//                        "添加会议类型 - " + meetingTypeEditVo.getMeetingTypeName())
+//        );
 
         return meetingTypeMapper.insertMeetingType(meetingTypeEditVo);
     }
@@ -68,10 +67,10 @@ public class MeetingTypeServiceImpl implements MeetingTypeService {
      */
     @Override
     public Integer updateMeetingType(MeetingTypeEditVo meetingTypeEditVo) {
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog(
-                        "修改会议类型 - " + meetingTypeEditVo.getMeetingTypeName())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog(
+//                        "修改会议类型 - " + meetingTypeEditVo.getMeetingTypeName())
+//        );
 
         return meetingTypeMapper.updateMeetingType(meetingTypeEditVo);
     }
@@ -82,10 +81,10 @@ public class MeetingTypeServiceImpl implements MeetingTypeService {
      */
     @Override
     public Integer deleteMeetingType(Long meetingTypeId) {
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog(
-                        "删除会议类型 - " + meetingTypeMapper.listMeetingType(meetingTypeId))
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog(
+//                        "删除会议类型 - " + meetingTypeMapper.listMeetingType(meetingTypeId))
+//        );
 
         return meetingTypeMapper.deleteMeetingType(meetingTypeId);
     }

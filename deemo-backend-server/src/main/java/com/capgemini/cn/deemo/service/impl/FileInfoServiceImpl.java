@@ -9,7 +9,6 @@ import com.capgemini.cn.deemo.mapper.OperationLogMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.utils.IdWorker;
-import com.capgemini.cn.deemo.utils.OperationLogUtils;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.FileInfoEditVo;
@@ -159,9 +158,9 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfo.setRemark(fileInfoEditVo.getRemark());
         fileInfo.setParentIdInTrash(fileInfoEditVo.getParentId());
 
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog("添加文件 - " + fileInfo.getFileName())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog("添加文件 - " + fileInfo.getFileName())
+//        );
 
         return fileInfoMapper.insertFile(fileInfo);
     }
@@ -171,9 +170,9 @@ public class FileInfoServiceImpl implements FileInfoService {
      */
     @Override
     public Integer updateFile(FileInfoEditVo fileInfoEditVo) {
-        operationLogMapper.insertOperationLog(
-                OperationLogUtils.createOperationLog("更新文件 - " + fileInfoEditVo.getFileName())
-        );
+//        operationLogMapper.insertOperationLog(
+//                OperationLogUtils.createOperationLog("更新文件 - " + fileInfoEditVo.getFileName())
+//        );
         return fileInfoMapper.updateFile(fileInfoEditVo);
     }
 
