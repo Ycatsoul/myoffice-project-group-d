@@ -2,9 +2,10 @@ package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.Role;
 import com.capgemini.cn.deemo.vo.request.RoleEditVo;
-import com.sun.tools.javac.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author hasaker
