@@ -79,30 +79,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Integer addDepartment(DepartmentEditVo departmentEditVo) {
         departmentEditVo.setDepartmentId(IdWorker.get().nextId());
-//        operationLogMapper.insertOperationLog(
-//                OperationLogUtils.createOperationLog("添加部门 - " + departmentEditVo.getDepartmentName())
-//        );
 
         return departmentMapper.insertDepartment(departmentEditVo);
     }
 
     @Override
     public Integer updateDepartment(DepartmentEditVo departmentEditVo) {
-//        operationLogMapper.insertOperationLog(
-//                OperationLogUtils.createOperationLog("修改部门 - " + departmentEditVo.getDepartmentName())
-//        );
 
         return departmentMapper.updateDepartment(departmentEditVo);
     }
 
     @Override
     public Integer deleteDepartments(DeleteVo deleteVo) {
-//        for (Long id : deleteVo.getIds()) {
-//            operationLogMapper.insertOperationLog(
-//                    OperationLogUtils.createOperationLog(
-//                            "删除部门 - " + departmentMapper.getDepartment(id).getDepartmentName())
-//            );
-//        }
 
         return departmentMapper.deleteDepartments(deleteVo.getIds());
     }

@@ -24,4 +24,9 @@
     DELETE FROM UserRole WHERE userId = #{userId} AND roleId = #{roleId}
   </delete>
   
+  <!-- 根据userId删除userRole -->
+  <delete id="deleteUserRolesByUserId" parameterType="Long">
+    DELETE FROM UserRole WHERE userId = #{userId}
+  </delete>
+  
 </mapper>

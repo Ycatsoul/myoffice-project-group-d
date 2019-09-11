@@ -35,7 +35,6 @@ public class FileInfoServiceImpl implements FileInfoService {
     private final FileInfoMapper fileInfoMapper;
     private final FileTypeMapper fileTypeMapper;
     private final UserMapper userMapper;
-    private final OperationLogMapper operationLogMapper;
 
     public FileInfoServiceImpl(FileInfoMapper fileInfoMapper,
                                FileTypeMapper fileTypeMapper,
@@ -44,7 +43,6 @@ public class FileInfoServiceImpl implements FileInfoService {
         this.fileInfoMapper = fileInfoMapper;
         this.fileTypeMapper = fileTypeMapper;
         this.userMapper = userMapper;
-        this.operationLogMapper = operationLogMapper;
     }
 
     /**
@@ -110,7 +108,7 @@ public class FileInfoServiceImpl implements FileInfoService {
      * 上传文件
      */
     @Override
-    public Boolean uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         String filePath = System.getProperties().getProperty("user.home") + "/Desktop/Deemo/Files/";
 
@@ -118,12 +116,12 @@ public class FileInfoServiceImpl implements FileInfoService {
             multipartFile.transferTo(new File(filePath + fileName));
             log.info("上传成功！");
 
-            return true;
+            return filePath + fileName;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return "上传失败!";
     }
 
 
@@ -158,10 +156,6 @@ public class FileInfoServiceImpl implements FileInfoService {
         fileInfo.setRemark(fileInfoEditVo.getRemark());
         fileInfo.setParentIdInTrash(fileInfoEditVo.getParentId());
 
-//        operationLogMapper.insertOperationLog(
-//                OperationLogUtils.createOperationLog("添加文件 - " + fileInfo.getFileName())
-//        );
-
         return fileInfoMapper.insertFile(fileInfo);
     }
 
@@ -170,9 +164,6 @@ public class FileInfoServiceImpl implements FileInfoService {
      */
     @Override
     public Integer updateFile(FileInfoEditVo fileInfoEditVo) {
-//        operationLogMapper.insertOperationLog(
-//                OperationLogUtils.createOperationLog("更新文件 - " + fileInfoEditVo.getFileName())
-//        );
         return fileInfoMapper.updateFile(fileInfoEditVo);
     }
 

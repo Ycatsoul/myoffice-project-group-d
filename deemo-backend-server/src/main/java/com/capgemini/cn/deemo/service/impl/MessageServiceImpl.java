@@ -9,7 +9,9 @@ import com.capgemini.cn.deemo.mapper.MessageTransMapper;
 import com.capgemini.cn.deemo.mapper.MessageTypeMapper;
 import com.capgemini.cn.deemo.mapper.UserMapper;
 import com.capgemini.cn.deemo.service.MessageService;
+import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.utils.IdWorker;
+import com.capgemini.cn.deemo.utils.UserUtils;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.MessageEditVo;
@@ -29,21 +31,22 @@ import java.util.stream.Collectors;
  */
 @Service
 public class MessageServiceImpl implements MessageService {
-
     private final MessageMapper messageMapper;
     private final MessageTransMapper messageTransMapper;
     private final MessageTypeMapper messageTypeMapper;
     private final UserMapper userMapper;
-
+    private final UserService userService;
 
     public MessageServiceImpl(MessageMapper messageMapper,
                               MessageTransMapper messageTransMapper,
                               MessageTypeMapper messageTypeMapper,
-                              UserMapper userMapper) {
+                              UserMapper userMapper,
+                              UserService userService) {
         this.messageMapper = messageMapper;
         this.messageTransMapper = messageTransMapper;
         this.messageTypeMapper = messageTypeMapper;
         this.userMapper = userMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -78,17 +81,48 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public RespVos<MessageVo> getMessagesByRecipientId(Long recipientId) {
+        List<Message> messages = messageTransMapper.getMessagesByRecipientId(recipientId);
+        List<MessageVo> messageVos = new ArrayList<>();
+        RespVos<MessageVo> respVos = new RespVos<>();
+
+        for (Message message : messages) {
+            messageVos.add(convertToVo(message));
+        }
+
+        respVos.setSize(messageVos.size());
+        respVos.setVos(messageVos);
+
+        return respVos;
+    }
+
+    /**
+     * 添加消息
+     * 如果recipients为null 则表示发送给所有人
+     */
+    @Override
     public Integer addMessage(MessageEditVo messageEditVo) {
         Long messageId = IdWorker.get().nextId();
         List<MessageTrans> messageTranses = new ArrayList<>();
 
         messageEditVo.setMessageId(messageId);
-        for (Long recipientId : messageEditVo.getRecipientIds()) {
-            messageTranses.add(new MessageTrans(){{
-                setMessageTransId(IdWorker.get().nextId());
-                setMessageId(messageId);
-                setRecipientId(recipientId);
-            }});
+
+        if (messageEditVo.getRecipientIds() != null) {
+            for (Long recipientId : messageEditVo.getRecipientIds()) {
+                messageTranses.add(new MessageTrans(){{
+                    setMessageTransId(IdWorker.get().nextId());
+                    setMessageId(messageId);
+                    setRecipientId(recipientId);
+                }});
+            }
+        } else {
+            for (Long recipientId : userService.getAllUserIds()) {
+                messageTranses.add(new MessageTrans(){{
+                    setMessageTransId(IdWorker.get().nextId());
+                    setMessageId(messageId);
+                    setRecipientId(recipientId);
+                }});
+            }
         }
 
         Integer res1 = messageMapper.insertMessage(messageEditVo);
@@ -116,6 +150,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Integer readMessages(MessageReadVo messageReadVo) {
+        messageReadVo.setCurrentUserId(UserUtils.getCurrentUser().getUserId());
+
         return messageTransMapper.readMessages(messageReadVo);
     }
 
@@ -124,11 +160,13 @@ public class MessageServiceImpl implements MessageService {
         return messageTransMapper.deleteMessageTranses(deleteVo.getIds());
     }
 
-    private Integer deleteMessageTransesByMessageId(List<Long> messageIds) {
+    @Override
+    public Integer deleteMessageTransesByMessageId(List<Long> messageIds) {
         return messageTransMapper.deleteMessageTransesByMessageId(messageIds);
     }
 
-    private MessageVo convertToVo(Message message) {
+    @Override
+    public MessageVo convertToVo(Message message) {
         MessageVo messageVo = new MessageVo();
 
         User createUser = userMapper.getUser(message.getCreateUserId());
@@ -145,6 +183,8 @@ public class MessageServiceImpl implements MessageService {
         messageVo.setCreateUserName(createUser == null ? null : createUser.getName());
         messageVo.setIsPublished(message.getIsPublished());
         messageVo.setPublishTime(message.getPublishTime());
+        messageVo.setRecipients(messageTransMapper.getRecipientsByMessageId(message.getMessageId())
+        .stream().map(userService::convertToVo).collect(Collectors.toList()));
 
         return messageVo;
     }

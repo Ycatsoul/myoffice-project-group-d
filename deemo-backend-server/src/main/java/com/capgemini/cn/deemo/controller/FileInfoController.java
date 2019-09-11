@@ -1,5 +1,6 @@
 package com.capgemini.cn.deemo.controller;
 
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.FileInfoService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -44,11 +45,12 @@ public class FileInfoController {
     @ApiOperation(value = "上传文件")
     @PostMapping("/upload")
     public RespBean uploadFile(@RequestParam("file") MultipartFile multipartFile) {
-        boolean res = fileInfoService.uploadFile(multipartFile);
+        String absPath = fileInfoService.uploadFile(multipartFile);
 
-        return res ? RespBean.ok("上传成功") : RespBean.error("上传失败!");
+        return "上传失败!".equals(absPath) ? RespBean.error("上传失败!") : RespBean.ok(absPath);
     }
 
+    @ControllerLog(name = "添加文件")
     @ApiOperation(value = "插入文件上传记录")
     @PostMapping("/insert")
     public RespBean insertFile(@RequestBody FileInfoEditVo fileInfoEditVo) {
@@ -57,6 +59,7 @@ public class FileInfoController {
         return res > 0 ? RespBean.ok("插入成功!") : RespBean.error("插入失败!");
     }
 
+    @ControllerLog(name = "更新文件信息")
     @ApiOperation(value = "更新一个文件的信息")
     @PutMapping("/update")
     public RespBean updateFile(@RequestBody FileInfoEditVo fileInfoEditVo) {
@@ -89,6 +92,7 @@ public class FileInfoController {
         return RespBean.error("未找到文件");
     }
 
+    @ControllerLog(name = "将文件放入回收站")
     @ApiOperation(value = "将文件放入回收站")
     @PostMapping("/delete")
     public RespBean putFileToTrash(@RequestBody DeleteVo deleteVo) {
@@ -97,6 +101,7 @@ public class FileInfoController {
         return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
 
+    @ControllerLog(name = "从回收站恢复文件")
     @ApiOperation(value = "从回收站取回文件")
     @PutMapping("/restore")
     public RespBean restoreFileFromTrash(@RequestBody DeleteVo deleteVo) {
@@ -105,6 +110,7 @@ public class FileInfoController {
         return res > 0 ? RespBean.ok("还原成功!") : RespBean.error("还原失败!");
     }
 
+    @ControllerLog(name = "从回收站彻底删除文件")
     @ApiOperation(value = "将文件从回收站中彻底删除")
     @PostMapping("/destroy")
     public RespBean deleteFilesInTrash(@RequestBody DeleteVo deleteVo) {

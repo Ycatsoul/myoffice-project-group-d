@@ -1,6 +1,9 @@
 package com.capgemini.cn.deemo.vo.response;
 
+import com.capgemini.cn.deemo.data.domain.Role;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -45,6 +48,11 @@ public class UserVo {
      * 所属部门名称
      */
     private String departmentName;
+
+    /**
+     * 角色ID
+     */
+    private List<Role> roles;
 
     /**
      * 是否被屏蔽

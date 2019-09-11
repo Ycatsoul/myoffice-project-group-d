@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.data.domain.Note;
 import com.capgemini.cn.deemo.service.NoteService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
@@ -47,6 +48,7 @@ public class NoteController extends BaseController {
     }
 
 
+    @ControllerLog(name = "新建Note")
     @ApiOperation(value = "新建一条Note")
     @PostMapping("/set")
     public RespBean insertNote(@RequestBody NoteEditVo noteEditVo) {
@@ -82,6 +84,7 @@ public class NoteController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "更新Note")
     @ApiOperation("更新Note")
     @PutMapping("/update")
     public RespBean updateNote(@RequestBody NoteEditVo note) {
@@ -91,6 +94,7 @@ public class NoteController extends BaseController {
         return res > 0 ? RespBean.ok("更新成功") : RespBean.error("更新失败");
     }
 
+    @ControllerLog(name = "删除Note")
     @ApiOperation(value = "根据noteId删除一条Note")
     @DeleteMapping("/{noteId}")
     public RespBean deleteNote(@PathVariable Long noteId) {

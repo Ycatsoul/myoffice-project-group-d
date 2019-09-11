@@ -18,7 +18,7 @@ public interface FileInfoService {
 
     RespVos<FileInfoVo> listFilesInTrash(FileInfoSearchVo fileInfoSearchVo);
 
-    Boolean uploadFile(MultipartFile multipartFile);
+    String uploadFile(MultipartFile multipartFile);
 
     Integer insertFile(FileInfoEditVo fileInfoEditVo);
 

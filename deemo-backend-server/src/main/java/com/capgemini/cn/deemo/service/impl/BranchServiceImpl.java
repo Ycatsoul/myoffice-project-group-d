@@ -26,11 +26,9 @@ import java.util.stream.Collectors;
 public class BranchServiceImpl implements BranchService {
 
     private final BranchMapper branchMapper;
-    private final OperationLogMapper operationLogMapper;
 
     public BranchServiceImpl(BranchMapper branchMapper, OperationLogMapper operationLogMapper) {
         this.branchMapper = branchMapper;
-        this.operationLogMapper = operationLogMapper;
     }
 
     @Override
@@ -68,36 +66,20 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public Integer addBranch(BranchEditVo branchEditVo) {
         branchEditVo.setBranchId(IdWorker.get().nextId());
-//        operationLogMapper.insertOperationLog(
-//                OperationLogUtils.createOperationLog("添加机构 - " + branchEditVo.getBranchName())
-//        );
 
         return branchMapper.insertBranch(branchEditVo);
     }
 
     @Override
     public Integer updateBranch(BranchEditVo branchEditVo) {
-//        operationLogMapper.insertOperationLog(
-//                OperationLogUtils.createOperationLog("修改机构 - " + branchEditVo.getBranchName())
-//        );
 
         return branchMapper.updateBranch(branchEditVo);
     }
 
     @Override
     public Integer deleteBranches(DeleteVo deleteVo) {
-        Integer res = branchMapper.deleteBranches(deleteVo.getIds());
 
-//        if (res > 0) {
-//            for (Long id : deleteVo.getIds()) {
-//                operationLogMapper.insertOperationLog(
-//                        OperationLogUtils.createOperationLog(
-//                                "删除机构 - " + branchMapper.getBranch(id).getBranchName())
-//                );
-//            }
-//        }
-
-        return res;
+        return branchMapper.deleteBranches(deleteVo.getIds());
     }
 
     private BranchVo convertToVo(Branch branch) {

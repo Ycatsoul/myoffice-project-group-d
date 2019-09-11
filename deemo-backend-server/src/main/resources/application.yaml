@@ -5,7 +5,7 @@ spring:
     charset: UTF-8
   aop:
     auto: true
-    proxy-target-class: false
+    proxy-target-class: true
   mandatory-file-encoding: utf-8
   http:
     encoding:

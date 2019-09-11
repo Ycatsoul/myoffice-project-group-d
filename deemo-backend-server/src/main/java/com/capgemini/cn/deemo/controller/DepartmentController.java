@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.DepartmentService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -53,6 +54,7 @@ public class DepartmentController extends BaseController {
         return RespBean.error("查询失败！");
     }
 
+    @ControllerLog(name = "添加部门")
     @ApiOperation("添加一个部门")
     @PostMapping("/")
     public RespBean addDepartment(@RequestBody DepartmentEditVo departmentEditVo) {
@@ -61,6 +63,7 @@ public class DepartmentController extends BaseController {
         return res > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
+    @ControllerLog(name = "修改部门")
     @ApiOperation("修改部门信息")
     @PutMapping("/")
     public RespBean updateDepartment(@RequestBody DepartmentEditVo departmentEditVo) {
@@ -69,6 +72,7 @@ public class DepartmentController extends BaseController {
         return res > 0 ? RespBean.ok("修改成功!") : RespBean.error("修改失败!");
     }
 
+    @ControllerLog(name = "删除部门")
     @ApiOperation("删除部门")
     @PostMapping("/delete")
     public RespBean deleteDepartments(@RequestBody DeleteVo deleteVo) {

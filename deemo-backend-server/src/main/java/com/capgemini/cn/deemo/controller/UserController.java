@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.UserService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -67,6 +68,7 @@ public class UserController extends BaseController {
         return RespBean.error("查询失败！");
     }
 
+    @ControllerLog(name = "添加用户")
     @ApiOperation("添加User")
     @PostMapping("/")
     public RespBean addUser(@RequestBody UserEditVo userEditVo) {
@@ -75,6 +77,7 @@ public class UserController extends BaseController {
         return res > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
+    @ControllerLog(name = "更新用户信息")
     @ApiOperation("更新User信息")
     @PutMapping("/")
     public RespBean updateUser(@RequestBody UserEditVo userEditVo) {
@@ -83,6 +86,7 @@ public class UserController extends BaseController {
         return res > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }
 
+    @ControllerLog(name = "屏蔽用户")
     @ApiOperation("屏蔽User")
     @PutMapping("/block")
     public RespBean blockUsers(@RequestBody DeleteVo deleteVo) {
@@ -91,6 +95,7 @@ public class UserController extends BaseController {
         return res > 0 ? RespBean.ok("成功屏蔽" + res + "个用户!") : RespBean.error("屏蔽失败!");
     }
 
+    @ControllerLog(name = "删除用户")
     @ApiOperation("删除User")
     @PostMapping("/delete")
     public RespBean deleteUsers(@RequestBody DeleteVo deleteVo) {

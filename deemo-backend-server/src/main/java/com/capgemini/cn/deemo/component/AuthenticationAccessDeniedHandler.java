@@ -27,7 +27,7 @@ public class AuthenticationAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-        RespBean error = RespBean.error("权限不足，请联系管理员!");
+        RespBean error = RespBean.error("权限不足, 请联系管理员!");
 
         out.write(new ObjectMapper().writeValueAsString(error));
         out.flush();
