@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.BranchService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -53,6 +54,7 @@ public class BranchController extends BaseController {
         return RespBean.error("查询失败！");
     }
 
+    @ControllerLog(name = "添加Branch")
     @ApiOperation("添加Branch信息")
     @PostMapping("/")
     public RespBean addBranch(@RequestBody BranchEditVo branchEditVo){
@@ -60,6 +62,7 @@ public class BranchController extends BaseController {
         return branchService.addBranch(branchEditVo) > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
+    @ControllerLog(name = "修改Branch")
     @ApiOperation("修改Branch信息")
     @PutMapping("/")
     public RespBean updateBranch(@RequestBody BranchEditVo branchEditVo){
@@ -67,6 +70,7 @@ public class BranchController extends BaseController {
         return branchService.updateBranch(branchEditVo) > 0 ? RespBean.ok("编辑成功!") : RespBean.error("编辑失败!");
     }
 
+    @ControllerLog(name = "删除Branch")
     @ApiOperation("删除Branch信息")
     @PostMapping("/delete")
     public RespBean deleteBranches(@RequestBody DeleteVo deleteVo){

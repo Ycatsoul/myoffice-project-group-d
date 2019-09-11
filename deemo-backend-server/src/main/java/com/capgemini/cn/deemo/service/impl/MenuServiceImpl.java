@@ -72,17 +72,18 @@ public class MenuServiceImpl implements MenuService {
     }
 
     private boolean containRoles(List<Role> userRoles, List<Role> menuRoles) {
-        for (Role userRole : userRoles) {
-            if ("ROLE_ADMIN".equals(userRole.getRoleName())) {
-                return true;
-            }
+        List<Long> userRoleIds = new ArrayList<>();
+        List<Long> menuRoleIds = new ArrayList<>();
+        for (Role role : userRoles) {
+            userRoleIds.add(role.getRoleId());
+        }
+        for (Role role : menuRoles) {
+            menuRoleIds.add(role.getRoleId());
+        }
 
-            if ("ROLE_USER".equals(userRole.getRoleName())) {
-                for (Role menuRole : menuRoles) {
-                    if ("ROLE_USER".equals(menuRole.getRoleName())) {
-                        return true;
-                    }
-                }
+        for (Long menuRoleId : menuRoleIds) {
+            if (userRoleIds.contains(menuRoleId)) {
+                return true;
             }
         }
 

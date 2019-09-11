@@ -28,12 +28,14 @@ public class MenuMapperTest {
 
     @Test
     public void addMenu() {
+        Long ROLE_ADMIN_ID = 2867588375773184L;
+        Long ROLE_USER_ID = 2867590938492928L;
 
         String[][] menuUrls = {
                 {"/", "/", "/", "/", "/", "/"},
                 {"/branch/**", "/department/**", "/user/**"},
                 {"/schedule/**", "/schedule/**", "/note/**"},
-                {"/file/**", "/trash/**"},
+                {"/file/**", "/file/**", "/trash/**"},
                 {"/message/**", "/message/**"},
                 {"/manualSign/**", "/manualSign/**", "/manualSign/**"},
                 {"/loginLog/**", "/operationLog/**", "/role/**", "/menu/**"}
@@ -43,19 +45,19 @@ public class MenuMapperTest {
                 {"/home", "/home", "/home", "/home", "/home", "/home"},
                 {"/personal/organization", "/personal/department", "/personal/employee"},
                 {"/schedule/mySchedule", "/schedule/departmentSchedule", "/schedule/myNotes"},
-                {"/file/manager", "/file/trash"},
+                {"/document/docManage", "/document/fileSearch", "/document/recycle"},
                 {"/message/msgManage", "/message/mailBox"},
                 {"/check/checkCount", "/check/Inquiry", "/check/employeeCheck"},
-                {"/system/loginRecord", "/system/operationRecord", "/system/roleManage", "/system/menuOrder"}
+                {"/system/loginRecord", "/system/operateRecord", "/system/roleManage", "/system/menuOrder"}
         };
 
         String[][] components = {
                 {"Home", "Home", "Home", "Home", "Home", "Home"},
                 {"organization", "department", "employee"},
-                {"mySchedule", "departmentSchedule", "myNote"},
-                {"FileManager", "FileTrash"},
+                {"mySchedule", "departmentSchedule", "myNotes"},
+                {"docManage", "fileSearch", "recycle"},
                 {"msgManage", "mailBox"},
-                {"ManualSignCount", "ManualSignQuery", "ManualSign"},
+                {"checkCount", "checkInquiry", "employeeCheck"},
                 {"loginRecord", "operateRecord", "roleManage", "menuOrder"}
         };
 
@@ -63,26 +65,11 @@ public class MenuMapperTest {
                 {"人事管理", "日程管理", "文档管理", "消息管理", "考勤管理", "系统管理"},
                 {"机构管理", "部门管理", "员工管理"},
                 {"我的日程", "部门日程", "我的便签"},
-                {"文件管理", "回收站"},
+                {"文件管理", "文件搜索", "回收站"},
                 {"信息管理", "信箱"},
                 {"考勤统计", "考勤历史记录查询", "员工签到/签退"},
                 {"登录日志", "操作日志", "角色管理", "菜单排序"}
         };
-
-        Long[] roles = new Long[]{
-                2867588375773184L,
-                2867590938492928L,
-                2867590938492928L,
-                2867590938492928L,
-                2867590938492928L,
-                2867588375773184L
-        };
-
-        Menu root = new Menu(){{
-           setMenuId(0L);
-           setMenuUrl("/");
-
-        }};
 
         for (int i = 0; i < names[0].length; i++) {
             int finalI = i;
@@ -95,11 +82,19 @@ public class MenuMapperTest {
                 setParentMenuId(0L);
             }};
             menuMapper.addMenu(menu);
-            // ROLE_USER
-            menuRoleMapper.addMenuRole(IdWorker.get().nextId(), menu.getMenuId(), roles[finalI]);
+
+            switch (finalI) {
+                case 1:
+                case 6:
+                    menuRoleMapper.addMenuRole(IdWorker.get().nextId(), menu.getMenuId(), ROLE_ADMIN_ID);
+                    break;
+                default:
+                    menuRoleMapper.addMenuRole(IdWorker.get().nextId(), menu.getMenuId(), ROLE_ADMIN_ID);
+                    menuRoleMapper.addMenuRole(IdWorker.get().nextId(), menu.getMenuId(), ROLE_USER_ID);
+            }
 
 
-            for (int j = 0; j < names[i + 1].length; j++) {
+            for (int j = 0; j < names[finalI + 1].length; j++) {
                 int finalJ = j;
                 Menu childMenu = new Menu(){{
                     setMenuId(IdWorker.get().nextId());
@@ -110,7 +105,23 @@ public class MenuMapperTest {
                     setParentMenuId(menu.getMenuId());
                 }};
                 menuMapper.addMenu(childMenu);
-                menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), roles[finalI]);
+
+                switch (finalI) {
+                    case 1:
+                    case 6:
+                        menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_ADMIN_ID);
+                        break;
+                    case 5:
+                        if (finalJ == 2) {
+                            menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_USER_ID);
+                        } else {
+                            menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_ADMIN_ID);
+                        }
+                        break;
+                    default:
+                        menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_USER_ID);
+                        menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_ADMIN_ID);
+                }
             }
         }
     }
