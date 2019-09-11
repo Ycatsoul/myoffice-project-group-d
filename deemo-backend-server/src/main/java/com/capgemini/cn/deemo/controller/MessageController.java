@@ -1,5 +1,6 @@
 package com.capgemini.cn.deemo.controller;
 
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.MessageService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -51,18 +52,21 @@ public class MessageController {
         return RespBean.error("查询失败!");
     }
 
+    @ControllerLog(name = "添加信息为草稿")
     @ApiOperation("添加消息为草稿")
     @PostMapping("/add")
     RespBean addMessage(@RequestBody MessageEditVo messageEditVo) {
         return messageService.addMessage(messageEditVo) > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
+    @ControllerLog(name = "修改草稿")
     @ApiOperation("修改草稿")
     @PutMapping("/update")
     RespBean updateMessage(@RequestBody MessageEditVo messageEditVo) {
         return messageService.updateMessage(messageEditVo) > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }
 
+    @ControllerLog(name = "删除消息")
     @ApiOperation("删除消息")
     @PostMapping("/deleteMessages")
     RespBean deleteMessages(@RequestBody DeleteVo deleteVo) {
@@ -71,6 +75,7 @@ public class MessageController {
         return res > 0 ? RespBean.ok("成功删除" + res + "条消息!") : RespBean.error("删除失败!");
     }
 
+    @ControllerLog(name = "发送消息")
     @ApiOperation("发送消息")
     @PutMapping("/publish")
     RespBean sendMessage(@RequestBody Long messageId) {
@@ -79,15 +84,16 @@ public class MessageController {
         return res > 0 ? RespBean.ok("成功将消息发送给" + res + "个用户!") : RespBean.error("发送失败!");
     }
 
+    @ControllerLog(name = "阅读消息")
     @ApiOperation("阅读消息/将消息标记为已读")
     @PostMapping("/read")
     RespBean readMessages(@RequestBody MessageReadVo messageReadVo) {
-        messageReadVo.setCurrentUserId(4715897054822400L);
         Integer res = messageService.readMessages(messageReadVo);
 
         return res > 0 ? RespBean.ok("成功阅读" + res + "条信息!") : RespBean.error("阅读失败!");
     }
 
+    @ControllerLog(name = "删除收件箱里的消息")
     @ApiOperation("删除收件箱里的消息")
     @PostMapping("/deleteMessageTranses")
     RespBean deleteMessageTranses(@RequestBody DeleteVo deleteVo) {

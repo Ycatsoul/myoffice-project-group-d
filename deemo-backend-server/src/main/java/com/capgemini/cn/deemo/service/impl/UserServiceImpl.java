@@ -30,18 +30,15 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-    private final RoleMapper roleMapper;
     private final UserRoleMapper userRoleMapper;
     private final DepartmentMapper departmentMapper;
     private final BranchMapper branchMapper;
 
     public UserServiceImpl(UserMapper userMapper,
-                           RoleMapper roleMapper,
                            UserRoleMapper userRoleMapper,
                            DepartmentMapper departmentMapper,
                            BranchMapper branchMapper) {
         this.userMapper = userMapper;
-        this.roleMapper = roleMapper;
         this.userRoleMapper = userRoleMapper;
         this.departmentMapper = departmentMapper;
         this.branchMapper = branchMapper;
@@ -59,6 +56,11 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
 
         return user;
+    }
+
+    @Override
+    public List<Long> getAllUserIds() {
+        return userMapper.getAllUserIds();
     }
 
     @Override
@@ -149,14 +151,12 @@ public class UserServiceImpl implements UserService {
         userEditVo.setUserId(IdWorker.get().nextId());
         userEditVo.setPassword(new BCryptPasswordEncoder().encode(userEditVo.getPassword()));
 
-        // 新注册用户默认为ROLE_USER
-        Role role = roleMapper.getRoleByRoleName("ROLE_USER");
+//        // 新注册用户默认为ROLE_USER
+//        Role role = roleMapper.getRoleByRoleName("ROLE_USER");
 
         Integer res = userMapper.insertUser(userEditVo);
 
-        if (res == 1 && role != null) {
-            userRoleMapper.addUserRole(IdWorker.get().nextId(), userEditVo.getUserId(), role.getRoleId());
-        }
+        userRoleMapper.addUserRole(IdWorker.get().nextId(), userEditVo.getUserId(), userEditVo.getRoleId());
 
         return res;
     }
@@ -173,16 +173,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer deleteUsers(DeleteVo deleteVo) {
+        // 删除用户的同时删除相关的权限分配记录
+        for (Long userId : deleteVo.getIds()) {
+            userRoleMapper.deleteUserRolesByUserId(userId);
+        }
+
         return userMapper.deleteUsers(deleteVo.getIds());
     }
 
     /**
      * 将User装换为UserVo
      */
-    private UserVo convertToVo(User user) {
+    @Override
+    public UserVo convertToVo(User user) {
         UserVo userVo = new UserVo();
-        
         Department department = departmentMapper.getDepartment(user.getDepartmentId());
+        List<Role> roles = userRoleMapper.getRolesByUserId(user.getUserId());
 
         userVo.setUserId(user.getUserId());
         userVo.setUsername(user.getUsername());
@@ -191,6 +197,8 @@ public class UserServiceImpl implements UserService {
         userVo.setAvatar(user.getAvatar());
         userVo.setDepartmentId(user.getDepartmentId());
         userVo.setDepartmentName(department == null ? null : department.getDepartmentName());
+        userVo.setRoles(roles);
+        userVo.setIsBlocked(user.getIsBlocked());
 
         return userVo;
     }

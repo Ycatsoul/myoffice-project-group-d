@@ -20,4 +20,6 @@ public interface UserRoleMapper {
     Integer deleteUserRoleByUserRoleId(@Param("userRoleId") Long userRoleId);
 
     Integer deleteUserRoleByUserIdAndRoleId(@Param("userId") Long userId, @Param("roleId") Long roleId);
+
+    Integer deleteUserRolesByUserId(@Param("userId") Long userId);
 }

@@ -20,6 +20,11 @@
         </if>
     </sql>
     
+    <!-- 获取所有userId -->
+    <select id="getAllUserIds" resultType="Long">
+        SELECT userId FROM User;
+    </select>
+    
     <!-- 根据userId查询User -->
     <select id="getUser" resultType="com.capgemini.cn.deemo.data.domain.User">
         SELECT * FROM User WHERE userId = #{userId};
@@ -53,7 +58,7 @@
     <insert id="insertUser" parameterType="com.capgemini.cn.deemo.vo.request.UserEditVo">
         INSERT INTO User
             (
-             userId, username, password, name, gender, avatar, departmentId
+             userId, username, password, name, gender, avatar, departmentId, isBlocked
             )
         values
             (
@@ -63,7 +68,8 @@
              #{userEditVo.name},
              #{userEditVo.gender},
              #{userEditVo.avatar},
-             #{userEditVo.departmentId}
+             #{userEditVo.departmentId},
+             #{userEditVo.isBlocked}
             )
     </insert>
 

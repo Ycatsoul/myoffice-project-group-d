@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.data.domain.PreContract;
 import com.capgemini.cn.deemo.service.PreContractService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
@@ -44,6 +45,7 @@ public class PreContractController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "新建一条预约记录")
     @ApiOperation(value =  "新建一条PreContract")
     @PostMapping("/set")
     public RespBean postPreContract(@RequestBody PreContractEditVo preContractEditVo) {
@@ -74,6 +76,7 @@ public class PreContractController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "更新预约记录")
     @ApiOperation(value = "根据preContractId更新一条PreContract")
     @PutMapping("/update")
     public RespBean updatePreContract(@RequestBody PreContractEditVo preContract) {
@@ -89,6 +92,7 @@ public class PreContractController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "删除预约记录")
     @ApiOperation(value = "根据userId删除一条PreContract")
     @DeleteMapping("/{userId}")
     public RespBean deletePreContract(@PathVariable Long userId) {

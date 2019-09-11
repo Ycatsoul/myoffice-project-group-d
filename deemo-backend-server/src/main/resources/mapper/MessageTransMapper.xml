@@ -11,6 +11,22 @@
       </foreach>
   </insert>
   
+  <!-- 根据messageId获取消息接收对象 -->
+  <select id="getRecipientsByMessageId" parameterType="Long"
+          resultType="com.capgemini.cn.deemo.data.domain.User">
+    SELECT * FROM User WHERE userId IN (
+        SELECT recipientId FROM MessageTrans WHERE messageId = #{messageId}
+      )
+  </select>
+  
+  <!-- 根据recipientId获取消息列表 -->
+  <select id="getMessagesByRecipientId" parameterType="Long"
+          resultType="com.capgemini.cn.deemo.data.domain.Message">
+    SELECT * FROM Message WHERE messageId IN (
+        SELECT messageId FROM MessageTrans WHERE recipientId = #{recipientId}
+      )
+  </select>
+  
   <!-- 标记信息为已读状态 -->
   <update id="readMessages">
     UPDATE MessageTrans SET isRead = 1

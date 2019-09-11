@@ -22,6 +22,7 @@
       AND uploadTime BETWEEN #{fileInfoSearchVo.startTime} AND #{fileInfoSearchVo.endTime}
     </if>
   </sql>
+  
   <!-- 回收站搜索字段 -->
   <sql id="searchFieldsInTrash">
     <if test="fileInfoSearchVo.parentId != null">
@@ -112,10 +113,10 @@
     WHERE fileId = #{fileInfoEditVo.fileId}
   </update>
 
-  <!-- 根据fileId将文件放入回收站并设置父文件夹ID为回收站(273734225100889) -->
+  <!-- 根据fileId将文件放入回收站并设置父文件夹ID为回收站 -->
   <update id="putFilesToTrash" parameterType="java.util.List">
     UPDATE FileInfo
-    SET isDeleted = 1, deleteTime = now(), parentIdInTrash = 273734225100889
+    SET isDeleted = 1, deleteTime = now(), parentIdInTrash = 2
     WHERE fileId IN
       <foreach collection="fileIds" item="fileId" separator="," open="(" close=")">
         #{fileId}

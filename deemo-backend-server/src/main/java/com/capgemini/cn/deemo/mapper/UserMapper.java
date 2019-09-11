@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public interface UserMapper {
 
+    List<Long> getAllUserIds();
+
     User getUser(@Param("userId") Long userId);
 
     User getUserByUsername(@Param("username") String username);

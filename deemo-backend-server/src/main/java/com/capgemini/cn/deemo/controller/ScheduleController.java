@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.core.commons.BaseController;
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.data.domain.Schedule;
 import com.capgemini.cn.deemo.service.ScheduleService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
@@ -46,6 +47,7 @@ public class ScheduleController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "添加日程")
     @ApiOperation(value = "新建一条schedule")
     @PostMapping("/set")
     public RespBean postSchedule(@RequestBody ScheduleEditVo scheduleEditVo){
@@ -77,6 +79,7 @@ public class ScheduleController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "更新日程")
     @ApiOperation("更新Schedule")
     @PostMapping("/update")
     public RespBean updateSchedule(@RequestBody ScheduleEditVo schedule) {
@@ -93,6 +96,7 @@ public class ScheduleController extends BaseController {
         }
     }
 
+    @ControllerLog(name = "删除日程")
     @ApiOperation(value = "根据scheduleId删除一条Schedule")
     @DeleteMapping("/{scheduleId}")
     public RespBean deleteSchedule(@PathVariable Long scheduleId) {

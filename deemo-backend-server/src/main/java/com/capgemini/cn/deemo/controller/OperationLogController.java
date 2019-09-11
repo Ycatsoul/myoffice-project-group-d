@@ -1,5 +1,6 @@
 package com.capgemini.cn.deemo.controller;
 
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.OperationLogService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -37,6 +38,7 @@ public class OperationLogController {
         return RespBean.error("没有查询到相关信息!");
     }
 
+    @ControllerLog(name = "删除一条操作记录")
     @ApiOperation("删除OperationLog")
     @PostMapping("/delete")
     public RespBean deleteOperationLogs(@RequestBody DeleteVo deleteVo) {

@@ -9,6 +9,8 @@ import com.capgemini.cn.deemo.vo.response.BraDepUserVo;
 import com.capgemini.cn.deemo.vo.response.UserVo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Classname :
@@ -16,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @date:
  */
 public interface UserService extends UserDetailsService {
+
+    List<Long> getAllUserIds();
 
     RespVos<UserVo> getUser(Long userId);
 
@@ -32,4 +36,6 @@ public interface UserService extends UserDetailsService {
     Integer blockUsers(DeleteVo deleteVo);
 
     Integer deleteUsers(DeleteVo deleteVo);
+
+    UserVo convertToVo(User user);
 }

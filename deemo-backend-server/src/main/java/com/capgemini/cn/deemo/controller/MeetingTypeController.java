@@ -1,5 +1,6 @@
 package com.capgemini.cn.deemo.controller;
 
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.data.domain.MeetingType;
 import com.capgemini.cn.deemo.service.MeetingTypeService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
@@ -27,6 +28,20 @@ public class MeetingTypeController {
         this.meetingTypeService = meetingTypeService;
     }
 
+    @ApiOperation(value = "根据meetingTypeId获取MeetingType详尽信息")
+    @GetMapping("/{meetingTypeId}")
+    public RespBean getMeetingType(@PathVariable Long meetingTypeId) {
+
+        MeetingType meetingType = meetingTypeService.listMeetingType(meetingTypeId);
+
+        // 判断是否获取成功
+        if(meetingType != null){
+            return RespBean.ok("获取成功",meetingType);
+        }else{
+            return RespBean.error("获取失败");
+        }
+    }
+
     @ApiOperation(value = "获取MeetingType列表")
     @GetMapping("/get")
     public RespBean getMeetingTypeList() {
@@ -39,6 +54,7 @@ public class MeetingTypeController {
         }
     }
 
+    @ControllerLog(name = "添加会议类型")
     @ApiOperation(value = "新建一条MeetingType")
     @PostMapping("/set")
     public RespBean insertMeetingType(@RequestBody MeetingTypeEditVo meetingTypeEditVo) {
@@ -50,20 +66,6 @@ public class MeetingTypeController {
             return RespBean.ok("新增成功");
         }else{
             return RespBean.error("新增失败");
-        }
-    }
-
-    @ApiOperation(value = "根据meetingTypeId获取MeetingType详尽信息")
-    @GetMapping("/{meetingTypeId}")
-    public RespBean getMeetingType(@PathVariable Long meetingTypeId) {
-
-        MeetingType meetingType = meetingTypeService.listMeetingType(meetingTypeId);
-
-        // 判断是否获取成功
-        if(meetingType != null){
-            return RespBean.ok("获取成功",meetingType);
-        }else{
-            return RespBean.error("获取失败");
         }
     }
 

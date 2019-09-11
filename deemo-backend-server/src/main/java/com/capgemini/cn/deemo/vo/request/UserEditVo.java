@@ -30,4 +30,10 @@ public class UserEditVo {
 
     @ApiModelProperty(value = "所属部门ID")
     private Long departmentId;
+
+    @ApiModelProperty(value = "角色ID")
+    private Long roleId;
+
+    @ApiModelProperty(value = "是否被屏蔽")
+    private Boolean isBlocked;
 }

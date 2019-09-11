@@ -1,5 +1,6 @@
 package com.capgemini.cn.deemo.controller;
 
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.MessageTypeService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
@@ -34,6 +35,7 @@ public class MessageTypeController {
         return RespBean.ok(respVos);
     }
 
+    @ControllerLog(name = "添加消息类型")
     @ApiOperation("添加消息类型")
     @PostMapping("/")
     RespBean insertMessageType(@RequestBody MessageTypeEditVo messageTypeEditVo) {
@@ -42,6 +44,7 @@ public class MessageTypeController {
         return res > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
+    @ControllerLog(name = "修改消息类型")
     @ApiOperation("修改消息类型")
     @PutMapping("/")
     RespBean updateMessageType(@RequestBody MessageTypeEditVo messageTypeEditVo) {
@@ -50,6 +53,7 @@ public class MessageTypeController {
         return res > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }
 
+    @ControllerLog(name = "删除消息类型")
     @ApiOperation("删除消息类型")
     @PostMapping("/delete")
     RespBean deleteMessageTypes(@RequestBody DeleteVo deleteVo) {

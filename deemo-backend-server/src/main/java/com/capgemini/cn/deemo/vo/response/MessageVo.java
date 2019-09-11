@@ -3,6 +3,7 @@ package com.capgemini.cn.deemo.vo.response;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author hasaker
@@ -24,6 +25,8 @@ public class MessageVo {
     private Date beginTime;
 
     private Date endTime;
+
+    private List<UserVo> recipients;
 
     private Long createUserId;
 
