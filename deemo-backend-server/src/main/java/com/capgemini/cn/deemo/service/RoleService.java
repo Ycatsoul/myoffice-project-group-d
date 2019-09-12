@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.data.domain.Role;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.RoleEditVo;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface RoleService {
 
     Integer updateRole(RoleEditVo editVo);
 
-    Integer deleteRole(Long roleId);
+    Integer deleteRole(DeleteVo deleteVo);
 }

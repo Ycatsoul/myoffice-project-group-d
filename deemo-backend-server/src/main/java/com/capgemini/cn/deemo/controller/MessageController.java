@@ -2,6 +2,7 @@ package com.capgemini.cn.deemo.controller;
 
 import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.service.MessageService;
+import com.capgemini.cn.deemo.utils.UserUtils;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
 import com.capgemini.cn.deemo.vo.request.DeleteVo;
@@ -50,6 +51,20 @@ public class MessageController {
         }
 
         return RespBean.error("查询失败!");
+    }
+
+    @ApiOperation("获取发送给当前用户的消息!")
+     @GetMapping("/")
+    RespBean getMessagesByRecipientId() {
+        RespVos<MessageVo> respVos = messageService.getMessagesByRecipientId(
+                UserUtils.getCurrentUser().getUserId()
+        );
+
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok(respVos);
+        }
+
+        return RespBean.ok("没有我的相关消息!");
     }
 
     @ControllerLog(name = "添加信息为草稿")

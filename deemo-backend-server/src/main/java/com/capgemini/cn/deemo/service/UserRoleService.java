@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.service;
 
 import com.capgemini.cn.deemo.data.domain.Role;
+import com.capgemini.cn.deemo.vo.request.UserRoleEditVo;
 
 import java.util.List;
 
@@ -11,4 +12,12 @@ import java.util.List;
 public interface UserRoleService {
 
     List<Role> getRolesByUserId(Long userId);
+
+    Integer addUserRole(UserRoleEditVo userRoleEditVo);
+
+    Integer deleteUserRoleByUserRoleId(Long userRoleId);
+
+    Integer deleteUserRoleByUserIdAndRoleId(Long userId, Long roleId);
+
+    Integer deleteUserRolesByUserId(Long userId);
 }

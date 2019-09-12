@@ -21,17 +21,26 @@ public interface NoteMapper {
     /**
      * 根据noteId搜索和根据userId搜素
      */
-    List<Note> listNoteForSearch(@Param("note") NoteSearchVo noteSearchVo);
+    List<Note> listNoteForSearch(@Param("createUserId") Long createUserId);
 
     /**
      * 遍历note表信息
      */
     List<Note> listNotes();
 
+    /**
+     * 新增
+     */
     Integer insertNote(@Param("noteEditVo") NoteEditVo noteEditVo);
 
+    /**
+     * 更新
+     */
     Integer updateNote(@Param("noteEditVo") NoteEditVo noteEditVo);
 
+    /**
+     * 删除
+     */
     Integer deleteNote(@Param("noteId") Long noteId);
 
 }

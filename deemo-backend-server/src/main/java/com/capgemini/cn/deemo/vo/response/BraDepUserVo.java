@@ -27,6 +27,9 @@ public class BraDepUserVo {
 
         String departmentName;
 
+        /**
+         * 该部门下的所有用户
+         */
         List<User> users;
     }
 
@@ -34,5 +37,8 @@ public class BraDepUserVo {
 
     String branchShortName;
 
+    /**
+     * 该机构下的部门
+     */
     List<Department> departments;
 }

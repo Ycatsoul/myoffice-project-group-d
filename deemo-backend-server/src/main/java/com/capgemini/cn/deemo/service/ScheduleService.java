@@ -4,6 +4,7 @@ import com.capgemini.cn.deemo.data.domain.Schedule;
 import com.capgemini.cn.deemo.vo.request.ScheduleEditVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleListVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleSearchVo;
+import com.capgemini.cn.deemo.vo.response.ScheduleVo;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface ScheduleService {
 
-    public List<Schedule> listSchedule(ScheduleListVo scheduleListVo);
+    public List<Schedule> listSchedule(Long createUserId);
 
     public List<Schedule> listSchedules(ScheduleSearchVo scheduleSearchVo);
 

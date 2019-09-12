@@ -15,7 +15,7 @@ public interface NoteService {
 
     public List<Note> listNotes();
 
-    public List<Note> listNoteForSearch(NoteSearchVo noteSearchVo);
+    public List<Note> listNoteForSearch(Long createUserId);
 
     public boolean insertNote(NoteEditVo noteEditVo);
 

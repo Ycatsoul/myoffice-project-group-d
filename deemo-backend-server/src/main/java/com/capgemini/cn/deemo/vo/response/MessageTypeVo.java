@@ -9,9 +9,18 @@ import lombok.Data;
 @Data
 public class MessageTypeVo {
 
+    /**
+     * ID
+     */
     private Long messageTypeId;
 
+    /**
+     * 文件类型名字
+     */
     private String messageTypeName;
 
+    /**
+     * 文件类型描述
+     */
     private String messageTypeDesc;
 }

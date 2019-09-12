@@ -4,6 +4,7 @@ import com.capgemini.cn.deemo.data.domain.Schedule;
 import com.capgemini.cn.deemo.vo.request.ScheduleEditVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleListVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleSearchVo;
+import com.capgemini.cn.deemo.vo.response.ScheduleVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public interface ScheduleMapper {
 
     List<Schedule> listSchedules(@Param("scheduleSearchVo") ScheduleSearchVo scheduleSearchVo);
 
-    List<Schedule> listSchedule(@Param("scheduleListVo") ScheduleListVo scheduleListVo);
+    List<Schedule> listSchedule(@Param("createUserId") Long createUserId);
 
     Integer insertSchedule(@Param("scheduleEditVo") ScheduleEditVo scheduleEditVo);
 

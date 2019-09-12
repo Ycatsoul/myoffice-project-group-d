@@ -6,10 +6,11 @@ import com.capgemini.cn.deemo.service.NoteService;
 import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.utils.UserUtils;
 import com.capgemini.cn.deemo.vo.request.NoteEditVo;
-import com.capgemini.cn.deemo.vo.request.NoteSearchVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+//import com.capgemini.cn.deemo.utils.UserUtils;
 
 /**
  * @author fuduwen
@@ -37,8 +38,8 @@ public class NoteServiceImpl implements NoteService {
      * 根据noteId,UserId获取便签信息
      */
     @Override
-    public List<Note> listNoteForSearch(NoteSearchVo noteSearchVo){
-        return noteMapper.listNoteForSearch(noteSearchVo);
+    public List<Note> listNoteForSearch(Long createUserId){
+        return noteMapper.listNoteForSearch(createUserId);
     }
 
     /**
@@ -56,7 +57,7 @@ public class NoteServiceImpl implements NoteService {
     public boolean insertNote(NoteEditVo noteEditVo) {
         noteEditVo.setNoteId(IdWorker.get().nextId());
         noteEditVo.setCreateUserId(UserUtils.getCurrentUser().getUserId());
-
+//UserUtils.getCurrentUser().getUserId()
         return noteMapper.insertNote(noteEditVo) > 0;
     }
 

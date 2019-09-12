@@ -28,4 +28,7 @@ public class UserSearchVo extends BaseSearchVo {
 
     @ApiModelProperty(value = "所属部门ID")
     private Long departmentId;
+
+    @ApiModelProperty(value = "所属机构ID")
+    private Long branchId;
 }

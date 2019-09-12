@@ -85,7 +85,7 @@ public class MenuMapperTest {
 
             switch (finalI) {
                 case 1:
-                case 6:
+                case 5:
                     menuRoleMapper.addMenuRole(IdWorker.get().nextId(), menu.getMenuId(), ROLE_ADMIN_ID);
                     break;
                 default:
@@ -108,10 +108,10 @@ public class MenuMapperTest {
 
                 switch (finalI) {
                     case 1:
-                    case 6:
+                    case 5:
                         menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_ADMIN_ID);
                         break;
-                    case 5:
+                    case 4:
                         if (finalJ == 2) {
                             menuRoleMapper.addMenuRole(IdWorker.get().nextId(), childMenu.getMenuId(), ROLE_USER_ID);
                         } else {

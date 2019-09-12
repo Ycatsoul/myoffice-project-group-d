@@ -9,6 +9,18 @@
         <if test="manualSignSearchVo.userId != null">
             AND userId = #{manualSignSearchVo.userId}
         </if>
+        <if test="manualSignSearchVo.departmentId != null">
+            AND userId IN (
+                SELECT userId FROM User WHERE departmentId = #{manualSignSearchVo.departmentId}
+            )
+        </if>
+        <if test="manualSignSearchVo.branchId != null and manualSignSearchVo.departmentId == null">
+            AND userId IN (
+                SELECT userId FROM User WHERE departmentId IN (
+                    SELECT departmentId FROM Department WHERE branchId = = #{manualSignSearchVo.branchId}
+                )
+            )
+        </if>
         <if test="manualSignSearchVo.name != null">
             AND userId IN (
                 SELECT userId FROM User WHERE name LIKE concat(concat('%', #{manualSignSearchVo.name}), '%')

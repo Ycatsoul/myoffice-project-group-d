@@ -1,6 +1,7 @@
 package com.capgemini.cn.deemo.mapper;
 
 import com.capgemini.cn.deemo.data.domain.Role;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.RoleEditVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,5 @@ public interface RoleMapper {
 
     Integer updateRole(@Param("roleEditVo") RoleEditVo roleEditVo);
 
-    Integer deleteRole(@Param("roleId") Long roleId);
+    Integer deleteRole(@Param("deleteVo") DeleteVo deleteVo);
 }

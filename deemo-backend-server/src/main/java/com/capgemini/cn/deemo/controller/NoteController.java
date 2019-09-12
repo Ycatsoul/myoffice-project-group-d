@@ -6,7 +6,6 @@ import com.capgemini.cn.deemo.data.domain.Note;
 import com.capgemini.cn.deemo.service.NoteService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.request.NoteEditVo;
-import com.capgemini.cn.deemo.vo.request.NoteSearchVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +46,7 @@ public class NoteController extends BaseController {
         }
     }
 
-
-    @ControllerLog(name = "新建Note")
+    @ControllerLog(name = "新建笔记")
     @ApiOperation(value = "新建一条Note")
     @PostMapping("/set")
     public RespBean insertNote(@RequestBody NoteEditVo noteEditVo) {
@@ -67,11 +65,11 @@ public class NoteController extends BaseController {
         }
     }
 
-    @ApiOperation(value = "根据noteId,createUserId获取Note详尽信息")
-    @PostMapping("/getByNoteSearchVo")
-    public RespBean getNote(@RequestBody NoteSearchVo noteSearchVo) {
+    @ApiOperation(value = "根据createUserId获取Note详尽信息")
+    @GetMapping("/{createUserId}")
+    public RespBean getNote(@PathVariable Long createUserId) {
 
-        List<Note> note = noteService.listNoteForSearch(noteSearchVo);
+        List<Note> note = noteService.listNoteForSearch(createUserId);
 
         /**
          * 判断是否成功
@@ -84,7 +82,7 @@ public class NoteController extends BaseController {
         }
     }
 
-    @ControllerLog(name = "更新Note")
+    @ControllerLog(name = "修改笔记")
     @ApiOperation("更新Note")
     @PutMapping("/update")
     public RespBean updateNote(@RequestBody NoteEditVo note) {
@@ -94,7 +92,7 @@ public class NoteController extends BaseController {
         return res > 0 ? RespBean.ok("更新成功") : RespBean.error("更新失败");
     }
 
-    @ControllerLog(name = "删除Note")
+    @ControllerLog(name = "删除笔记")
     @ApiOperation(value = "根据noteId删除一条Note")
     @DeleteMapping("/{noteId}")
     public RespBean deleteNote(@PathVariable Long noteId) {

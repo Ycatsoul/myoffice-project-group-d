@@ -20,11 +20,11 @@ import java.sql.Date;
 @ApiModel
 public class ManualSignSearchVo extends BaseSearchVo {
 
-//    @ApiModelProperty(value = "机构ID")
-//    private Long branchId;
-//
-//    @ApiModelProperty(value = "部门ID")
-//    private Long departmentId;
+    @ApiModelProperty(value = "机构ID")
+    private Long branchId;
+
+    @ApiModelProperty(value = "部门ID")
+    private Long departmentId;
 
     @ApiModelProperty(value = "用户ID")
     private Long userId;

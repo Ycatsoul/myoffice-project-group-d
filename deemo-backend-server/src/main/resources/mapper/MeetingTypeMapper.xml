@@ -31,7 +31,7 @@
     <update id="updateMeetingType" parameterType="com.capgemini.cn.deemo.vo.request.MeetingTypeEditVo">
         update meetingType
         <set>
-            <if test="meetingType.meetingTypeName != null">meetingTypeName = #{meetingTypeEditVo.meetingTypeName} , </if>
+            <if test="meetingTypeEditVo.meetingTypeName != null">meetingTypeName = #{meetingTypeEditVo.meetingTypeName} , </if>
         </set>
         where meetingTypeId = #{meetingTypeEditVo.meetingTypeId}
     </update>
