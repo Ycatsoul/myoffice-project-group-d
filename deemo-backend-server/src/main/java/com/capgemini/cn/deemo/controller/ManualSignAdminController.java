@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api
 @RestController
-@RequestMapping("/manualSign")
-public class ManualSignController {
+@RequestMapping("/manualSignAdmin")
+public class ManualSignAdminController {
 
     private final ManualSignService manualSignService;
 
-    public ManualSignController(ManualSignService manualSignService) {
+    public ManualSignAdminController(ManualSignService manualSignService) {
         this.manualSignService = manualSignService;
     }
 
@@ -41,23 +41,14 @@ public class ManualSignController {
 
     @ApiOperation("获取签到列表")
     @PostMapping("/list")
-    public RespBean listManualSigns(@RequestBody ManualSignSearchVo manualSignSearchVo){
+    public RespBean listManualSigns(@RequestBody ManualSignSearchVo manualSignSearchVo) {
         RespVos<ManualSignVo> respVos = manualSignService.listManualSigns(manualSignSearchVo);
 
         if (respVos != null && respVos.getSize() > 0) {
-            return RespBean.ok("查询成功",respVos);
+            return RespBean.ok("查询成功", respVos);
         }
 
         return RespBean.error("查询失败! 未找到相关信息!");
-    }
-
-    @ControllerLog(name = "签到")
-    @ApiOperation("添加一个签到")
-    @PostMapping("/")
-    public RespBean addManualSign(@RequestBody ManualSignEditVo manualSignEditVo) {
-        Integer res = manualSignService.addManualSign(manualSignEditVo);
-
-        return res > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败! 未找到相关信息!");
     }
 
     @ControllerLog(name = "修改签到信息")

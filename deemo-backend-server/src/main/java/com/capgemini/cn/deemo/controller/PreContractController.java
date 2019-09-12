@@ -45,7 +45,7 @@ public class PreContractController extends BaseController {
         }
     }
 
-    @ControllerLog(name = "新建一条预约记录")
+    @ControllerLog(name = "添加一条预约信息")
     @ApiOperation(value =  "新建一条PreContract")
     @PostMapping("/set")
     public RespBean postPreContract(@RequestBody PreContractEditVo preContractEditVo) {
@@ -76,7 +76,7 @@ public class PreContractController extends BaseController {
         }
     }
 
-    @ControllerLog(name = "更新预约记录")
+    @ControllerLog(name = "修改预约信息")
     @ApiOperation(value = "根据preContractId更新一条PreContract")
     @PutMapping("/update")
     public RespBean updatePreContract(@RequestBody PreContractEditVo preContract) {
@@ -92,7 +92,7 @@ public class PreContractController extends BaseController {
         }
     }
 
-    @ControllerLog(name = "删除预约记录")
+    @ControllerLog(name = "删除预约信息")
     @ApiOperation(value = "根据userId删除一条PreContract")
     @DeleteMapping("/{userId}")
     public RespBean deletePreContract(@PathVariable Long userId) {
@@ -106,6 +106,4 @@ public class PreContractController extends BaseController {
             return RespBean.error("删除失败");
         }
     }
-
-
 }

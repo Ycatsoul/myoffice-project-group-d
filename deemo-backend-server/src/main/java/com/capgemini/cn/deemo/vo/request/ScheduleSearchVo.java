@@ -15,8 +15,8 @@ import java.sql.Date;
 @ApiModel
 public class ScheduleSearchVo {
 
-    @ApiModelProperty(value = "departmentId")
-    private Long departmentId;
+    @ApiModelProperty(value = "createUserId")
+    private Long createUserId;
 
     @ApiModelProperty(value = "日程开始时间")
     private Date beginTime;

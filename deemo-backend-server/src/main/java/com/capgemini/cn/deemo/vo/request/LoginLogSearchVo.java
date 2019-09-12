@@ -2,6 +2,7 @@ package com.capgemini.cn.deemo.vo.request;
 
 import com.capgemini.cn.deemo.vo.base.BaseSearchVo;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,9 +17,12 @@ import java.sql.Date;
 @ApiModel
 public class LoginLogSearchVo extends BaseSearchVo {
 
+    @ApiModelProperty("登录用户的ID")
     private Long loginUserId;
 
+    @ApiModelProperty("登录起始时间")
     private Date startTime;
 
+    @ApiModelProperty("登录截止时间")
     private Date endTime;
 }

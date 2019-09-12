@@ -9,11 +9,8 @@ import lombok.Data;
  */
 @Data
 public class PreContract {
-
     private Long preContractId;
-
     private Long scheduleId;
-
     private Long userId;
 
 }

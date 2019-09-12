@@ -33,8 +33,8 @@
     <update id="updatePreContract" parameterType="com.capgemini.cn.deemo.vo.request.PreContractEditVo">
         update preContract
         <set>
-            <if test="preContract.scheduleId != null">scheduleId = #{preContractEditVo.scheduleId} , </if>
-            <if test="preContract.userId != null">userId = #{preContractEditVo.userId}, </if>
+            <if test="preContractEditVo.scheduleId != null">scheduleId = #{preContractEditVo.scheduleId} , </if>
+            <if test="preContractEditVo.userId != null">userId = #{preContractEditVo.userId}, </if>
         </set>
         where preContractId = #{preContractEditVo.preContractId}
     </update>

@@ -1,5 +1,7 @@
 package com.capgemini.cn.deemo.vo.request;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -9,7 +11,9 @@ import java.util.List;
  * @since 2019/9/6 20:41
  */
 @Data
+@ApiModel
 public class DeleteVo {
 
+    @ApiModelProperty("所要删除的Id集合")
     List<Long> ids;
 }

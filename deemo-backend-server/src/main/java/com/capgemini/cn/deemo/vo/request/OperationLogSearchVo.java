@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author hasaker
@@ -18,7 +18,7 @@ public class OperationLogSearchVo extends BaseSearchVo {
 
     private Long operationUserId;
 
-    private Date startTime;
+    private Timestamp startTime;
 
-    private Date endTime;
+    private Timestamp endTime;
 }

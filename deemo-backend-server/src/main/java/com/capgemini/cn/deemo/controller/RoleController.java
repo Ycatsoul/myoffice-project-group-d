@@ -1,15 +1,15 @@
 package com.capgemini.cn.deemo.controller;
 
+import com.capgemini.cn.deemo.annotation.ControllerLog;
 import com.capgemini.cn.deemo.data.domain.Role;
 import com.capgemini.cn.deemo.service.RoleService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.base.RespVos;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
+import com.capgemini.cn.deemo.vo.request.RoleEditVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +49,32 @@ public class RoleController {
         respVos.setSize(roles.size());
 
         return RespBean.ok(respVos);
+    }
+
+    @ControllerLog(name = "添加角色")
+    @ApiOperation("添加角色")
+    @PostMapping("/")
+    public RespBean addRole(@RequestBody RoleEditVo roleEditVo) {
+        Integer res = roleService.addRole(roleEditVo);
+
+        return res == 1 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
+    }
+
+    @ControllerLog(name = "编辑角色")
+    @ApiOperation("编辑角色")
+    @PutMapping("/")
+    public RespBean updateRole(@RequestBody RoleEditVo roleEditVo) {
+        Integer res = roleService.updateRole(roleEditVo);
+
+        return res == 1 ? RespBean.ok("编辑成功!") : RespBean.error("编辑失败!");
+    }
+
+    @ControllerLog(name = "删除角色")
+    @ApiOperation("删除角色")
+    @PostMapping("/delete")
+    public RespBean deleteRoles(@RequestBody DeleteVo deleteVo) {
+        Integer res = roleService.deleteRole(deleteVo);
+
+        return res > 0 ? RespBean.ok("删除成功!") : RespBean.error("删除失败!");
     }
 }

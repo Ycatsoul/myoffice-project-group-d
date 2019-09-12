@@ -6,7 +6,6 @@ import com.capgemini.cn.deemo.data.domain.Schedule;
 import com.capgemini.cn.deemo.service.ScheduleService;
 import com.capgemini.cn.deemo.vo.base.RespBean;
 import com.capgemini.cn.deemo.vo.request.ScheduleEditVo;
-import com.capgemini.cn.deemo.vo.request.ScheduleListVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleSearchVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,16 +30,15 @@ public class ScheduleController extends BaseController {
         this.scheduleService = scheduleService;
     }
 
-    @ApiOperation(value = "获取schedule列表，将相应的信息遍历到日历上")
-    @PostMapping("/list")
-    public RespBean getScheduleList(@RequestBody ScheduleListVo scheduleListVo){
+    @ApiOperation(value = "根据createUserId获取schedule列表，将相应的信息遍历到日历上")
+    @GetMapping("/{createUserId}")
+    public RespBean getScheduleList(@PathVariable Long createUserId){
 
-        List<Schedule> schedule = scheduleService.listSchedule(scheduleListVo);
-
+        List<Schedule> schedule = scheduleService.listSchedule(createUserId);
         /**
          * 判断是否获取成功
          */
-        if(schedule != null){
+        if(schedule != null && schedule.size() >0){
             return RespBean.ok("获取成功",schedule);
         }else{
             return RespBean.error("获取失败");
@@ -79,7 +77,7 @@ public class ScheduleController extends BaseController {
         }
     }
 
-    @ControllerLog(name = "更新日程")
+    @ControllerLog(name = "更新日程信息")
     @ApiOperation("更新Schedule")
     @PostMapping("/update")
     public RespBean updateSchedule(@RequestBody ScheduleEditVo schedule) {
@@ -96,7 +94,7 @@ public class ScheduleController extends BaseController {
         }
     }
 
-    @ControllerLog(name = "删除日程")
+    @ControllerLog(name = "删除日程信息")
     @ApiOperation(value = "根据scheduleId删除一条Schedule")
     @DeleteMapping("/{scheduleId}")
     public RespBean deleteSchedule(@PathVariable Long scheduleId) {

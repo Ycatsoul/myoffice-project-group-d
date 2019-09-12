@@ -3,6 +3,8 @@ package com.capgemini.cn.deemo.service.impl;
 import com.capgemini.cn.deemo.data.domain.Role;
 import com.capgemini.cn.deemo.mapper.RoleMapper;
 import com.capgemini.cn.deemo.service.RoleService;
+import com.capgemini.cn.deemo.utils.IdWorker;
+import com.capgemini.cn.deemo.vo.request.DeleteVo;
 import com.capgemini.cn.deemo.vo.request.RoleEditVo;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Integer addRole(RoleEditVo roleEditVo) {
+        roleEditVo.setRoleId(IdWorker.get().nextId());
+
         return roleMapper.addRole(roleEditVo);
     }
 
@@ -47,7 +51,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Integer deleteRole(Long roleId) {
-        return roleMapper.deleteRole(roleId);
+    public Integer deleteRole(DeleteVo deleteVo) {
+        return roleMapper.deleteRole(deleteVo);
     }
 }

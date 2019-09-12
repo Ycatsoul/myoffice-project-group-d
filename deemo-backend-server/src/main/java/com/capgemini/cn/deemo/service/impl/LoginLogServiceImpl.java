@@ -59,7 +59,7 @@ public class LoginLogServiceImpl implements LoginLogService {
         User user = userMapper.getUser(loginLog.getLoginUserId());
 
         loginLogVo.setLoginLogId(loginLog.getLoginId());
-        loginLogVo.setIsSuccess(loginLog.getIsSuccess());
+        loginLogVo.setIsSuccess(loginLog.getIsSuccess() ? "是" : "否");
         loginLogVo.setLoginUserId(loginLog.getLoginUserId());
         loginLogVo.setLoginUserName(user == null ? null : user.getName());
         loginLogVo.setLoginTime(loginLog.getLoginTime());

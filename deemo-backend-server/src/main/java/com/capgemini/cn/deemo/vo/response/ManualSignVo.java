@@ -24,9 +24,24 @@ public class ManualSignVo {
     private Long userId;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
      * 用户名字
      */
     private String name;
+
+    /**
+     * 所属部门
+     */
+    private String departmentName;
+
+    /**
+     * 所属机构
+     */
+    private String branchName;
 
     /**
      * 签卡时间

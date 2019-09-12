@@ -28,20 +28,6 @@ public class MeetingTypeController {
         this.meetingTypeService = meetingTypeService;
     }
 
-    @ApiOperation(value = "根据meetingTypeId获取MeetingType详尽信息")
-    @GetMapping("/{meetingTypeId}")
-    public RespBean getMeetingType(@PathVariable Long meetingTypeId) {
-
-        MeetingType meetingType = meetingTypeService.listMeetingType(meetingTypeId);
-
-        // 判断是否获取成功
-        if(meetingType != null){
-            return RespBean.ok("获取成功",meetingType);
-        }else{
-            return RespBean.error("获取失败");
-        }
-    }
-
     @ApiOperation(value = "获取MeetingType列表")
     @GetMapping("/get")
     public RespBean getMeetingTypeList() {
@@ -54,7 +40,7 @@ public class MeetingTypeController {
         }
     }
 
-    @ControllerLog(name = "添加会议类型")
+    @ControllerLog(name = "新建会议类型")
     @ApiOperation(value = "新建一条MeetingType")
     @PostMapping("/set")
     public RespBean insertMeetingType(@RequestBody MeetingTypeEditVo meetingTypeEditVo) {
@@ -69,11 +55,26 @@ public class MeetingTypeController {
         }
     }
 
+    @ApiOperation(value = "根据meetingTypeId获取MeetingType详尽信息")
+    @GetMapping("/{meetingTypeId}")
+    public RespBean getMeetingType(@PathVariable Long meetingTypeId) {
+
+        MeetingType meetingType = meetingTypeService.listMeetingType(meetingTypeId);
+
+        // 判断是否获取成功
+        if(meetingType != null){
+            return RespBean.ok("获取成功",meetingType);
+        }else{
+            return RespBean.error("获取失败");
+        }
+    }
+
+    @ControllerLog(name = "修改会议类型")
     @ApiOperation(value = "根据meetingTypeId更新一条meetingType")
     @PutMapping("/update")
-    public RespBean updateMeetingType(@RequestBody MeetingTypeEditVo meetingType) {
+    public RespBean updateMeetingType(@RequestBody MeetingTypeEditVo meetingTypeEditVo) {
 
-        Integer res = meetingTypeService.updateMeetingType(meetingType);
+        Integer res = meetingTypeService.updateMeetingType(meetingTypeEditVo);
 
         if(res !=null){
             return RespBean.ok("更新成功",res);
@@ -82,6 +83,7 @@ public class MeetingTypeController {
         }
     }
 
+    @ControllerLog(name = "删除会议类型")
     @ApiOperation(value = "更具MeetingTypeId删除一条meetingType")
     @DeleteMapping("/{meetingTypeId}")
     public RespBean deleteMeetingType(@PathVariable Long meetingTypeId) {

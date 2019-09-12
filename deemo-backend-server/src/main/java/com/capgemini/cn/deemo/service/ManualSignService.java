@@ -18,7 +18,7 @@ public interface ManualSignService {
 
     RespVos<ManualSignVo> listManualSigns(ManualSignSearchVo manualSignSearchVo);
 
-    Integer addManualSign(ManualSignEditVo manualSignEditVo);
+    ManualSignVo addManualSign(ManualSignEditVo manualSignEditVo);
 
     Integer updateManualSign(ManualSignEditVo manualSignEditVo);
 

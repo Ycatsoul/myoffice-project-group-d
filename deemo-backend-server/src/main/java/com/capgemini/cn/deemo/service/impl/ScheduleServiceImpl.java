@@ -8,11 +8,12 @@ import com.capgemini.cn.deemo.utils.IdWorker;
 import com.capgemini.cn.deemo.utils.UserUtils;
 import com.capgemini.cn.deemo.vo.request.PreContractEditVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleEditVo;
-import com.capgemini.cn.deemo.vo.request.ScheduleListVo;
 import com.capgemini.cn.deemo.vo.request.ScheduleSearchVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+//import com.capgemini.cn.deemo.utils.UserUtils;
 
 /**
  * @author fuduwen
@@ -35,8 +36,8 @@ public class ScheduleServiceImpl implements ScheduleService {
      * 获取日程信息
      */
     @Override
-    public List<Schedule> listSchedule(ScheduleListVo scheduleListVo) {
-        return scheduleMapper.listSchedule(scheduleListVo);
+    public List<Schedule> listSchedule(Long createUserId) {
+            return scheduleMapper.listSchedule(createUserId);
     }
 
     /**

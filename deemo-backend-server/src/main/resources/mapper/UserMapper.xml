@@ -18,6 +18,11 @@
         <if test="userSearchVo.departmentId != null">
             AND departmentId = #{userSearchVo.departmentId}
         </if>
+        <if test="userSearchVo.branchId != null">
+            AND departmentId IN (
+                SELECT departmentId FROM Department WHERE branchId = #{userSearchVo.branchId}
+            )
+        </if>
     </sql>
     
     <!-- 获取所有userId -->
